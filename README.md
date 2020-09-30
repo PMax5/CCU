@@ -1,2 +1,2 @@
 # CCU
-CCU Project
+CCU Project (MEIC-A).

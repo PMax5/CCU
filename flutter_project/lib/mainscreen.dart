@@ -2,8 +2,9 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'signup.dart';
 
-class Screen1 extends StatelessWidget {
+class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,12 @@ class Screen1 extends StatelessWidget {
               ),
             color: Colors.pink[800],
             child: Text('Sign Up'),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignUp())
+              );
+            },
             ),
           ),
         ],

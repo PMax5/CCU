@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screen1.dart';
+import 'mainscreen.dart';
 
 
 void main() => runApp(MyApp());
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {   //ctrl + shift + R (refactor)
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Screen1(), //   <-- screen1
+        body: MainPage(), //   <-- screen1
       ),
     );
   }

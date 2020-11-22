@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'settings.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -10,43 +11,74 @@ class SignUp extends StatefulWidget {
 
 class SignUpState extends State<SignUp> {
 
+  Settings projectSettings = new Settings();
+
   Widget buildFormInputField(String hintText, String invalidInputMessage) {
-    return TextFormField(
-      decoration: InputDecoration(
-        hintText: hintText
-      ),
-      validator: (value) {
-        if (value.isEmpty)
-          return invalidInputMessage;
-        return null;
-      }
+
+    OutlineInputBorder inputBorder(Color color) {
+      return OutlineInputBorder(
+          borderSide: BorderSide(color: color, width: 2.0),
+          borderRadius: BorderRadius.all(Radius.circular(6.0))
+      );
+    }
+
+    return Center(
+      child: Padding(
+          padding: EdgeInsets.only(bottom: 14),
+          child: Container(
+              width: projectSettings.textInputWidth,
+              height: projectSettings.textInputHeight + 25,
+              child: TextFormField(
+                  decoration: InputDecoration(
+                      enabledBorder: inputBorder(Colors.black),
+                      focusedBorder: inputBorder(Colors.black),
+                      errorBorder: inputBorder(Colors.red),
+                      focusedErrorBorder: inputBorder(Colors.red),
+                      hintText: hintText
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty)
+                      return invalidInputMessage;
+                    return null;
+                  }
+              )
+          )
+      )
     );
   }
 
   Widget buildForm(BuildContext context) {
     final signUpFormKey = GlobalKey<FormState>();
 
-    return Form(
-      key: signUpFormKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          this.buildFormInputField('user@example.com', 'Enter an email address.'),
-          this.buildFormInputField('Username', 'Enter an username.'),
-          this.buildFormInputField('Password', 'Enter a password.'),
-          Center(
-            child: ElevatedButton(
-              child: Text("Next"),
-              onPressed: () {
-                if(signUpFormKey.currentState.validate()) {
-                  //TODO: Move to the next stage
-                } else {
-                  //TODO: Show notification to user
-                }
-              },
-            )
+    return Padding(
+      padding: EdgeInsets.only(top: 48),
+      child: Form(
+          key: signUpFormKey,
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                this.buildFormInputField('user@example.com', 'Enter an email address.'),
+                this.buildFormInputField('Username', 'Enter an username.'),
+                this.buildFormInputField('Password', 'Enter a password.'),
+                Center(
+                    child: Container(
+                        width: projectSettings.textInputWidth,
+                        height: projectSettings.textInputHeight,
+                        child: ElevatedButton(
+                            child: Text("NEXT"),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
+                            ),
+                            onPressed: () {
+                              if(signUpFormKey.currentState.validate()) {
+                                //TODO: Move to the next stage
+                              }
+                            }
+                        )
+                    )
+                )
+              ]
           )
-        ],
       )
     );
   }
@@ -55,7 +87,8 @@ class SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign Up")
+        title: Text("Sign Up"),
+        backgroundColor: projectSettings.mainColor
       ),
       body: this.buildForm(context)
     );

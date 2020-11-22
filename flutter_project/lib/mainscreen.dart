@@ -2,7 +2,7 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'signup.dart';
+import 'signup/signup.dart';
 
 class MainPage extends StatelessWidget {
 

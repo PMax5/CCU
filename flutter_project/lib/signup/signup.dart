@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'settings.dart';
+import '../settings.dart';
+import 'type.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -65,13 +66,21 @@ class SignUpState extends State<SignUp> {
                         width: projectSettings.textInputWidth,
                         height: projectSettings.textInputHeight,
                         child: ElevatedButton(
-                            child: Text("NEXT"),
+                            child: Text(
+                                "NEXT",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold
+                                )
+                            ),
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                             ),
                             onPressed: () {
                               if(signUpFormKey.currentState.validate()) {
-                                //TODO: Move to the next stage
+                                Navigator.push(
+                                  context,
+                                    MaterialPageRoute(builder: (context) => SignUpType())
+                                );
                               }
                             }
                         )

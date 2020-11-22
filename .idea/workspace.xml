@@ -20,8 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb23d01c-afdc-4a5c-b080-b268185b13f3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/flutter_project/lib/settings.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flutter_project/lib/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_project/lib/signup.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flutter_project/lib/signup/type.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_project/lib/mainscreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_project/lib/mainscreen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_project/lib/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_project/lib/signup/signup.dart" afterDir="false" />
     </list>
     <list id="b0cd6bc1-8bf0-4fdf-97e7-a4253f237d7c" name="Revert &quot;Added SignUp simple form (WIP).&quot;" comment="Revert &quot;Added SignUp simple form (WIP).&quot;&#10;&#10;This reverts commit f5b939e8" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,7 +52,6 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
-    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
@@ -58,6 +59,11 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\pedro\Repos\CCU\flutter_project\lib\signup" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="FlutterRunConfigurationType" factoryName="Flutter">

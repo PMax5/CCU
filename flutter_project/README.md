@@ -1,9 +1,9 @@
 # CCU
 CCU Project (MEIC-A).
 
-#LiveEvent App
+# LiveEvent App
 
-###Authors:
+### Authors:
 
 - Ana Sofia
 - Beatriz Feliciano

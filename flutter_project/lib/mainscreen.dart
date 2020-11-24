@@ -2,6 +2,7 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/authentication/login.dart';
 import 'authentication/signup.dart';
 import 'settings.dart';
 
@@ -40,7 +41,10 @@ class MainPage extends StatelessWidget {
                       )
                   ),
                   onPressed: () {
-
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login())
+                    );
                   },
                 ),
               )

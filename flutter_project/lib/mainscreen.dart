@@ -18,8 +18,8 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: <Widget> [
-          Image.asset('assets/images/rockw.png', width: double.infinity, height: double.infinity,fit: BoxFit.cover,),
-          Center(child: Image.asset('assets/images/logo.png', fit: BoxFit.cover),),
+          Image.asset('assets/images/rockw.png', width: double.infinity, height: double.infinity,fit: BoxFit.cover),
+          Center(child: projectSettings.logo),
           Positioned(
             left: marginDistance,
             top: 400,
@@ -86,24 +86,3 @@ class MainPage extends StatelessWidget {
     );
   }
 }
-
-
-
-
-/*
- RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(5.0),
-        ),
-        child: Text('Login'),
-        onPressed: () {},
-      ),
-      RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(5.0),
-        ),
-        child: Text( "Sign In"),
-        onPressed: () {},
-      ),
-
-*/

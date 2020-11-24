@@ -63,7 +63,7 @@ class MainPage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(5.0),
                   ),
-                  color: Colors.pink[800],
+                  color: projectSettings.mainColor,
                   child: Text(
                       'SIGN UP',
                       style: TextStyle(

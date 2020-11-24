@@ -3,14 +3,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/authentication/login.dart';
+import 'package:flutter_complete_guide/payment/paymentOptions.dart';
 import 'authentication/signup.dart';
 import 'settings.dart';
 
 class MainPage extends StatelessWidget {
 
   Settings projectSettings = new Settings();
-  double buttonWidth = 150;
-  double buttonHeight = 52;
   double marginDistance = 40;
 
   @override
@@ -27,11 +26,15 @@ class MainPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 25),
               child: Container(
-                width: buttonWidth,
-                height: buttonHeight,
+                width: projectSettings.smallButtonWidth,
+                height: projectSettings.smallButtonHeight,
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(5.0),
+                      borderRadius: new BorderRadius.circular(5.0),
+                      side: BorderSide(
+                          color: Colors.black,
+                          width: 2
+                      )
                   ),
                   child: Text(
                       'LOG IN',
@@ -57,8 +60,8 @@ class MainPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 25),
               child: Container(
-                width: buttonWidth,
-                height: buttonHeight,
+                width: projectSettings.smallButtonWidth,
+                height: projectSettings.smallButtonHeight,
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(5.0),

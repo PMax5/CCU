@@ -20,6 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb23d01c-afdc-4a5c-b080-b268185b13f3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/flutter_project/assets/images/atm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flutter_project/assets/images/mbway.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flutter_project/assets/images/progress_0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flutter_project/assets/images/progress_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flutter_project/assets/images/progress_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flutter_project/assets/images/progress_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flutter_project/lib/payment/paymentOptions.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/flutter_project/lib/mainscreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_project/lib/mainscreen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/flutter_project/lib/settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_project/lib/settings.dart" afterDir="false" />
@@ -47,6 +54,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
@@ -121,22 +129,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="811" y="421" key="GitRewordDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606001434343" />
-    <state width="1877" height="278" key="GridCell.Tab.0.bottom" timestamp="1606237704601">
+    <state width="1877" height="278" key="GridCell.Tab.0.bottom" timestamp="1606243836560">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="278" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606237704601" />
-    <state width="1877" height="278" key="GridCell.Tab.0.center" timestamp="1606237704601">
+    <state width="1877" height="278" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606243836560" />
+    <state width="1877" height="278" key="GridCell.Tab.0.center" timestamp="1606243836560">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="278" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606237704601" />
-    <state width="1877" height="278" key="GridCell.Tab.0.left" timestamp="1606237704601">
+    <state width="1877" height="278" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606243836560" />
+    <state width="1877" height="278" key="GridCell.Tab.0.left" timestamp="1606243836560">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="278" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606237704601" />
-    <state width="1877" height="278" key="GridCell.Tab.0.right" timestamp="1606237704601">
+    <state width="1877" height="278" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606243836560" />
+    <state width="1877" height="278" key="GridCell.Tab.0.right" timestamp="1606243836560">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="278" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606237704601" />
+    <state width="1877" height="278" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606243836560" />
     <state x="540" y="263" key="IDE.errors.dialog" timestamp="1606073609637">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

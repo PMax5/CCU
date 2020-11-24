@@ -2,7 +2,7 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'signup/signup.dart';
+import 'authentication/signup.dart';
 import 'settings.dart';
 
 class MainPage extends StatelessWidget {
@@ -39,7 +39,9 @@ class MainPage extends StatelessWidget {
                           color: Colors.black
                       )
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+
+                  },
                 ),
               )
             )

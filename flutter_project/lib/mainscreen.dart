@@ -3,8 +3,14 @@
 
 import 'package:flutter/material.dart';
 import 'signup/signup.dart';
+import 'settings.dart';
 
 class MainPage extends StatelessWidget {
+
+  Settings projectSettings = new Settings();
+  double buttonWidth = 150;
+  double buttonHeight = 52;
+  double marginDistance = 40;
 
   @override
   Widget build(BuildContext context) {
@@ -14,34 +20,60 @@ class MainPage extends StatelessWidget {
           Image.asset('assets/images/rockw.png', width: double.infinity, height: double.infinity,fit: BoxFit.cover,),
           Center(child: Image.asset('assets/images/logo.png', fit: BoxFit.cover),),
           Positioned(
-            left: 100,
+            left: marginDistance,
             top: 400,
             child: 
-            RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(5.0),
-              ),
-            child: Text('Log in'),
-            onPressed: () {},
-            ),
+            Padding(
+              padding: EdgeInsets.only(top: 25),
+              child: Container(
+                width: buttonWidth,
+                height: buttonHeight,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(5.0),
+                  ),
+                  child: Text(
+                      'LOG IN',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black
+                      )
+                  ),
+                  onPressed: () {},
+                ),
+              )
+            )
           ),
           Positioned(
-            right: 100,
+            right: marginDistance,
             top: 400,
             child: 
-            RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(5.0),
-              ),
-            color: Colors.pink[800],
-            child: Text('Sign Up'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SignUp())
-              );
-            },
-            ),
+            Padding(
+              padding: EdgeInsets.only(top: 25),
+              child: Container(
+                width: buttonWidth,
+                height: buttonHeight,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(5.0),
+                  ),
+                  color: Colors.pink[800],
+                  child: Text(
+                      'SIGN UP',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                      )
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUp())
+                    );
+                  },
+                ),
+              )
+            )
           ),
         ],
       ),

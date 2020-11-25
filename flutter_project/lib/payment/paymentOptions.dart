@@ -33,7 +33,10 @@ class PaymentOptionsState extends State<PaymentOptions> {
                 fontSize: 22
             ),
           ),
-          trailing: Image.asset(assetPath, fit: BoxFit.cover),
+          trailing: Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: Image.asset(assetPath, fit: BoxFit.cover)
+          ),
           leading: Transform.scale(
               scale: 1.5,
               child: Radio(

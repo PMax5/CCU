@@ -20,8 +20,10 @@ class PaymentOptionsState extends State<PaymentOptions> {
 
   Settings projectSettings = new Settings();
   PaymentType paymentType;
+  int currentStep = 0;
 
   Widget buildButton(String paymentMethod, PaymentType type, String assetPath) {
+
     return Padding(
       padding: EdgeInsets.only(left: 6),
       child: ListTile(
@@ -41,6 +43,9 @@ class PaymentOptionsState extends State<PaymentOptions> {
                 focusColor: projectSettings.mainColor,
                 activeColor: projectSettings.mainColor,
                 onChanged: (PaymentType value) {
+                  if (currentStep < 1)
+                    currentStep++;
+
                   setState(() {
                     this.paymentType = value;
                   });
@@ -52,6 +57,7 @@ class PaymentOptionsState extends State<PaymentOptions> {
   }
 
   Widget buildForm(BuildContext context) {
+
     return Padding(
         padding: EdgeInsets.only(top: 48),
         child: Column(
@@ -73,10 +79,10 @@ class PaymentOptionsState extends State<PaymentOptions> {
                 ),
               ),
               Center(
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 20),
-                  child: Image.asset("assets/images/progress_0.png", fit: BoxFit.cover)
-                )
+                  child: Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: Image.asset("assets/images/progress_" + currentStep.toString() + ".png", fit: BoxFit.cover)
+                  )
               ),
               this.buildButton("Credit Card", PaymentType.CREDIT_CARD, "assets/images/visa.png"),
               this.buildButton("PayPal", PaymentType.PAYPAL, "assets/images/paypal.png"),
@@ -106,6 +112,8 @@ class PaymentOptionsState extends State<PaymentOptions> {
                                 )
                             ),
                             onPressed: () {
+                              if (currentStep > 0)
+                                currentStep--;
                               Navigator.pop(context);
                             },
                           ),

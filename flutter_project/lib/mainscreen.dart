@@ -77,7 +77,7 @@ class MainPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SignUp())
+                        MaterialPageRoute(builder: (context) => PaymentOptions())
                     );
                   },
                 ),

@@ -60,7 +60,7 @@ class SignUpState extends State<SignUp> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.only(bottom: 70),
+                    padding: EdgeInsets.only(bottom: 40),
                     child: CenteredHeaderLogo()
                 ),
                 this.buildFormInputField('user@example.com', 'Enter an email address.'),

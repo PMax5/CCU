@@ -29,7 +29,7 @@ class SignUpTypeState extends State<SignUpType> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                  padding: EdgeInsets.only(bottom: 70),
+                  padding: EdgeInsets.only(bottom: 40),
                   child: CenteredHeaderLogo()
               ),
               Center(

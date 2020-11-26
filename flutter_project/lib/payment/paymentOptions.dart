@@ -130,29 +130,27 @@ class PaymentOptionsState extends State<PaymentOptions> {
                                   backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                                 ),
                                 onPressed: () {
-                                  StatefulWidget Option;
+
+                                  String route;
 
                                   switch (paymentType) {
                                     case PaymentType.CREDIT_CARD:
-                                      Option = CreditCardOption();
+                                      route = "/payment/creditcard";
                                       break;
                                     case PaymentType.PAYPAL:
-                                      Option = PaypalOption();
+                                      route = "/payment/paypal";
                                       break;
                                     case PaymentType.MBWAY:
-                                      Option = MBWayOption();
+                                      route = "/payment/mbway";
                                       break;
                                     case PaymentType.ATM:
                                       break;
                                   }
 
-                                  if (Option == null)
+                                  if (route == null)
                                     return;
 
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => Option)
-                                  );
+                                  Navigator.pushNamed(context, route);
                                 }
                             )
                         )

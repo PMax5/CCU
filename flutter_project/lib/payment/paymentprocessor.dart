@@ -76,7 +76,7 @@ class PaymentProcessorState extends State<PaymentProcessor> {
                         )
                     ),
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.popUntil(context, ModalRoute.withName("/"));
                     },
                   ),
                 )
@@ -97,7 +97,7 @@ class PaymentProcessorState extends State<PaymentProcessor> {
                         backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                       ),
                       onPressed: () {
-                        //TODO: Retry Payment.
+                        Navigator.popUntil(context, ModalRoute.withName("/payment"));
                       }
                   )
               )
@@ -120,7 +120,7 @@ class PaymentProcessorState extends State<PaymentProcessor> {
                         backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                       ),
                       onPressed: () {
-                        //TODO: Change to payment status page.
+                        Navigator.popUntil(context, ModalRoute.withName("/"));
                       }
                   )
               )

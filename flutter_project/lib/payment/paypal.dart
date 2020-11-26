@@ -85,10 +85,7 @@ class PaypalState extends State<PaypalOption> {
                                       backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                                     ),
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => PaymentProcessor())
-                                      );
+                                      Navigator.pushNamed(context, "/payment/process");
                                     }
                                 )
                             )

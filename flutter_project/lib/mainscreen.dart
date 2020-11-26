@@ -44,10 +44,7 @@ class MainPage extends StatelessWidget {
                       )
                   ),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login())
-                    );
+                    Navigator.pushNamed(context, "/login");
                   },
                 ),
               )

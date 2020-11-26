@@ -94,7 +94,20 @@ class CreditCardState extends State<CreditCardOption> {
                                         backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                                       ),
                                       onPressed: () {
-                                        //TODO: Change to payment status page.
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => ConfirmationDialog(
+                                                "Payment Confirmation",
+                                                "Do you wish to continue with this purchase?",
+                                                    () {
+                                                  Navigator.of(context).pop();
+                                                  Navigator.pushNamed(context, "/payment/process");
+                                                },
+                                                    () {
+                                                  Navigator.of(context).pop();
+                                                }
+                                            )
+                                        );
                                       }
                                   )
                               )

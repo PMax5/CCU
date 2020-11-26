@@ -144,6 +144,18 @@ class PaymentOptionsState extends State<PaymentOptions> {
                                       break;
                                     case PaymentType.ATM:
                                       break;
+                                    default:
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => TipDialog(
+                                              "Notice",
+                                              "Please select one payment option before proceeding.",
+                                                  () {
+                                                Navigator.of(context).pop();
+                                              }
+                                          )
+                                      );
+                                      break;
                                   }
 
                                   if (route == null)

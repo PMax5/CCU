@@ -72,7 +72,7 @@ class MainPage extends StatelessWidget {
                       )
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, "/signup");
+                    Navigator.pushNamed(context, "/payment");
                   },
                 ),
               )

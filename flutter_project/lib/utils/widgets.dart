@@ -62,3 +62,62 @@ Widget MainMenu() {
       )
   );
 }
+
+Widget ConfirmationDialog(String title, String content, Function onConfirm, Function onBack) {
+  return AlertDialog(
+    title: Text(title),
+    content: Text(content),
+    actions: <Widget>[
+      RaisedButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(5.0),
+            side: BorderSide(
+                color: Colors.black,
+                width: 2
+            )
+        ),
+        child: Text(
+            'BACK',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+            )
+        ),
+        onPressed: onBack
+      ),
+      ElevatedButton(
+          child: Text(
+              "CONFIRM",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold
+              )
+          ),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
+          ),
+          onPressed: onConfirm
+      )
+    ]
+  );
+}
+
+Widget TipDialog(String title, String description, Function onOK) {
+  return AlertDialog(
+    title: Text(title),
+    content: Text(description),
+      actions: <Widget>[
+        ElevatedButton(
+            child: Text(
+                "OK",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold
+                )
+            ),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
+            ),
+            onPressed: onOK
+        )
+      ]
+  );
+}

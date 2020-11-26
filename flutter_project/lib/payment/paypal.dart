@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_complete_guide/payment/paymentprocessor.dart';
 import '../settings.dart';
 
 class PaypalOption extends StatefulWidget {
@@ -84,7 +85,10 @@ class PaypalState extends State<PaypalOption> {
                                       backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                                     ),
                                     onPressed: () {
-                                      //TODO: Change to payment status page.
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => PaymentProcessor())
+                                      );
                                     }
                                 )
                             )

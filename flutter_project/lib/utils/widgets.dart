@@ -47,3 +47,18 @@ Widget FormInputField(String hintText, String invalidInputMessage, int maxCharac
       )
   );
 }
+
+Widget MainMenu() {
+  return DefaultTabController(
+      length: 4,
+      child: TabBar(
+        tabs: [
+          Tab(icon: Icon(Icons.library_music)),
+          Tab(icon: Icon(Icons.forum)),
+          Tab(icon: Icon(Icons.notifications)),
+          Tab(icon: Icon(Icons.menu))
+        ],
+        //TODO: Finish this. This needs to be a Scaffold.
+      )
+  );
+}

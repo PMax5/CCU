@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/payment/mbway.dart';
+import 'package:flutter_complete_guide/payment/paypal.dart';
 import '../settings.dart';
+import 'creditcard.dart';
 
 enum PaymentType {
   CREDIT_CARD,
@@ -70,23 +73,12 @@ class PaymentOptionsState extends State<PaymentOptions> {
                 child: projectSettings.logo
               ),
               Center(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 30),
-                  child: Text(
-                      "Payment Options",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 25
-                      )
-                  ),
-                ),
-              ),
-              Center(
                   child: Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: Image.asset("assets/images/progress_" + currentStep.toString() + ".png", fit: BoxFit.cover)
                   )
               ),
+              projectSettings.headerPayment("Payment Options", null),
               this.buildButton("Credit Card", PaymentType.CREDIT_CARD, "assets/images/visa.png"),
               this.buildButton("PayPal", PaymentType.PAYPAL, "assets/images/paypal.png"),
               this.buildButton("MBWay", PaymentType.MBWAY, "assets/images/mbway.png"),
@@ -123,7 +115,7 @@ class PaymentOptionsState extends State<PaymentOptions> {
                         )
                     ),
                     Padding(
-                        padding: EdgeInsets.only(top: 25, left: 30),
+                        padding: EdgeInsets.only(top: 25, left: 35),
                         child: Container(
                             width: projectSettings.smallButtonWidth,
                             height: projectSettings.smallButtonHeight,
@@ -138,7 +130,29 @@ class PaymentOptionsState extends State<PaymentOptions> {
                                   backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                                 ),
                                 onPressed: () {
-                                  //TODO: Move to the next stage (Main user page).
+                                  StatefulWidget Option;
+
+                                  switch (paymentType) {
+                                    case PaymentType.CREDIT_CARD:
+                                      Option = CreditCardOption();
+                                      break;
+                                    case PaymentType.PAYPAL:
+                                      Option = PaypalOption();
+                                      break;
+                                    case PaymentType.MBWAY:
+                                      Option = MBWayOption();
+                                      break;
+                                    case PaymentType.ATM:
+                                      break;
+                                  }
+
+                                  if (Option == null)
+                                    return;
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Option)
+                                  );
                                 }
                             )
                         )

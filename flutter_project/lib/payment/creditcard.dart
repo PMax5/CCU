@@ -65,8 +65,8 @@ class CreditCardState extends State<CreditCardOption> {
                   Center(
                       child: projectSettings.logo
                   ),
-                  projectSettings.headerPayment("Credit Card", "assets/images/visa.png"),
                   projectSettings.createStep(2),
+                  projectSettings.headerPayment("Credit Card", "assets/images/visa.png"),
                   this.buildFormInputField('Card Number', 'Enter a credit card number.', 16),
                   Center(
                     child: Container(

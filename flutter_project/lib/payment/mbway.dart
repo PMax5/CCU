@@ -65,8 +65,8 @@ class MBWayState extends State<MBWayOption> {
                   Center(
                       child: projectSettings.logo
                   ),
-                  projectSettings.headerPayment("MBWay", "assets/images/mbway.png"),
                   projectSettings.createStep(2),
+                  projectSettings.headerPayment("MBWay", "assets/images/mbway.png"),
                   this.buildFormInputField('Phone Number', 'Enter a phone number.', 9),
                   Center(
                       child: Row(

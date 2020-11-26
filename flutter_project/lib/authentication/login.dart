@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
 import 'type.dart';
 
@@ -58,6 +59,10 @@ class LoginState extends State<Login> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 70),
+                    child: CenteredHeaderLogo()
+                  ),
                   this.buildFormInputField('user@example.com', 'Enter an email address.'),
                   this.buildFormInputField('Password', 'Enter a password.'),
                   Center(

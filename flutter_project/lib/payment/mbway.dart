@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
 
 class MBWayOption extends StatefulWidget {
@@ -13,45 +14,7 @@ class MBWayOption extends StatefulWidget {
 class MBWayState extends State<MBWayOption> {
 
   Settings projectSettings = new Settings();
-
-  Widget buildFormInputField(String hintText, String invalidInputMessage, int maxCharacters) {
-
-    OutlineInputBorder inputBorder(Color color) {
-      return OutlineInputBorder(
-          borderSide: BorderSide(color: color, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(6.0))
-      );
-    }
-
-    return Center(
-        child: Padding(
-            padding: EdgeInsets.only(bottom: 14),
-            child: Container(
-                width: projectSettings.textInputWidth + 20,
-                height: projectSettings.textInputHeight + 25,
-                child: TextFormField(
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(maxCharacters)
-                    ],
-                    decoration: InputDecoration(
-                        enabledBorder: inputBorder(Colors.black),
-                        focusedBorder: inputBorder(Colors.black),
-                        errorBorder: inputBorder(Colors.red),
-                        focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: hintText
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty)
-                        return invalidInputMessage;
-                      return null;
-                    }
-                )
-            )
-        )
-    );
-  }
-
+  
   Widget buildForm(BuildContext context) {
     final signUpFormKey = GlobalKey<FormState>();
 
@@ -62,12 +25,10 @@ class MBWayState extends State<MBWayOption> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Center(
-                      child: projectSettings.logo
-                  ),
+                  CenteredHeaderLogo(),
                   projectSettings.createStep(2),
                   projectSettings.headerPayment("MBWay", "assets/images/mbway.png"),
-                  this.buildFormInputField('Phone Number', 'Enter a phone number.', 9),
+                  FormInputField('Phone Number', 'Enter a phone number.', 9),
                   Center(
                       child: Row(
                         children: [

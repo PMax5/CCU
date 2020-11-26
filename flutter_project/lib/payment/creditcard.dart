@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
 
 class CreditCardOption extends StatefulWidget {
@@ -14,44 +15,6 @@ class CreditCardState extends State<CreditCardOption> {
 
   Settings projectSettings = new Settings();
 
-  Widget buildFormInputField(String hintText, String invalidInputMessage, int maxCharacters) {
-
-    OutlineInputBorder inputBorder(Color color) {
-      return OutlineInputBorder(
-          borderSide: BorderSide(color: color, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(6.0))
-      );
-    }
-
-    return Center(
-        child: Padding(
-            padding: EdgeInsets.only(bottom: 14),
-            child: Container(
-                width: projectSettings.textInputWidth + 20,
-                height: projectSettings.textInputHeight + 25,
-                child: TextFormField(
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(maxCharacters)
-                    ],
-                    decoration: InputDecoration(
-                        enabledBorder: inputBorder(Colors.black),
-                        focusedBorder: inputBorder(Colors.black),
-                        errorBorder: inputBorder(Colors.red),
-                        focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: hintText
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty)
-                        return invalidInputMessage;
-                      return null;
-                    }
-                )
-            )
-        )
-    );
-  }
-
   Widget buildForm(BuildContext context) {
     final signUpFormKey = GlobalKey<FormState>();
 
@@ -62,12 +25,10 @@ class CreditCardState extends State<CreditCardOption> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Center(
-                      child: projectSettings.logo
-                  ),
+                  CenteredHeaderLogo(),
                   projectSettings.createStep(2),
                   projectSettings.headerPayment("Credit Card", "assets/images/visa.png"),
-                  this.buildFormInputField('Card Number', 'Enter a credit card number.', 16),
+                  FormInputField('Card Number', 'Enter a credit card number.', 16),
                   Center(
                     child: Container(
                         width: projectSettings.textInputWidth + 20,
@@ -75,13 +36,13 @@ class CreditCardState extends State<CreditCardOption> {
                             children: <Widget>[
                               Container(
                                   width: projectSettings.smallButtonWidth + 20,
-                                  child: this.buildFormInputField("MM/AA", "Enter a month/year value.", 4)
+                                  child: FormInputField("MM/AA", "Enter a month/year value.", 4)
                               ),
                               Padding(
                                 padding: EdgeInsets.only(left: 20),
                                 child: Container(
                                     width: projectSettings.smallButtonWidth,
-                                    child: this.buildFormInputField("CVV", "Enter your card's CVV digits.", 3)
+                                    child: FormInputField("CVV", "Enter your card's CVV digits.", 3)
                                 )
                               )
                             ]

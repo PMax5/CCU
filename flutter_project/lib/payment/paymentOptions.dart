@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/payment/mbway.dart';
 import 'package:flutter_complete_guide/payment/paypal.dart';
+import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
 import 'creditcard.dart';
 
@@ -69,9 +70,7 @@ class PaymentOptionsState extends State<PaymentOptions> {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Center(
-                child: projectSettings.logo
-              ),
+             CenteredHeaderLogo(),
               Center(
                   child: Padding(
                       padding: EdgeInsets.only(bottom: 20),

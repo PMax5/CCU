@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
 
 class PaymentProcessor extends StatefulWidget {
@@ -19,9 +20,7 @@ class PaymentProcessorState extends State<PaymentProcessor> {
     String message = "Payment was processed succesfully";
 
     List<Widget> widgets = [
-      Center(
-          child: projectSettings.logo
-      )
+      CenteredHeaderLogo()
     ];
 
     if (!isValid) {

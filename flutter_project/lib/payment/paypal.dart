@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/payment/paymentprocessor.dart';
+import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
 
 class PaypalOption extends StatefulWidget {
@@ -25,9 +26,7 @@ class PaypalState extends State<PaypalOption> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Center(
-                      child: projectSettings.logo
-                  ),
+                  CenteredHeaderLogo(),
                   projectSettings.createStep(2),
                   projectSettings.headerPayment("PayPal", null),
                   Center(

@@ -48,17 +48,49 @@ Widget FormInputField(String hintText, String invalidInputMessage, int maxCharac
   );
 }
 
-Widget MainMenu() {
+Widget MainMenu(BuildContext context) {
   return DefaultTabController(
       length: 4,
-      child: TabBar(
-        tabs: [
-          Tab(icon: Icon(Icons.library_music)),
-          Tab(icon: Icon(Icons.forum)),
-          Tab(icon: Icon(Icons.notifications)),
-          Tab(icon: Icon(Icons.menu))
-        ],
-        //TODO: Finish this. This needs to be a Scaffold.
+      child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.grey
+                      ),
+                      top: BorderSide(
+                          color: Colors.grey
+                      )
+                    ),
+                  ),
+                  child: TabBar(
+                      unselectedLabelColor: Color.fromRGBO(100, 100, 100, 1),
+                      labelColor: projectSettings.mainColor,
+                      indicatorColor: projectSettings.mainColor,
+                      tabs: [
+                        Tab(icon: Icon(Icons.library_music)),
+                        Tab(icon: Icon(Icons.forum)),
+                        Tab(icon: Icon(Icons.notifications)),
+                        Tab(icon: Icon(Icons.menu))
+                      ]
+                  )
+              )
+            ),
+            Container(
+                height: MediaQuery.of(context).size.height,
+                child: TabBarView(
+                    children: [
+                      Text("Hello"),
+                      Text("This"),
+                      Text("is a"),
+                      Text("Test")
+                    ]
+                )
+            )
+          ]
       )
   );
 }

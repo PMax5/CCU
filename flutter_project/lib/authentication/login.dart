@@ -82,6 +82,7 @@ class LoginState extends State<Login> {
                               onPressed: () {
                                 if(signUpFormKey.currentState.validate()) {
                                   //TODO: Implement login.
+                                  Navigator.pushNamed(context, "/user/main");
                                 }
                               }
                           )

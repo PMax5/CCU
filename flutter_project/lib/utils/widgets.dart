@@ -2,8 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/settings.dart';
+import 'package:flutter/foundation.dart';
 
 Settings projectSettings = new Settings();
+
+class Concert {
+
+}
 
 Widget CenteredHeaderLogo() {
   return Center(
@@ -57,14 +62,15 @@ Widget MainMenu(BuildContext context) {
               padding: EdgeInsets.only(top: 20),
               child: Container(
                   decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.grey
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 5,
+                        offset: Offset(0, 5), // changes position of shadow
                       ),
-                      top: BorderSide(
-                          color: Colors.grey
-                      )
-                    ),
+                    ],
                   ),
                   child: TabBar(
                       unselectedLabelColor: Color.fromRGBO(100, 100, 100, 1),
@@ -83,15 +89,69 @@ Widget MainMenu(BuildContext context) {
                 height: MediaQuery.of(context).size.height,
                 child: TabBarView(
                     children: [
-                      Text("Hello"),
+                      ListView(
+                        children: <Widget>[
+                          InkWell(
+                            child: Card(
+                              semanticContainer: true,
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              margin: EdgeInsets.all(10),
+                              child: Column(
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/images/james.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                  ListTile(
+                                    title: Text("James Smith's Concert"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onTap: null,
+                          ),
+                          Card(
+                            semanticContainer: true,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            margin: EdgeInsets.all(10),
+                            child: Column(
+                              children: <Widget>[
+                                Image.asset(
+                              'assets/images/concert2.png', height: 200,
+                              fit: BoxFit.cover,
+                              ),
+                                ListTile(
+                                  title: Text("Concert 2"),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Card(
+                            semanticContainer: true,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            margin: EdgeInsets.all(10),
+                            child: Column(
+                              children: <Widget>[
+                                Image.asset(
+                                  'assets/images/concert3.jpg', height: 260,
+                                  fit: BoxFit.cover,
+                                ),
+                                ListTile(
+                                  title: Text("Concert 3"),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                       Text("This"),
                       Text("is a"),
                       Text("Test")
                     ]
-                )
-            )
-          ]
-      )
+                ),
+            ),
+          ],
+      ),
   );
 }
 
@@ -153,3 +213,5 @@ Widget TipDialog(String title, String description, Function onOK) {
       ]
   );
 }
+
+

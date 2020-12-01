@@ -52,94 +52,108 @@ Widget FormInputField(String hintText, String invalidInputMessage, int maxCharac
       )
   );
 }
-
 Widget MainMenu(BuildContext context) {
   return DefaultTabController(
-      length: 4,
-      child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 20),
-              child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 5,
-                        offset: Offset(0, 5), // changes position of shadow
+    length: 4,
+    child: Column(
+      children: <Widget>[
+        Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 5,
+                      offset: Offset(0, 5), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: TabBar(
+                    unselectedLabelColor: Color.fromRGBO(100, 100, 100, 1),
+                    labelColor: projectSettings.mainColor,
+                    indicatorColor: projectSettings.mainColor,
+                    tabs: [
+                      Tab(icon: Icon(Icons.library_music)),
+                      Tab(icon: Icon(Icons.forum)),
+                      Tab(icon: Icon(Icons.notifications)),
+                      Tab(icon: Icon(Icons.menu))
+                    ]
+                )
+            )
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height - 150,
+          child: TabBarView(
+              children: [
+                ListView(
+                  children: [
+                    Card(
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 5,
+                      child: Column(
+                        children: [
+                          Image.asset('assets/images/james.png'),
+                          ListTile(
+                            leading: Image.asset('assets/images/mini_james.png'),
+                            title: const Text("James Smith's Concert"),
+                            subtitle: Text(
+                              'Artist: James Smith',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: TabBar(
-                      unselectedLabelColor: Color.fromRGBO(100, 100, 100, 1),
-                      labelColor: projectSettings.mainColor,
-                      indicatorColor: projectSettings.mainColor,
-                      tabs: [
-                        Tab(icon: Icon(Icons.library_music)),
-                        Tab(icon: Icon(Icons.forum)),
-                        Tab(icon: Icon(Icons.notifications)),
-                        Tab(icon: Icon(Icons.menu))
-                      ]
-                  )
-              )
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: TabBarView(
-                      children: [
-                        ListView(
-                          children: [
-                            Card(
-                              clipBehavior: Clip.antiAlias,
-                              elevation: 5,
-                              child: Column(
-                                children: [
-                                  Image.asset('assets/images/james.png'),
-                                  ListTile(
-                                    leading: Image.asset('assets/images/mini_james.png'),
-                                    title: const Text("James Smith's Concert"),
-                                    subtitle: Text(
-                                      'Artist: James Smith',
-                                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                    ),
+                    Card(
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 5,
+                      child: Column(
+                        children: [
+                          Image.asset('assets/images/concert2.png'),
+                          ListTile(
+                            leading: Image.asset('assets/images/mini_james.png'),
+                            title: const Text("Concert 2"),
+                            subtitle: Text(
+                              'Artist: ...',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
-                            Card(
-                              clipBehavior: Clip.antiAlias,
-                              elevation: 5,
-                              child: Column(
-                                children: [
-                                  Image.asset('assets/images/concert2.png'),
-                                  ListTile(
-                                    leading: Image.asset('assets/images/mini_james.png'),
-                                    title: const Text("Concert 2"),
-                                    subtitle: Text(
-                                      'Artist: ...',
-                                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Card(
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 5,
+                      child: Column(
+                        children: [
+                          Image.asset('assets/images/concert2.png'),
+                          ListTile(
+                            leading: Image.asset('assets/images/mini_james.png'),
+                            title: const Text("Concert 2"),
+                            subtitle: Text(
+                              'Artist: ...',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
-                          ],
-                        ),
-                        Text("This"),
-                        Text("is a"),
-                        Text("Test")
-                      ]
-                  ),
-              ),  
-            ),  
-          ],
-      ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Text("This"),
+                Text("is a"),
+                Text("Test")
+              ]
+          ),
+        ),
+      ],
+    ),
   );
 }
+
 
 Widget ConfirmationDialog(String title, String content, Function onConfirm, Function onBack) {
   return AlertDialog(

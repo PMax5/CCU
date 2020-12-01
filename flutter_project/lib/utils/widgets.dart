@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/settings.dart';
-import 'package:flutter/foundation.dart';
+
 
 Settings projectSettings = new Settings();
 
@@ -85,71 +85,57 @@ Widget MainMenu(BuildContext context) {
                   )
               )
             ),
-            Container(
-                height: MediaQuery.of(context).size.height,
-                child: TabBarView(
-                    children: [
-                      ListView(
-                        children: <Widget>[
-                          InkWell(
-                            child: Card(
-                              semanticContainer: true,
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              margin: EdgeInsets.all(10),
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: TabBarView(
+                      children: [
+                        ListView(
+                          children: [
+                            Card(
+                              clipBehavior: Clip.antiAlias,
+                              elevation: 5,
                               child: Column(
-                                children: <Widget>[
-                                  Image.asset(
-                                    'assets/images/james.png',
-                                    fit: BoxFit.cover,
-                                  ),
+                                children: [
+                                  Image.asset('assets/images/james.png'),
                                   ListTile(
-                                    title: Text("James Smith's Concert"),
+                                    leading: Image.asset('assets/images/mini_james.png'),
+                                    title: const Text("James Smith's Concert"),
+                                    subtitle: Text(
+                                      'Artist: James Smith',
+                                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                            onTap: null,
-                          ),
-                          Card(
-                            semanticContainer: true,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            margin: EdgeInsets.all(10),
-                            child: Column(
-                              children: <Widget>[
-                                Image.asset(
-                              'assets/images/concert2.png', height: 200,
-                              fit: BoxFit.cover,
+                            Card(
+                              clipBehavior: Clip.antiAlias,
+                              elevation: 5,
+                              child: Column(
+                                children: [
+                                  Image.asset('assets/images/concert2.png'),
+                                  ListTile(
+                                    leading: Image.asset('assets/images/mini_james.png'),
+                                    title: const Text("Concert 2"),
+                                    subtitle: Text(
+                                      'Artist: ...',
+                                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                    ),
+                                  ),
+                                ],
                               ),
-                                ListTile(
-                                  title: Text("Concert 2"),
-                                ),
-                              ],
                             ),
-                          ),
-                          Card(
-                            semanticContainer: true,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            margin: EdgeInsets.all(10),
-                            child: Column(
-                              children: <Widget>[
-                                Image.asset(
-                                  'assets/images/concert3.jpg', height: 260,
-                                  fit: BoxFit.cover,
-                                ),
-                                ListTile(
-                                  title: Text("Concert 3"),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text("This"),
-                      Text("is a"),
-                      Text("Test")
-                    ]
-                ),
-            ),
+                          ],
+                        ),
+                        Text("This"),
+                        Text("is a"),
+                        Text("Test")
+                      ]
+                  ),
+              ),  
+            ),  
           ],
       ),
   );

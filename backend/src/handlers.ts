@@ -70,9 +70,13 @@ export class Handlers {
     }
 
     startVoiceCall(req: Request, res: Response) {
-        let result = this.repository.startVoiceCall(req.params.username, Number(req.params.id));
+        let channel = this.repository.startVoiceCall(req.params.username, Number(req.params.id));
 
-        result ? res.sendStatus(200) : res.sendStatus(500);
+        if (channel !== null) {
+            res.json(channel);
+        } else {
+            res.sendStatus(404);
+        }
     }
 
     sendConcertMessage(req: Request, res: Response) {
@@ -96,7 +100,7 @@ export class Handlers {
     purchaseTicket(req: Request, res: Response) {
         let result = this.repository.purchaseTicket(req.params.username, Number(req.params.id));
 
-        result ? res.sendStatus(200) :  res.sendStatus(500);
+        result ? res.sendStatus(200) : res.sendStatus(500);
     }
 
 }

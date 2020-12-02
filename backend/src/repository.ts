@@ -142,11 +142,11 @@ export class Repository {
                 }
 
                 this.voiceChannels.set(username, channel);
-                return true;
+                return channel;
             }
         }
 
-        return false;
+        return null;
     }
 
     endVoiceCall(username: string, id: number) {

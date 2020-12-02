@@ -54,6 +54,10 @@ export class Server {
         this.app.post("/concerts/:id/sendMessage", (req, res) => {
            this.handlers.sendConcertMessage(req, res);
         });
+
+        this.app.get("/concerts/:id/messages", (req, res) => {
+           this.handlers.loadConcertMessages(req, res);
+        });
         
     }
 

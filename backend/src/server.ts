@@ -15,12 +15,16 @@ export class Server {
     }
 
     async start() {
-        this.app.post("/signup", (req, res) => {
+        this.app.post("/user/signup", (req, res) => {
             this.handlers.createUser(req, res);
         });
 
-        this.app.post("/login", (req, res) => {
+        this.app.post("/user/login", (req, res) => {
             this.handlers.loginUser(req, res);
+        });
+
+        this.app.put("/user/:username/update", (req, res) => {
+           this.handlers.updateUser(req, res);
         });
 
         this.app.post("/artist/:username/concerts/new", (req, res) => {

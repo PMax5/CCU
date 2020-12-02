@@ -1,10 +1,11 @@
 import {User} from './models/authentication';
-import {Concert} from "./models/artist";
+import {Channel, Concert} from "./models/artist";
 
 export class Repository {
 
     private users = new Map();
     private concerts = new Map<string, Concert[]>();
+    private channels = new Map<string, Channel>();
 
     createUser(user: User) {
         this.users.set(user.username, user);
@@ -24,7 +25,37 @@ export class Repository {
         concerts!.push(concert);
     }
 
+    updateConcert(username: string, id: number, concert: Concert) {
+        let concerts = this.getArtistConcerts(username);
+        if (concerts !== undefined) {
+            concerts[id] = concert;
+            return true;
+        }
+
+        return false;
+    }
+
     getArtistConcerts(username: string) {
         return this.concerts.get(username);
     }
+
+    startConcert(username: string, id: number) {
+        let concerts = this.getArtistConcerts(username);
+        if (concerts !== undefined) {
+            let concert = concerts[id];
+            concert.started = true;
+
+            let channel = {
+                voice: false,
+                messages: new Array<string[]>(),
+                name: concert.name
+            }
+
+            this.channels.set(username, channel);
+            return true;
+        }
+
+        return false;
+    }
+
 }

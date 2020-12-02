@@ -5,7 +5,8 @@ export interface User {
     password ?: string,
     imagePath ?: string,
     description ?: string,
-    type ?: string
+    type ?: string,
+    concerts ?: Array<any>
 }
 
 export interface Login {

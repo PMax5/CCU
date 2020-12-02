@@ -28,12 +28,18 @@ export class Server {
         });
 
         this.app.put("/artist/:username/concerts/:id/update", (req, res) => {
-            //TODO: Implement this method.
+            this.handlers.updateConcert(req, res);
         });
 
         this.app.get("/artist/:username/concerts", (req, res) => {
             this.handlers.getArtistsConcerts(req, res);
         });
+
+        this.app.post("/artist/:username/concerts/:id/start", (req, res) => {
+            this.handlers.startConcert(req, res);
+        });
+
+
     }
 
 

@@ -29,6 +29,18 @@ export class Handlers {
         res.sendStatus(200);
     }
 
+    updateConcert(req: Request, res: Response) {
+        let result = this.repository.updateConcert(req.params.username, Number(req.params.id), req.body);
+
+        result ? res.sendStatus(200) : res.sendStatus(500);
+    }
+
+    startConcert(req: Request, res: Response) {
+        let result = this.repository.startConcert(req.params.username, Number(req.params.id));
+
+        result ? res.sendStatus(200) : res.sendStatus(500);
+    }
+
     getArtistsConcerts(req: Request, res: Response) {
         let concerts = this.repository.getArtistConcerts(req.params.username);
         if (concerts !== undefined)

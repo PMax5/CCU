@@ -134,12 +134,16 @@ export class Repository {
         return false;
     }
 
-    endVoiceCall(username: string) {
+    endVoiceCall(username: string, id: number) {
+        let concert = this.concerts.get(id);
         let channel = this.voiceChannels.get(username);
 
-        if (channel !== undefined) {
+        if (channel !== undefined && concert !== undefined && concert.status === this.STATUS_ENDED) {
             this.voiceChannels.delete(username);
+            return true;
         }
+
+        return false;
     }
 
     purchaseTicket(username: string, id: number) {

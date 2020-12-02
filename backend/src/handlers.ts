@@ -73,7 +73,9 @@ export class Handlers {
     }
 
     endVoiceCall(req: Request, res: Response) {
+        let result = this.repository.endVoiceCall(req.params.username, Number(req.params.id));
 
+        result ? res.sendStatus(200) : res.sendStatus(500);
     }
 
     purchaseTicket(req: Request, res: Response) {

@@ -47,6 +47,10 @@ export class Server {
            this.handlers.startVoiceCall(req, res);
         });
 
+        this.app.post("/artist/:username/concerts/:id/endVoiceCall", (req, res) => {
+           this.handlers.endVoiceCall(req, res);
+        });
+
         this.app.post("/user/:username/concerts/:id/purchaseTicket", (req, res) => {
            this.handlers.purchaseTicket(req, res);
         });

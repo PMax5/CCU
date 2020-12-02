@@ -24,6 +24,12 @@ export class Handlers {
             loginDetails.password === user.password ? res.sendStatus(200) : res.sendStatus(403);
     }
 
+    updateUser(req: Request, res: Response) {
+        let result = this.repository.updateUser(req.params.username, req.body);
+
+        result ? res.sendStatus(200) : res.sendStatus(500);
+    }
+
     createConcert(req: Request, res: Response) {
         this.repository.createConcert(req.params.username, req.body);
         res.sendStatus(200);

@@ -20,6 +20,17 @@ export class Repository {
         return this.users.get(username);
     }
 
+    updateUser(username: string, userUpdated: User) {
+        let user = this.users.get(username);
+
+        if (user !== undefined) {
+            this.users.set(username, userUpdated);
+            return true;
+        }
+
+        return false;
+    }
+
     createConcert(username: string, concert: Concert) {
         let concertID = this.concerts.size;
 

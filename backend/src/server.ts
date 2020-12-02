@@ -50,6 +50,10 @@ export class Server {
         this.app.post("/user/:username/concerts/:id/purchaseTicket", (req, res) => {
            this.handlers.purchaseTicket(req, res);
         });
+
+        this.app.post("/concerts/:id/sendMessage", (req, res) => {
+           this.handlers.sendConcertMessage(req, res);
+        });
         
     }
 

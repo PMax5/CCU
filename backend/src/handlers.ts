@@ -60,6 +60,22 @@ export class Handlers {
         result ? res.sendStatus(200) : res.sendStatus(500);
     }
 
+    sendConcertMessage(req: Request, res: Response) {
+        let messages = this.repository.sendConcertMessage(Number(req.params.id), req.body);
+
+        res.json(messages);
+    }
+
+    loadConcertMessages(req: Request, res: Response) {
+        let messages = this.repository.getConcertMessages(Number(req.params.id));
+
+        res.json(messages);
+    }
+
+    endVoiceCall(req: Request, res: Response) {
+
+    }
+
     purchaseTicket(req: Request, res: Response) {
         let result = this.repository.purchaseTicket(req.params.username, Number(req.params.id));
 

@@ -23,7 +23,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb23d01c-afdc-4a5c-b080-b268185b13f3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/backend/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/handlers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/handlers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/models/artist.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/models/artist.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/repository.ts" afterDir="false" />
     </list>
     <list id="b0cd6bc1-8bf0-4fdf-97e7-a4253f237d7c" name="Revert &quot;Added SignUp simple form (WIP).&quot;" comment="Revert &quot;Added SignUp simple form (WIP).&quot;&#10;&#10;This reverts commit f5b939e8" />
     <option name="SHOW_DIALOG" value="false" />
@@ -112,10 +114,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="716" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1606784982271" />
-    <state x="123" y="124" width="2315" height="1153" key="AVDManager" timestamp="1606660083828">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="92" y="92" width="1736" height="856" key="AVDManager" timestamp="1606937248356">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1605998158893" />
+    <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1606937248356" />
     <state x="123" y="124" width="2315" height="1153" key="AVDManager/301.1440.1536.832/0.0.2560.1400@0.0.2560.1400" timestamp="1606660083828" />
     <state x="562" y="87" key="CommitChangelistDialog2" timestamp="1606001451366">
       <screen x="0" y="0" width="1920" height="1040" />

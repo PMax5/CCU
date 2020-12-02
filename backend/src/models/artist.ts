@@ -8,15 +8,21 @@ export interface Concert {
     id ?: number,
     participants ?: string[],
     username ?: string,
-    started ?: boolean
+    status ?: number
 }
 
 export interface Channel {
     name ?: string,
-    messages ?: Array<string[]>,
+    messages ?: Array<Message>,
 }
 
 export interface VoiceChannel {
     name ?: string,
-    participants ?: string[]
+    participants ?: string[],
+    concertId ?: number
+}
+
+export interface Message {
+    authorUserName : string,
+    message : string
 }

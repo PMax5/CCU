@@ -1,12 +1,16 @@
 import {User} from './models/authentication';
-import {Channel, Concert, VoiceChannel} from "./models/artist";
+import {Channel, Concert, Message, VoiceChannel} from "./models/artist";
 
 export class Repository {
 
     private users = new Map();
     private concerts = new Map<number, Concert>();
-    private channels = new Map<string, Channel>();
+    private channels = new Map<number, Channel>();
     private voiceChannels = new Map<string, VoiceChannel>();
+
+    private STATUS_PENDING = 0;
+    private STATUS_STARTED = 1;
+    private STATUS_ENDED = 2;
 
     createUser(user: User) {
         this.users.set(user.username, user);
@@ -22,6 +26,7 @@ export class Repository {
         concert.participants = new Array<string>();
         concert.id = concertID;
         concert.username = username;
+        concert.status = this.STATUS_PENDING;
         this.concerts.set(concertID, concert);
 
         let userConcerts = this.users.get(username).concerts;
@@ -62,14 +67,14 @@ export class Repository {
         let concert = this.concerts.get(id);
 
         if (concert !== undefined && concert.username === username) {
-            concert.started = true;
+            concert.status = this.STATUS_STARTED;
 
             let channel = {
-                messages: new Array<string[]>(),
+                messages: new Array<Message>(),
                 name: concert.name
             }
 
-            this.channels.set(username, channel);
+            this.channels.set(id, channel);
             return true;
         }
 
@@ -77,7 +82,36 @@ export class Repository {
     }
 
     endConcert(username: string, id: number) {
-        //this.channels.delete(username);
+        let concert = this.concerts.get(id);
+        if (concert !== undefined && concert.username === username) {
+            concert.status = this.STATUS_ENDED;
+        }
+    }
+
+    sendConcertMessage(id: number, message: Message) {
+        let concert = this.concerts.get(id);
+        let channel = this.channels.get(id);
+
+        if (concert !== undefined && channel !== undefined && concert.status === this.STATUS_STARTED) {
+            let participants = concert.participants;
+            if (participants !== undefined && channel.messages !== undefined && participants.includes(message.authorUserName)) {
+                channel.messages.push(message);
+                return channel.messages;
+            }
+        }
+
+        return [];
+    }
+
+    getConcertMessages(id: number) {
+        let concert = this.concerts.get(id);
+        let channel = this.channels.get(id);
+
+        if (concert !== undefined && channel !== undefined && channel.messages !== undefined && concert.status === this.STATUS_STARTED) {
+            return channel.messages;
+        }
+
+        return [];
     }
 
     startVoiceCall(username: string, id: number) {
@@ -88,7 +122,8 @@ export class Repository {
 
                 let channel = {
                     voice: true,
-                    participants: concert.participants.slice(0, 3)
+                    participants: concert.participants.slice(0, 3),
+                    concertId: concert.id
                 }
 
                 this.voiceChannels.set(username, channel);
@@ -97,6 +132,14 @@ export class Repository {
         }
 
         return false;
+    }
+
+    endVoiceCall(username: string) {
+        let channel = this.voiceChannels.get(username);
+
+        if (channel !== undefined) {
+            this.voiceChannels.delete(username);
+        }
     }
 
     purchaseTicket(username: string, id: number) {

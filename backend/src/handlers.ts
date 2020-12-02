@@ -32,7 +32,7 @@ export class Handlers {
     getArtistsConcerts(req: Request, res: Response) {
         let concerts = this.repository.getArtistConcerts(req.params.username);
         if (concerts !== undefined)
-            return res.json(Array.from(concerts.entries()));
+            return res.json(concerts);
         else
             return res.json({});
     }

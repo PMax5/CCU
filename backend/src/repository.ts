@@ -4,7 +4,7 @@ import {Concert} from "./models/artist";
 export class Repository {
 
     private users = new Map();
-    private concerts = new Map<string, Map<number, Concert>>();
+    private concerts = new Map<string, Concert[]>();
 
     createUser(user: User) {
         this.users.set(user.username, user);
@@ -17,11 +17,11 @@ export class Repository {
     createConcert(username: string, concert: Concert) {
         let concerts = this.getArtistConcerts(username);
         if (concerts === undefined)
-            this.concerts.set(username, new Map<number, Concert>());
+            this.concerts.set(username, new Array<Concert>());
 
         concerts = this.getArtistConcerts(username);
-        concert.id = concerts!.size;
-        concerts!.set(concert.id, concert);
+        concert.id = concerts!.length;
+        concerts!.push(concert);
     }
 
     getArtistConcerts(username: string) {

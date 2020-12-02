@@ -98,4 +98,16 @@ export class Repository {
 
         return false;
     }
+
+    purchaseTicket(username: string, id: number) {
+        let concert = this.concerts.get(id);
+        let user = this.users.get(username);
+
+        if (concert !== undefined && user !== undefined) {
+            user.concerts.push(id);
+            return true;
+        }
+
+        return false;
+    }
 }

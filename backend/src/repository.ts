@@ -4,7 +4,7 @@ import {Channel, Concert, VoiceChannel} from "./models/artist";
 export class Repository {
 
     private users = new Map();
-    private concerts = new Map<string, Concert[]>();
+    private concerts = new Map<number, Concert>();
     private channels = new Map<string, Channel>();
     private voiceChannels = new Map<string, VoiceChannel>();
 
@@ -17,20 +17,24 @@ export class Repository {
     }
 
     createConcert(username: string, concert: Concert) {
-        let concerts = this.getArtistConcerts(username);
-        if (concerts === undefined)
-            this.concerts.set(username, new Array<Concert>());
+        let concertID = this.concerts.size;
 
-        concerts = this.getArtistConcerts(username);
         concert.participants = new Array<string>();
-        concert.id = concerts!.length;
-        concerts!.push(concert);
+        concert.id = concertID;
+        concert.username = username;
+        this.concerts.set(concertID, concert);
+
+        let userConcerts = this.users.get(username).concerts;
+        if (userConcerts === undefined)
+            userConcerts = new Array<number>();
+
+        userConcerts.push(concertID);
     }
 
-    updateConcert(username: string, id: number, concert: Concert) {
-        let concerts = this.getArtistConcerts(username);
-        if (concerts !== undefined) {
-            concerts[id] = concert;
+    updateConcert(username: string, id: number, concertUpdated: Concert) {
+        let concert = this.concerts.get(id);
+        if (concert !== undefined) {
+            this.concerts.set(id, concertUpdated);
             return true;
         }
 
@@ -38,13 +42,26 @@ export class Repository {
     }
 
     getArtistConcerts(username: string) {
-        return this.concerts.get(username);
+        let concerts = new Array<Concert>();
+        let userConcertIds = this.users.get(username).concerts;
+
+        if (userConcertIds !== undefined) {
+            userConcertIds.forEach((value: number) => {
+                let concert = this.concerts.get(value);
+                if (concert !== undefined)
+                    concerts.push(concert);
+            });
+
+            return concerts;
+        }
+
+        return [];
     }
 
     startConcert(username: string, id: number) {
-        let concerts = this.getArtistConcerts(username);
-        if (concerts !== undefined) {
-            let concert = concerts[id];
+        let concert = this.concerts.get(id);
+
+        if (concert !== undefined && concert.username === username) {
             concert.started = true;
 
             let channel = {
@@ -60,14 +77,12 @@ export class Repository {
     }
 
     endConcert(username: string, id: number) {
-        this.channels.delete(username);
+        //this.channels.delete(username);
     }
 
     startVoiceCall(username: string, id: number) {
-        let concerts = this.getArtistConcerts(username);
-        if (concerts !== undefined) {
-            let concert = concerts[id];
-
+        let concert = this.concerts.get(id);
+        if (concert !== undefined && concert.username === username) {
             if (concert.participants !== undefined) {
                 concert.participants.sort(() => Math.random() - 0.5);
 
@@ -83,7 +98,4 @@ export class Repository {
 
         return false;
     }
-
-
-
 }

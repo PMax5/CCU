@@ -60,4 +60,8 @@ export class Handlers {
         result ? res.sendStatus(200) : res.sendStatus(500);
     }
 
+    purchaseTicket(req: Request, res: Response) {
+
+    }
+
 }

@@ -7,7 +7,8 @@ export interface Concert {
     image ?: string,
     id ?: number,
     participants ?: string[],
-    started ?: boolean;
+    username ?: string,
+    started ?: boolean
 }
 
 export interface Channel {

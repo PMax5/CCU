@@ -6,7 +6,7 @@ export interface User {
     imagePath ?: string,
     description ?: string,
     type ?: string,
-    concerts ?: Array<any>
+    concerts ?: Array<number>
 }
 
 export interface Login {

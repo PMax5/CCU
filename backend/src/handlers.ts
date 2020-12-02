@@ -42,6 +42,8 @@ export class Handlers {
     }
 
     endConcert(req: Request, res: Response) {
+        this.repository.endConcert(req.params.username, Number(req.params.id));
+        res.sendStatus(200);
     }
 
     getArtistsConcerts(req: Request, res: Response) {

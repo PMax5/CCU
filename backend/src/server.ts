@@ -40,7 +40,7 @@ export class Server {
         });
 
         this.app.post("/artist/:username/concerts/:id/end", (req, res) => {
-
+            this.handlers.endConcert(req, res);
         });
 
         this.app.post("/artist/:username/concerts/:id/startVoiceCall", (req, res) => {

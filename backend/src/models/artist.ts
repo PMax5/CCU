@@ -11,7 +11,11 @@ export interface Concert {
 }
 
 export interface Channel {
-    voice ?: boolean,
     name ?: string,
-    messages ?: Array<string[]>
+    messages ?: Array<string[]>,
+}
+
+export interface VoiceChannel {
+    name ?: string,
+    participants ?: string[]
 }

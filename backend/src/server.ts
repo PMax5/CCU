@@ -39,7 +39,14 @@ export class Server {
             this.handlers.startConcert(req, res);
         });
 
+        this.app.post("/artist/:username/concerts/:id/end", (req, res) => {
 
+        });
+
+        this.app.post("/artist/:username/concerts/:id/startVoiceCall", (req, res) => {
+           this.handlers.startVoiceCall(req, res);
+        });
+        
     }
 
 

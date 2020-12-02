@@ -1,11 +1,12 @@
 import {User} from './models/authentication';
-import {Channel, Concert} from "./models/artist";
+import {Channel, Concert, VoiceChannel} from "./models/artist";
 
 export class Repository {
 
     private users = new Map();
     private concerts = new Map<string, Concert[]>();
     private channels = new Map<string, Channel>();
+    private voiceChannels = new Map<string, VoiceChannel>();
 
     createUser(user: User) {
         this.users.set(user.username, user);
@@ -21,6 +22,7 @@ export class Repository {
             this.concerts.set(username, new Array<Concert>());
 
         concerts = this.getArtistConcerts(username);
+        concert.participants = new Array<string>();
         concert.id = concerts!.length;
         concerts!.push(concert);
     }
@@ -46,7 +48,6 @@ export class Repository {
             concert.started = true;
 
             let channel = {
-                voice: false,
                 messages: new Array<string[]>(),
                 name: concert.name
             }
@@ -57,5 +58,32 @@ export class Repository {
 
         return false;
     }
+
+    endConcert(username: string, id: number) {
+        this.channels.delete(username);
+    }
+
+    startVoiceCall(username: string, id: number) {
+        let concerts = this.getArtistConcerts(username);
+        if (concerts !== undefined) {
+            let concert = concerts[id];
+
+            if (concert.participants !== undefined) {
+                concert.participants.sort(() => Math.random() - 0.5);
+
+                let channel = {
+                    voice: true,
+                    participants: concert.participants.slice(0, 3)
+                }
+
+                this.voiceChannels.set(username, channel);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
 
 }

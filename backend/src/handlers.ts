@@ -41,6 +41,9 @@ export class Handlers {
         result ? res.sendStatus(200) : res.sendStatus(500);
     }
 
+    endConcert(req: Request, res: Response) {
+    }
+
     getArtistsConcerts(req: Request, res: Response) {
         let concerts = this.repository.getArtistConcerts(req.params.username);
         if (concerts !== undefined)
@@ -48,4 +51,11 @@ export class Handlers {
         else
             return res.json({});
     }
+
+    startVoiceCall(req: Request, res: Response) {
+        let result = this.repository.startVoiceCall(req.params.username, Number(req.params.id));
+
+        result ? res.sendStatus(200) : res.sendStatus(500);
+    }
+
 }

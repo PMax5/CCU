@@ -23,8 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb23d01c-afdc-4a5c-b080-b268185b13f3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/flutter_project/lib/services/AuthenticationService.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/server.ts" afterDir="false" />
     </list>
     <list id="b0cd6bc1-8bf0-4fdf-97e7-a4253f237d7c" name="Revert &quot;Added SignUp simple form (WIP).&quot;" comment="Revert &quot;Added SignUp simple form (WIP).&quot;&#10;&#10;This reverts commit f5b939e8" />
     <option name="SHOW_DIALOG" value="false" />
@@ -150,10 +149,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="540" y="263" key="IDE.errors.dialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606073609637" />
-    <state x="440" y="94" key="SettingsEditor" timestamp="1606785080452">
+    <state x="440" y="94" key="SettingsEditor" timestamp="1606924377421">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606785080452" />
+    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606924377421" />
     <state x="587" y="127" key="SettingsEditor/301.1440.1536.832/0.0.2560.1400@0.0.2560.1400" timestamp="1606660083387" />
     <state x="807" y="434" key="VCS.ChangelistChooser" timestamp="1606001442933">
       <screen x="0" y="0" width="1920" height="1040" />

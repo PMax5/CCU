@@ -23,4 +23,17 @@ export class Handlers {
         else
             loginDetails.password === user.password ? res.sendStatus(200) : res.sendStatus(403);
     }
+
+    createConcert(req: Request, res: Response) {
+        this.repository.createConcert(req.params.username, req.body);
+        res.sendStatus(200);
+    }
+
+    getArtistsConcerts(req: Request, res: Response) {
+        let concerts = this.repository.getArtistConcerts(req.params.username);
+        if (concerts !== undefined)
+            return res.json(Array.from(concerts.entries()));
+        else
+            return res.json({});
+    }
 }

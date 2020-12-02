@@ -21,7 +21,19 @@ export class Server {
 
         this.app.post("/login", (req, res) => {
             this.handlers.loginUser(req, res);
-        })
+        });
+
+        this.app.post("/artist/:username/concerts/new", (req, res) => {
+           this.handlers.createConcert(req, res);
+        });
+
+        this.app.put("/artist/:username/concerts/:id/update", (req, res) => {
+            //TODO: Implement this method.
+        });
+
+        this.app.get("/artist/:username/concerts", (req, res) => {
+            this.handlers.getArtistsConcerts(req, res);
+        });
     }
 
 

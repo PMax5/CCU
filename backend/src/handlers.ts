@@ -60,6 +60,15 @@ export class Handlers {
             return res.json({});
     }
 
+    getAllConcerts(req: Request, res: Response) {
+        let concerts = this.repository.getAllConcerts();
+
+        if (concerts !== undefined)
+            return res.json(concerts);
+        else
+            return res.json({});
+    }
+
     startVoiceCall(req: Request, res: Response) {
         let result = this.repository.startVoiceCall(req.params.username, Number(req.params.id));
 

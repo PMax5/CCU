@@ -74,6 +74,10 @@ export class Repository {
         return [];
     }
 
+    getAllConcerts() {
+        return this.concerts;
+    }
+
     startConcert(username: string, id: number) {
         let concert = this.concerts.get(id);
 

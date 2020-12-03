@@ -1,11 +1,9 @@
 import Express from 'express';
-import {Repository} from "./repository";
 import bodyParser from "body-parser";
 import {Handlers} from "./handlers";
 
 export class Server {
     private app = Express();
-    private repository = new Repository();
     private handlers = new Handlers();
 
     constructor(port: number) {

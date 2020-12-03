@@ -44,7 +44,7 @@ class ConcertService extends Service {
     return concerts;
   }
 
-  Future<List<Concert>> getArtistConcerts(String username) {
+  Future<List<Concert>> getArtistConcerts(String username) async {
     final http.Response response = await http.get(
         this.apiURL + "/artist/$username/concerts",
         headers: this.requestHeadersPost
@@ -56,6 +56,18 @@ class ConcertService extends Service {
     var concertsJson = json.decode(response.body) as List;
     List<Concert> concerts = concertsJson.map((concertJson) => Concert.fromJson(concertJson)).toList();
     return concerts;
+  }
+
+  Future<bool> startConcert(String username, int id) async {
+    final http.Response response = await http.post(
+      this.apiURL + "/artist/$username/concerts/$id/start",
+      headers: this.headersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not start concert with id=$id.");
+    else
+      return true;
   }
 
 }

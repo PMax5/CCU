@@ -233,7 +233,44 @@ Widget MainMenu(BuildContext context) {
                     ),  
                   ],
                 ),
-                Text("Test")
+                ListView(
+                  children: [
+                    Divider(
+                      color: Colors.grey,
+                      height: 10,
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                    ListTile(
+                      title: Text("Profile",
+                          style: TextStyle(fontSize: 20)),
+                      leading: Icon(Icons.person),
+                      onTap: () { //TODO: redirecionar para ecra de perfil
+                        Navigator.pushNamed(context, "/login");
+                      },
+                    ),
+                    Divider(
+                      color: Colors.grey,
+                      height: 10,
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                    ListTile(
+                      title: Text("Log Out",
+                          style: TextStyle(fontSize: 20)),
+                      leading: Icon(Icons.logout),
+                      onTap: () { //
+                        Navigator.pushNamed(context, "/");
+                      }
+                    ),
+                    Divider(
+                      color: Colors.grey,
+                      height: 10,
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                  ]
+                )
               ]
           ),
         ),

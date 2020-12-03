@@ -4,6 +4,7 @@ class User {
   String name;
   String imagePath;
   String type;
+  String password;
 
   User(String username, String email, String name, String imagePath, String type) {
     this.username = username;
@@ -14,6 +15,15 @@ class User {
   }
 
   User.emptyUser();
+
+  Map<String, dynamic> toJson() => {
+    'name': this.name,
+    'email': this.email,
+    'imagePath': this.imagePath,
+    'type': this.type,
+    'username': this.username,
+    'password': this.password
+  };
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -37,6 +47,12 @@ class Artist extends User {
   Artist(String username, String email, String name, String imagePath, String description) :
         super(username, email, name, imagePath, "ARTIST") {
     this.description = description;
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = super.toJson();
+    json['description'] = this.description;
+    return json;
   }
 
   factory Artist.fromJson(Map<String, dynamic> json) {

@@ -244,7 +244,7 @@ Widget MainMenu(BuildContext context) {
                     ListTile(
                       title: Text("Profile",
                           style: TextStyle(fontSize: 20)),
-                      leading: Icon(Icons.person),
+                      leading: Icon(Icons.person, size: 35),
                       onTap: () { //TODO: redirecionar para ecra de perfil
                         Navigator.pushNamed(context, "/login");
                       },
@@ -258,7 +258,7 @@ Widget MainMenu(BuildContext context) {
                     ListTile(
                       title: Text("Log Out",
                           style: TextStyle(fontSize: 20)),
-                      leading: Icon(Icons.logout),
+                      leading: Icon(Icons.logout, size: 35),
                       onTap: () { //
                         Navigator.pushNamed(context, "/");
                       }

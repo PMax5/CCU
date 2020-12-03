@@ -1,9 +1,7 @@
 
 import 'package:flutter/material.dart';
-import '../models/user.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
-import 'type.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);

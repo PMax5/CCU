@@ -91,7 +91,19 @@ class ConcertService extends Service {
     if (response.statusCode != 200)
       throw new Exception("Could not start voice call associated with concert id=$id.");
 
-    return
+    return VoiceChannel.fromJson(json.decode(response.body));
+  }
+
+  Future<bool> endVoiceCall(String username, int id) async {
+    final http.Response response = await http.post(
+        this.apiURL + "/artist/$username/concerts/$id/endVoiceCall",
+        headers: this.headersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not start voice call associated with concert id=$id.");
+    else
+      return true;
   }
 
 }

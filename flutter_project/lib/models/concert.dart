@@ -67,11 +67,20 @@ class TextChannel {
 class VoiceChannel {
   String name;
   List<String> participants;
+  int concertId;
 
-  VoiceChannel(String name, )
+  VoiceChannel(String name, List<String> participants, int concertId) {
+    this.name = name;
+    this.participants = participants;
+    this.concertId = concertId;
+  }
 
   factory VoiceChannel.fromJson(Map<String, dynamic> json) {
-    return
+    return VoiceChannel(
+      json["name"],
+      json["participants"],
+      json["concertId"]
+    );
   }
 }
 

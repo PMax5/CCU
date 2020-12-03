@@ -136,7 +136,7 @@ export class Repository {
                 concert.participants.sort(() => Math.random() - 0.5);
 
                 let channel = {
-                    voice: true,
+                    name: concert.name,
                     participants: concert.participants.slice(0, 3),
                     concertId: concert.id
                 }

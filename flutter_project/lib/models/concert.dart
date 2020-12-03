@@ -67,6 +67,12 @@ class TextChannel {
 class VoiceChannel {
   String name;
   List<String> participants;
+
+  VoiceChannel(String name, )
+
+  factory VoiceChannel.fromJson(Map<String, dynamic> json) {
+    return
+  }
 }
 
 class Message {

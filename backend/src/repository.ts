@@ -24,7 +24,17 @@ export class Repository {
         let user = this.users.get(username);
 
         if (user !== undefined) {
-            this.users.set(username, userUpdated);
+            let newUser = {
+                username : userUpdated.username !== undefined ? userUpdated.username : user.username,
+                name: userUpdated.name !== undefined ? userUpdated.name : user.name,
+                email: userUpdated.email !== undefined ? userUpdated.email : user.email,
+                password: userUpdated.password !== undefined ? userUpdated.password : user.password,
+                imagePath: userUpdated.imagePath !== undefined ? userUpdated.imagePath : user.imagePath,
+                description: userUpdated.description !== undefined ? userUpdated.description : user.description,
+                type: userUpdated.type !== undefined ? userUpdated.type : user.type
+            }
+
+            this.users.set(username, newUser);
             return true;
         }
 

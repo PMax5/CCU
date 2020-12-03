@@ -44,4 +44,18 @@ class ConcertService extends Service {
     return concerts;
   }
 
+  Future<List<Concert>> getArtistConcerts(String username) {
+    final http.Response response = await http.get(
+        this.apiURL + "/artist/$username/concerts",
+        headers: this.requestHeadersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not get concerts for artist with username=$username.");
+
+    var concertsJson = json.decode(response.body) as List;
+    List<Concert> concerts = concertsJson.map((concertJson) => Concert.fromJson(concertJson)).toList();
+    return concerts;
+  }
+
 }

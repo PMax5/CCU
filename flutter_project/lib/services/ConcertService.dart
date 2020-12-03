@@ -124,4 +124,14 @@ class ConcertService extends Service {
     return messages;
   }
 
+  Future<void> sendMessage(String id, String username, String message) async {
+    final http.Response response = await http.post(
+      this.apiURL + "/concerts/$id/sendMessage",
+      headers: this.headersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not send message for concert with id=$id.");
+  }
+
 }

@@ -26,6 +26,17 @@ class Concert {
     this.voiceChannel = channel;
   }
 
+  Map<String, dynamic> toJson() => {
+    'name': this.name,
+    'description': this.description,
+    'date': this.date,
+    'link': this.link,
+    'image': this.image,
+    'id': this.id,
+    'status': this.status,
+    'username': this.username
+  };
+
   factory Concert.fromJson(Map<String, dynamic> json) {
     return Concert(
       json["id"],

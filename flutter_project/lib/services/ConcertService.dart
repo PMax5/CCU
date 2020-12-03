@@ -58,7 +58,7 @@ class ConcertService extends Service {
     return concerts;
   }
 
-  Future<bool> startConcert(String username, int id) async {
+  Future<void> startConcert(String username, int id) async {
     final http.Response response = await http.post(
       this.apiURL + "/artist/$username/concerts/$id/start",
       headers: this.headersPost
@@ -66,11 +66,9 @@ class ConcertService extends Service {
 
     if (response.statusCode != 200)
       throw new Exception("Could not start concert with id=$id.");
-    else
-      return true;
   }
 
-  Future<bool> endConcert(String username, int id) async {
+  Future<void> endConcert(String username, int id) async {
     final http.Response response = await http.post(
       this.apiURL + "/artist/$username/concerts/$id/end",
       headers: this.headersPost
@@ -78,8 +76,6 @@ class ConcertService extends Service {
 
     if (response.statusCode != 200)
       throw new Exception("Could not end concert with id=$id.");
-    else
-      return true;
   }
 
   Future<VoiceChannel> startVoiceCall(String username, int id) async {
@@ -94,7 +90,7 @@ class ConcertService extends Service {
     return VoiceChannel.fromJson(json.decode(response.body));
   }
 
-  Future<bool> endVoiceCall(String username, int id) async {
+  Future<void> endVoiceCall(String username, int id) async {
     final http.Response response = await http.post(
         this.apiURL + "/artist/$username/concerts/$id/endVoiceCall",
         headers: this.headersPost
@@ -102,8 +98,16 @@ class ConcertService extends Service {
 
     if (response.statusCode != 200)
       throw new Exception("Could not start voice call associated with concert id=$id.");
-    else
-      return true;
+  }
+
+  Future<void> purchaseTicket(String username, int id) async {
+    final http.Response response = await http.post(
+      this.apiURL + "/user/$username/concerts/$id/purchaseTicket",
+      headers: this.headersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not purchase ticket for concert with id=$id.");
   }
 
 }

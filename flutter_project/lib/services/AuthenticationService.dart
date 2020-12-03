@@ -5,14 +5,10 @@ import "package:http/http.dart" as http;
 
 class AuthenticationService extends Service {
 
-  final headersPost = {
-    'Content-Type': 'application/json'
-  };
-
   Future<User> login(String username, String password) async {
     final http.Response response = await http.post(
       this.apiURL + "/user/login",
-      headers: headersPost,
+      headers: this.headersPost,
       body: jsonEncode(<String, dynamic> {
         'username': username,
         'password': password
@@ -41,7 +37,7 @@ class AuthenticationService extends Service {
 
     final http.Response response = await http.post(
       this.apiURL + "/user/signup",
-      headers: headersPost,
+      headers: this.headersPost,
       body: jsonEncode(json)
     );
 

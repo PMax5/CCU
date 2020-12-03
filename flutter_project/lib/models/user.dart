@@ -4,7 +4,6 @@ class User {
   String name;
   String imagePath;
   String type;
-  String password;
 
   User(String username, String email, String name, String imagePath, String type) {
     this.username = username;

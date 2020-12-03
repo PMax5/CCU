@@ -7,4 +7,8 @@ class Service {
     'Accept': 'application/json',
     'Access-Control-Allow-Headers': 'Content-Type'
   };
+
+  final headersPost = {
+    'Content-Type': 'application/json'
+  };
 }

@@ -19,14 +19,15 @@ class AuthenticationService extends Service {
       })
     );
 
-    print(response.statusCode);
-    if(response.statusCode == 403)
-      print("HAHAHAHAH");
 
     if (response.statusCode != 200)
       throw new Exception("Login not authorized.");
 
     return User.fromJson(json.decode(response.body));
+  }
+
+  Future<User> signUp(User user) async {
+
   }
 
 }

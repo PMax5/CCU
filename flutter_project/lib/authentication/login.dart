@@ -91,6 +91,18 @@ class LoginState extends State<Login> {
                                   User user = login();
                                   if (user != null)
                                     Navigator.pushNamed(context, "/user/main");
+                                  else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => TipDialog(
+                                            "Notice",
+                                            "Incorrect username or password.",
+                                                () {
+                                              Navigator.of(context).pop();
+                                            }
+                                        )
+                                    );
+                                  }
                                 }
                               }
                           )
@@ -109,7 +121,6 @@ class LoginState extends State<Login> {
       return user;
     } catch(e) {
       print(e.toString());
-      return null;
     }
   }
 

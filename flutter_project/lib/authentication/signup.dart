@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import '../models/user.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
 import 'type.dart';
@@ -14,8 +15,9 @@ class SignUp extends StatefulWidget {
 class SignUpState extends State<SignUp> {
 
   Settings projectSettings = new Settings();
+  Map<String, String> formValues = new Map<String, String>();
 
-  Widget buildFormInputField(String hintText, String invalidInputMessage) {
+  Widget buildFormInputField(String identifier, String hintText, String invalidInputMessage) {
 
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
@@ -41,7 +43,10 @@ class SignUpState extends State<SignUp> {
                   validator: (value) {
                     if (value.isEmpty)
                       return invalidInputMessage;
-                    return null;
+                    else {
+                      formValues[identifier] = value;
+                      return null;
+                    }
                   }
               )
           )
@@ -63,9 +68,9 @@ class SignUpState extends State<SignUp> {
                     padding: EdgeInsets.only(bottom: 40),
                     child: CenteredHeaderLogo()
                 ),
-                this.buildFormInputField('user@example.com', 'Enter an email address.'),
-                this.buildFormInputField('Username', 'Enter an username.'),
-                this.buildFormInputField('Password', 'Enter a password.'),
+                this.buildFormInputField('email', 'user@example.com', 'Enter an email address.'),
+                this.buildFormInputField('username', 'Username', 'Enter an username.'),
+                this.buildFormInputField('password', 'Password', 'Enter a password.'),
                 Center(
                     child: Container(
                         width: projectSettings.textInputWidth,
@@ -82,9 +87,10 @@ class SignUpState extends State<SignUp> {
                             ),
                             onPressed: () {
                               if(signUpFormKey.currentState.validate()) {
-                                Navigator.push(
+                                Navigator.pushNamed(
                                   context,
-                                    MaterialPageRoute(builder: (context) => SignUpType())
+                                  "/signup/type",
+                                  arguments: formValues
                                 );
                               }
                             }

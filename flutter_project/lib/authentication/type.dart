@@ -21,7 +21,7 @@ class SignUpTypeState extends State<SignUpType> {
   Type userType = Type.FAN;
 
   Widget buildForm(BuildContext context) {
-    final signUpFormKey = GlobalKey<FormState>();
+    Map<String, String> formValues = ModalRoute.of(context).settings.arguments;
 
     return Padding(
         padding: EdgeInsets.only(top: 48),
@@ -98,7 +98,7 @@ class SignUpTypeState extends State<SignUpType> {
                           height: projectSettings.textInputHeight,
                           child: ElevatedButton(
                               child: Text(
-                                "SIGN UP",
+                                "NEXT",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold
                                 )
@@ -107,7 +107,12 @@ class SignUpTypeState extends State<SignUpType> {
                                 backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                               ),
                               onPressed: () {
-                                //TODO: Move to the next stage (Main user page).
+                                formValues["type"] = userType == Type.FAN ? "FAN" : "ARTIST";
+
+                                // TODO: Route to next page.
+                                /*if (userType == Type.FAN)
+
+                                else*/
                               }
                           )
                       )

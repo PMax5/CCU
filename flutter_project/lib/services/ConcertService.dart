@@ -29,4 +29,19 @@ class ConcertService extends Service {
     if (response.statusCode != 200)
       throw new Exception("Could not update concert.");
   }
+
+  Future<List<Concert>> getAllConcerts() async {
+    final http.Response response = await http.get(
+      this.apiURL + "/concerts",
+      headers: this.requestHeadersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not get all the concerts.");
+
+    var concertsJson = json.decode(response.body) as List;
+    List<Concert> concerts = concertsJson.map((concertJson) => Concert.fromJson(concertJson)).toList();
+    return concerts;
+  }
+
 }

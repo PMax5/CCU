@@ -2,15 +2,13 @@ class User {
   String username;
   String email;
   String name;
-  String password;
   String imagePath;
   String type;
 
-  User(String username, String email, String name, String password, String imagePath, String type) {
+  User(String username, String email, String name, String imagePath, String type) {
     this.username = username;
     this.email = email;
     this.name = name;
-    this.password = password;
     this.imagePath = imagePath;
     this.type = type;
   }
@@ -20,7 +18,6 @@ class User {
       json["username"],
       json["email"],
       json["name"],
-      json["password"],
       json["imagePath"],
       json["type"]
     );
@@ -28,15 +25,15 @@ class User {
 }
 
 class Fan extends User {
-  Fan(String username, String email, String name, String password, String imagePath) :
-        super(username, email, name, password, imagePath, "FAN");
+  Fan(String username, String email, String name, String imagePath) :
+        super(username, email, name, imagePath, "FAN");
 }
 
 class Artist extends User {
   String description;
 
-  Artist(String username, String email, String name, String password, String imagePath, String description) :
-        super(username, email, name, password, imagePath, "ARTIST") {
+  Artist(String username, String email, String name, String imagePath, String description) :
+        super(username, email, name, imagePath, "ARTIST") {
     this.description = description;
   }
 
@@ -45,7 +42,6 @@ class Artist extends User {
       json["username"],
       json["email"],
       json["name"],
-      json["password"],
       json["imagePath"],
       json["description"]
     );

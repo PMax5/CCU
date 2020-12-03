@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import '../models/user.dart';
+import 'package:flutter_complete_guide/services/AuthenticationService.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
 import 'type.dart';
@@ -14,6 +16,8 @@ class Login extends StatefulWidget {
 class LoginState extends State<Login> {
 
   Settings projectSettings = new Settings();
+  AuthenticationService authenticationService = new AuthenticationService();
+  Map<String, String> formValues = new Map<String, String>();
 
   Widget buildFormInputField(String hintText, String invalidInputMessage) {
 
@@ -41,7 +45,10 @@ class LoginState extends State<Login> {
                     validator: (value) {
                       if (value.isEmpty)
                         return invalidInputMessage;
-                      return null;
+                      else {
+                        formValues[hintText] = value;
+                        return null;
+                      }
                     }
                 )
             )
@@ -50,12 +57,12 @@ class LoginState extends State<Login> {
   }
 
   Widget buildForm(BuildContext context) {
-    final signUpFormKey = GlobalKey<FormState>();
+    final loginFormKey = GlobalKey<FormState>();
 
     return Padding(
         padding: EdgeInsets.only(top: 48),
         child: Form(
-            key: signUpFormKey,
+            key: loginFormKey,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -63,7 +70,7 @@ class LoginState extends State<Login> {
                     padding: EdgeInsets.only(bottom: 40),
                     child: CenteredHeaderLogo()
                   ),
-                  this.buildFormInputField('user@example.com', 'Enter an email address.'),
+                  this.buildFormInputField('Username', 'Enter an username.'),
                   this.buildFormInputField('Password', 'Enter a password.'),
                   Center(
                       child: Container(
@@ -80,9 +87,10 @@ class LoginState extends State<Login> {
                                 backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                               ),
                               onPressed: () {
-                                if(signUpFormKey.currentState.validate()) {
-                                  //TODO: Implement login.
-                                  Navigator.pushNamed(context, "/user/main");
+                                if(loginFormKey.currentState.validate()) {
+                                  User user = login();
+                                  if (user != null)
+                                    Navigator.pushNamed(context, "/user/main");
                                 }
                               }
                           )
@@ -92,6 +100,17 @@ class LoginState extends State<Login> {
             )
         )
     );
+  }
+
+  User login() {
+    try {
+      User user;
+      authenticationService.login(formValues['Username'], formValues['Password']).then((value) => user = value);
+      return user;
+    } catch(e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   @override

@@ -1,17 +1,16 @@
-import 'package:flutter_complete_guide/models/user.dart';
-
 class Concert {
   String name;
   String description;
   String date;
   String link;
   String image;
+  String username;
   int id;
   int status;
   TextChannel textChannel;
   VoiceChannel voiceChannel;
 
-  Concert(int id, String name, String description, String date, String link, String image, int status) {
+  Concert(int id, String name, String description, String date, String link, String image, String username, int status) {
     this.name = name;
     this.description = description;
     this.date = date;
@@ -19,6 +18,7 @@ class Concert {
     this.image = image;
     this.id = id;
     this.status = status;
+    this.username = username;
     this.textChannel = new TextChannel(this.name + " Channel");
   }
 
@@ -34,6 +34,7 @@ class Concert {
       json["date"],
       json["link"],
       json["image"],
+      json["username"],
       json["status"]
     );
   }

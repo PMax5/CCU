@@ -20,8 +20,21 @@ export class Handlers {
 
         if (user === undefined)
             return res.status(500).send("Username does not exist.");
-        else
-            loginDetails.password === user.password ? res.sendStatus(200) : res.sendStatus(403);
+        else {
+
+            let userToSend = {
+                username: user.username,
+                name: user.name,
+                email: user.email,
+                imagePath: user.imagePath,
+                description: user.description,
+                type: user.type,
+                concerts: user.concerts,
+                favorites: user.favorites
+            }
+            
+            loginDetails.password === user.password ? res.status(200).json(userToSend) : res.sendStatus(403);
+        }
     }
 
     updateUser(req: Request, res: Response) {

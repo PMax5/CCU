@@ -20,6 +20,7 @@ export class Server {
         });
 
         this.app.post("/user/login", (req, res) => {
+            console.log(req.body);
             this.handlers.loginUser(req, res);
         });
 

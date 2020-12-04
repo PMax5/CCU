@@ -4,6 +4,36 @@ import {Repository} from "./repository";
 export class Handlers {
     private repository = new Repository();
 
+    constructor() {
+        this.repository.createUser({
+            username: "test",
+            name: "Test User",
+            email: "user@example.com",
+            password: "lol",
+            imagePath: "assets/images/atm.png",
+            type: "FAN"
+        });
+
+        this.repository.createUser({
+            username: "testartist",
+            name: "Test User 2",
+            email: "user2@example.com",
+            password: "lol",
+            imagePath: "assets/images/atm.png",
+            type: "ARTIST",
+            description: "This is a description ok."
+        });
+
+        this.repository.createConcert( "testartist", {
+            name: "My Concert",
+            description: "A Concert",
+            link: "https://www.google.com",
+            image: "assets/images/atm.png"
+        });
+
+        console.log("Created default users and concert...");
+    }
+
     createUser(req: Request, res: Response) {
         let user = req.body;
         if (this.repository.getUser(user.username) === undefined) {

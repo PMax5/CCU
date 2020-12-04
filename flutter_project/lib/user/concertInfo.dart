@@ -21,9 +21,28 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 40),
-                child: CenteredHeaderLogo()
+              // FIXME
+              Row(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child:
+                      Padding(
+                        padding: EdgeInsets.only(top: 40),
+                        child: BackButton()
+                      )
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: FractionalOffset.center,
+                      child:
+                        Padding(
+                            padding: EdgeInsets.only(top: 40),
+                            child: CenteredHeaderLogo()
+                        )
+                    )
+                  )
+                ]
               ),
               ConcertInfoMenu(
                 context,

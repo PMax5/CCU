@@ -106,8 +106,9 @@ export class Handlers {
     getAllConcerts(req: Request, res: Response) {
         let concerts = this.repository.getAllConcerts();
 
-        if (concerts !== undefined)
-            return res.json(concerts);
+        if (concerts !== undefined){
+            return res.json(Array.from(concerts.values()));
+        }
         else
             return res.json({});
     }

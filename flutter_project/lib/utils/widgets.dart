@@ -50,7 +50,7 @@ Widget FormInputField(String hintText, String invalidInputMessage, int maxCharac
       )
   );
 }
-Widget MainMenu(BuildContext context, Widget mainPage, Widget channelsPage, Widget notificationsPage, Widget optionsPage) {
+Widget MainMenu(BuildContext context, Widget mainPage) {
   return DefaultTabController(
     length: 4,
     child: Column(
@@ -87,9 +87,43 @@ Widget MainMenu(BuildContext context, Widget mainPage, Widget channelsPage, Widg
           child: TabBarView(
               children: [
                 mainPage,
-                channelsPage,
-                notificationsPage,
-                optionsPage
+                ListView(
+                  children: [
+                    ListTile(
+                      title: Text("Voice Calls",
+                          style: TextStyle(fontSize: 20)),
+                    ),
+                    Image.asset('assets/images/divider.png'),
+                    ListTile(
+                      title: Text("James Smith"),
+                      leading: Icon(Icons.volume_up),
+                      trailing:Image.asset('assets/images/mini_james.png'),
+                    ),
+                    ListTile(
+                      title: Text("Chat Rooms",
+                          style: TextStyle(fontSize: 20)),
+                    ),
+                    Image.asset('assets/images/divider.png'),
+                    ListTile(
+                      title: Text("James Smith's Concert"),
+                      leading: Icon(Icons.sms),
+                    ),
+                  ],
+                ),
+                ListView(
+                  children: [
+                    ListTile(
+                      title: Text("Notification History",
+                          style: TextStyle(fontSize: 20)),
+                    ),
+                    Image.asset('assets/images/divider.png'),
+                    ListTile(
+                      title: Text("New James Smith’s Concert"),
+                      trailing: Icon(Icons.delete),
+                    ),
+                  ],
+                ),
+                Text("Test")
               ]
           ),
         ),
@@ -159,181 +193,104 @@ Widget TipDialog(String title, String description, Function onOK) {
 }
 
 Widget ConcertInfoMenu(BuildContext context, String title, String description, String date, String image) {
-  return DefaultTabController(
-    length: 4,
-    child: Column(
-      children: <Widget>[
-        Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 5,
-                      offset: Offset(0, 5), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: TabBar(
-                    unselectedLabelColor: Color.fromRGBO(100, 100, 100, 1),
-                    labelColor: projectSettings.mainColor,
-                    indicatorColor: projectSettings.mainColor,
-                    tabs: [
-                      Tab(icon: Icon(Icons.library_music)),
-                      Tab(icon: Icon(Icons.forum)),
-                      Tab(icon: Icon(Icons.notifications)),
-                      Tab(icon: Icon(Icons.menu))
-                    ]
-                )
-            )
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height - 150,
-          child: TabBarView(
-              children: [
-                ListView(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.zero,
-                      child: Image.asset(image, fit: BoxFit.fill),
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              title: Text(
-                                  title,
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black)
-                              ),
-                              subtitle: Padding(
-                                padding : EdgeInsets.only(top: 6.0),
-                                child: Text(
-                                  date,
-                                  style: TextStyle(fontSize: 15, color: Colors.black)
-                                ),
-                              ),
-                              trailing: Container(
-                                /*width: projectSettings.smallButtonWidth,
-                                height: projectSettings.smallButtonHeight,*/
-                                width: 140,
-                                height: 40,
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: new BorderRadius.circular(5.0),
-                                      side: BorderSide(
-                                          color: Colors.black,
-                                          width: 2
-                                      )
-                                  ),
-                                  child: Text(
-                                      'ARTIST PROFILE',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black
-                                      )
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, "/login");
-                                  },
-                                ),
-                              )
-                            ),
-                            ListTile(
-                              title: Padding(
-                                padding: EdgeInsets.only(top: 10.0),
-                                child: const Text(
-                                  "About the concert",
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black)
-                                ),
-                              ),
-                              subtitle: Padding(
-                                padding : EdgeInsets.only(top: 6.0),
-                                child: Text(
-                                    description,
-                                    textAlign: TextAlign.justify,
-                                    style: TextStyle(fontSize: 15, color: Colors.black)
-                                ),
-                              ),
-                            ),
-                            Padding(
-                                // FIXME this padding only serves for the first example
-                                padding: EdgeInsets.only(top: 100),
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Container(
-                                    width: 350,
-                                    height: projectSettings.smallButtonHeight,
-                                    child: RaisedButton(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: new BorderRadius.circular(5.0),
-                                      ),
-                                      color: projectSettings.mainColor,
-                                      child: Text(
-                                          'BUY TICKET',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white
-                                          )
-                                      ),
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, "/payment");
-                                      },
-                                    ),
-                                  )
-                                ),
-                            )
-                          ]
-                      )
-                    ),
-                  ],
-                ),
-                ListView(
-                  children: [
-                    ListTile(
-                      title: Text("Voice Calls",
-                          style: TextStyle(fontSize: 20)),
-                    ),
-                    Image.asset('assets/images/divider.png'),
-                    ListTile(
-                      title: Text("James Smith"),
-                      leading: Icon(Icons.volume_up),
-                      trailing:Image.asset('assets/images/mini_james.png'),
-                    ),
-                    ListTile(
-                      title: Text("Chat Rooms",
-                          style: TextStyle(fontSize: 20)),
-                    ),
-                    Image.asset('assets/images/divider.png'),
-                    ListTile(
-                      title: Text("James Smith's Concert"),
-                      leading: Icon(Icons.sms),
-                    ),
-                  ],
-                ),
-                ListView(
-                  children: [
-                    ListTile(
-                      title: Text("Notification History",
-                          style: TextStyle(fontSize: 20)),
-                    ),
-                    Image.asset('assets/images/divider.png'),
-                    ListTile(
-                      title: Text("New James Smith’s Concert"),
-                      trailing: Icon(Icons.delete),
-                    ),
-                  ],
-                ),
-                Text("Test")
-              ]
+  return MainMenu(
+      context,
+      ListView(
+        children: [
+          Padding(
+            padding: EdgeInsets.zero,
+            child: Image.asset(image, fit: BoxFit.fill),
           ),
-        ),
-      ],
-    ),
-  );
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    title: Text(
+                        title,
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black)
+                    ),
+                    subtitle: Padding(
+                      padding : EdgeInsets.only(top: 6.0),
+                      child: Text(
+                        date,
+                        style: TextStyle(fontSize: 15, color: Colors.black)
+                      ),
+                    ),
+                    trailing: Container(
+                      /*width: projectSettings.smallButtonWidth,
+                      height: projectSettings.smallButtonHeight,*/
+                      width: 140,
+                      height: 40,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(5.0),
+                            side: BorderSide(
+                                color: Colors.black,
+                                width: 2
+                            )
+                        ),
+                        child: Text(
+                            'ARTIST PROFILE',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black
+                            )
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/login");
+                        },
+                      ),
+                    )
+                  ),
+                  ListTile(
+                    title: Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: const Text(
+                        "About the concert",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black)
+                      ),
+                    ),
+                    subtitle: Padding(
+                      padding : EdgeInsets.only(top: 6.0),
+                      child: Text(
+                          description,
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(fontSize: 15, color: Colors.black)
+                      ),
+                    ),
+                  ),
+                ]
+            )
+          ),
+          Padding(
+            // FIXME this padding only serves for the first example
+            padding: EdgeInsets.only(top: 90),
+            child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: 350,
+                  height: projectSettings.smallButtonHeight,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(5.0),
+                    ),
+                    color: projectSettings.mainColor,
+                    child: Text(
+                        'BUY TICKET',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                        )
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/payment");
+                    },
+                  ),
+                )
+            ),
+          )
+        ],
+      ));
 }

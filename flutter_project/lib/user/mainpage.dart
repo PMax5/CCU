@@ -125,44 +125,7 @@ class UserMainPageState extends State<UserMainPage> {
               ),
             )
           ],
-        ),
-        ListView(
-          children: [
-            ListTile(
-              title: Text("Voice Calls",
-                  style: TextStyle(fontSize: 20)),
-            ),
-            Image.asset('assets/images/divider.png'),
-            ListTile(
-              title: Text("James Smith"),
-              leading: Icon(Icons.volume_up),
-              trailing:Image.asset('assets/images/mini_james.png'),
-            ),
-            ListTile(
-              title: Text("Chat Rooms",
-                  style: TextStyle(fontSize: 20)),
-            ),
-            Image.asset('assets/images/divider.png'),
-            ListTile(
-              title: Text("James Smith's Concert"),
-              leading: Icon(Icons.sms),
-            ),
-          ],
-        ),
-        ListView(
-          children: [
-            ListTile(
-              title: Text("Notification History",
-                  style: TextStyle(fontSize: 20)),
-            ),
-            Image.asset('assets/images/divider.png'),
-            ListTile(
-              title: Text("New James Smith’s Concert"),
-              trailing: Icon(Icons.delete),
-            ),
-          ],
-        ),
-        Text("Test")
+        )
     );
   }
 

@@ -34,11 +34,11 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                   ),
                   Expanded(
                     child: Align(
-                      alignment: FractionalOffset.center,
+                      alignment: Alignment(-0.2, 0.0),
                       child:
                         Padding(
                             padding: EdgeInsets.only(top: 40),
-                            child: CenteredHeaderLogo()
+                            child: projectSettings.logo
                         )
                     )
                   )

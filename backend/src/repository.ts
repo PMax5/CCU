@@ -35,6 +35,17 @@ export class Repository {
             }
 
             this.users.set(username, newUser);
+
+            if (user.type === "ARTIST") {
+                user.concerts.forEach((concertId: number) => {
+                    let concert = this.concerts.get(concertId);
+                    if (concert !== undefined) {
+                        concert.artistName = user.name,
+                        concert.artistImage = user.image
+                    }
+                });
+            }
+            
             return true;
         }
 
@@ -43,14 +54,17 @@ export class Repository {
 
     createConcert(username: string, concert: Concert) {
         let concertID = this.concerts.size;
+        let user = this.users.get(username);
 
         concert.participants = new Array<string>();
         concert.id = concertID;
         concert.username = username;
         concert.status = this.STATUS_PENDING;
+        concert.artistImage = user.imagePath;
+        concert.artistName = user.name;
         this.concerts.set(concertID, concert);
 
-        let userConcerts = this.users.get(username).concerts;
+        let userConcerts = user.concerts;
         if (userConcerts === undefined)
             userConcerts = new Array<number>();
 

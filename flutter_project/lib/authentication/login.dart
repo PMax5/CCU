@@ -88,21 +88,27 @@ class LoginState extends State<Login> {
                               ),
                               onPressed: () {
                                 if(loginFormKey.currentState.validate()) {
-                                  User user = login();
-                                  if (user != null)
-                                    Navigator.pushNamed(context, "/user/main");
-                                  else {
-                                    showDialog(
-                                        context: context,
-                                        builder: (_) => TipDialog(
-                                            "Notice",
-                                            "Incorrect username or password.",
-                                                () {
-                                              Navigator.of(context).pop();
-                                            }
-                                        )
-                                    );
-                                  }
+                                  login().then((user) {
+                                    if (user != null) {
+                                      Navigator.pushNamed(
+                                          context,
+                                          "/user/main",
+                                          arguments: user
+                                      );
+                                    }
+                                    else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => TipDialog(
+                                              "Notice",
+                                              "Incorrect username or password.",
+                                                  () {
+                                                Navigator.of(context).pop();
+                                              }
+                                          )
+                                      );
+                                    }
+                                  });
                                 }
                               }
                           )
@@ -114,10 +120,9 @@ class LoginState extends State<Login> {
     );
   }
 
-  User login() {
+  Future<User> login() async {
     try {
-      User user;
-      authenticationService.login(formValues['Username'], formValues['Password']).then((value) => user = value);
+      User user = await authenticationService.login(formValues['Username'], formValues['Password']);
       return user;
     } catch(e) {
       print(e.toString());

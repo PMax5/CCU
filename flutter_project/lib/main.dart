@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {   //ctrl + shift + R (refactor)
         "/payment/creditcard": (context) => CreditCardOption(),
         "/payment/paypal": (context) => PaypalOption(),
         "/payment/mbway": (context) => MBWayOption(),
-        //TODO:"/payment/atm": (context) => ATMOption(),
         "/payment/process": (context) => PaymentProcessor(),
         "/user/main": (context) => UserMainPage(),
         "/user/concertInfo": (context) => ConcertInfoPage(),

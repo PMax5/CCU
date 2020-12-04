@@ -5,12 +5,14 @@ class Concert {
   String link;
   String image;
   String username;
+  String artistName;
+  String artistImage;
   int id;
   int status;
   TextChannel textChannel;
   VoiceChannel voiceChannel;
 
-  Concert(int id, String name, String description, String date, String link, String image, String username, int status) {
+  Concert(int id, String name, String description, String date, String link, String image, String username, String artistName, String artistImage, int status) {
     this.name = name;
     this.description = description;
     this.date = date;
@@ -19,6 +21,8 @@ class Concert {
     this.id = id;
     this.status = status;
     this.username = username;
+    this.artistImage = artistImage;
+    this.artistImage = artistImage;
     this.textChannel = new TextChannel(this.name + " Channel");
   }
 
@@ -34,7 +38,9 @@ class Concert {
     'image': this.image,
     'id': this.id,
     'status': this.status,
-    'username': this.username
+    'username': this.username,
+    'artistName': this.artistName,
+    'artistImage': this.artistImage
   };
 
   factory Concert.fromJson(Map<String, dynamic> json) {
@@ -46,6 +52,8 @@ class Concert {
       json["link"],
       json["image"],
       json["username"],
+      json["artistName"],
+      json["artistImage"],
       json["status"]
     );
   }

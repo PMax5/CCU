@@ -19,7 +19,7 @@ class LoginState extends State<Login> {
   AuthenticationService authenticationService = new AuthenticationService();
   Map<String, String> formValues = new Map<String, String>();
 
-  Widget buildFormInputField(String hintText, String invalidInputMessage) {
+  Widget buildFormInputField(String hintText, String invalidInputMessage, bool obscure) {
 
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
@@ -42,6 +42,7 @@ class LoginState extends State<Login> {
                         focusedErrorBorder: inputBorder(Colors.red),
                         hintText: hintText
                     ),
+                    obscureText: obscure,
                     validator: (value) {
                       if (value.isEmpty)
                         return invalidInputMessage;
@@ -70,8 +71,8 @@ class LoginState extends State<Login> {
                     padding: EdgeInsets.only(bottom: 40),
                     child: CenteredHeaderLogo()
                   ),
-                  this.buildFormInputField('Username', 'Enter an username.'),
-                  this.buildFormInputField('Password', 'Enter a password.'),
+                  this.buildFormInputField('Username', 'Enter an username.', false),
+                  this.buildFormInputField('Password', 'Enter a password.', true),
                   Center(
                       child: Container(
                           width: projectSettings.textInputWidth,

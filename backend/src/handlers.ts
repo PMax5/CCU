@@ -36,7 +36,9 @@ export class Handlers {
 
         this.repository.createConcert( "testartist", {
             name: "James Smith's Concert",
-            description: "A Concert",
+            description: "The long wait is over: Portugal is scheduled to meet with James Smith at Altice Arena, in Lisbon. "
+                + "This unique date is part of the European tour scheduled for autumn, which will feature \"I love you\", \ "
+                + "the first James Smith’s original album in six years.",
             link: "https://www.google.com",
             image: "assets/images/james.png",
             artistName: "Test User 2",
@@ -45,7 +47,7 @@ export class Handlers {
 
         this.repository.createConcert( "testartist2", {
             name: "Iron Maiden's Concert",
-            description: "A Concert",
+            description: "The concert of your life",
             link: "https://www.google.com",
             image: "assets/images/concert2.png",
             artistName: "Iron Maiden",

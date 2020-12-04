@@ -23,13 +23,7 @@ class UserMainPageState extends State<UserMainPage> {
           future: getConcerts(),
           builder: (context, concerts) {
             if (!concerts.hasData) {
-              print('concerts data ${concerts.data}');
-              return Column(
-                  children: [
-                    Text("the data is empty"),
-                    Center(child: CircularProgressIndicator())
-                  ]
-              );
+              return Center(child: CircularProgressIndicator());
             }
             return ListView.builder(
               itemCount: concerts.data.length,
@@ -41,8 +35,12 @@ class UserMainPageState extends State<UserMainPage> {
                       clipBehavior: Clip.antiAlias,
                       elevation: 5,
                       child: new InkWell(
-                        onTap: () {  //TODO: ecrã com info dinâmica
-                          Navigator.pushNamed(context, "/user/concertInfo");
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context,
+                              "/user/concertInfo",
+                              arguments: concert
+                          );
                         },
                         child: Column(
                           children: [

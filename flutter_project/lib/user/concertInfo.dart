@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../models/concert.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 
 class ConcertInfoPage extends StatefulWidget {
@@ -13,6 +14,9 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    Concert concert = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -23,12 +27,10 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
               ),
               ConcertInfoMenu(
                 context,
-                "James Smith's Concert",
-                "The long wait is over: Portugal is scheduled to meet with James Smith at Altice Arena, in Lisbon. \ "
-                    "This unique date is part of the European tour scheduled for autumn, which will feature \"I love you\", \ "
-                    "the first James Smith’s original album in six years.",
-                "10th November 2020 9 p.m.",
-                "assets/images/james.png"
+                concert.name,
+                concert.description,
+                "10th November 2020 9 p.m.", //FIXME
+                concert.image
               )
             ]
           )

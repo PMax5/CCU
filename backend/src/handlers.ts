@@ -25,10 +25,45 @@ export class Handlers {
         });
 
         this.repository.createConcert( "testartist", {
-            name: "My Concert",
+            name: "James Smith's Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/atm.png"
+            image: "assets/images/james.png"
+        });
+
+        this.repository.createConcert( "testartist", {
+            name: "Iron Maiden's Concert",
+            description: "A Concert",
+            link: "https://www.google.com",
+            image: "assets/images/concert2.png"
+        });
+
+        this.repository.createConcert( "testartist", {
+            name: "Twenty One Pilots' Concert",
+            description: "A Concert",
+            link: "https://www.google.com",
+            image: "assets/images/concert3.png"
+        });
+
+        this.repository.createConcert( "testartist", {
+            name: "K.Flay's Concert",
+            description: "A Concert",
+            link: "https://www.google.com",
+            image: "assets/images/concert4.png"
+        });
+
+        this.repository.createConcert( "testartist", {
+            name: "Lemaitre's Concert",
+            description: "A Concert",
+            link: "https://www.google.com",
+            image: "assets/images/concert5.png"
+        });
+
+        this.repository.createConcert( "testartist", {
+            name: "y.azz's Concert",
+            description: "A Concert",
+            link: "https://www.google.com",
+            image: "assets/images/concert6.png"
         });
 
         console.log("Created default users and concert...");

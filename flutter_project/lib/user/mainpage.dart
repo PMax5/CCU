@@ -21,8 +21,8 @@ class UserMainPageState extends State<UserMainPage> {
               clipBehavior: Clip.antiAlias,
               elevation: 5,
               child: new InkWell(
-                onTap: () {  //TODO: ecra com info do concerto
-                  Navigator.pushNamed(context, "/login");
+                onTap: () {  //TODO: ecrã com info dinâmica
+                  Navigator.pushNamed(context, "/user/concertInfo");
                 },
                 child: Column(
                   children: [

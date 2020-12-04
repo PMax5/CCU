@@ -195,16 +195,15 @@ Widget TipDialog(String title, String description, Function onOK) {
 Widget ConcertInfoMenu(BuildContext context, String title, String description, String date, String image) {
   return MainMenu(
       context,
-      ListView(
+      Column(
         children: [
           Padding(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.only(top: 10.0),
             child: Image.asset(image, fit: BoxFit.fill),
           ),
           Padding(
             padding: const EdgeInsets.all(6.0),
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
                     title: Text(
@@ -219,8 +218,6 @@ Widget ConcertInfoMenu(BuildContext context, String title, String description, S
                       ),
                     ),
                     trailing: Container(
-                      /*width: projectSettings.smallButtonWidth,
-                      height: projectSettings.smallButtonHeight,*/
                       width: 140,
                       height: 40,
                       child: RaisedButton(
@@ -239,6 +236,7 @@ Widget ConcertInfoMenu(BuildContext context, String title, String description, S
                             )
                         ),
                         onPressed: () {
+                          // TODO create artist screen
                           Navigator.pushNamed(context, "/login");
                         },
                       ),
@@ -264,33 +262,39 @@ Widget ConcertInfoMenu(BuildContext context, String title, String description, S
                 ]
             )
           ),
-          Padding(
-            // FIXME this padding only serves for the first example
-            padding: EdgeInsets.only(top: 90),
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: 350,
-                  height: projectSettings.smallButtonHeight,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(5.0),
-                    ),
-                    color: projectSettings.mainColor,
-                    child: Text(
-                        'BUY TICKET',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                        )
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/payment");
-                    },
-                  ),
-                )
+          // TODO change button according to state of ticket (if bought or not)
+          LargeBottomButton(context, 'BUY TICKET', "/payment")
+        ]
+      ));
+}
+
+Widget LargeBottomButton(BuildContext context, String buttonText, String pageTo) {
+  return Expanded(
+      child: Align(
+          alignment: FractionalOffset.bottomCenter,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 20.0),
+            child: Container(
+              width: 350,
+              height: projectSettings.smallButtonHeight,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(5.0),
+                ),
+                color: projectSettings.mainColor,
+                child: Text(
+                    buttonText,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white
+                    )
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, pageTo);
+                },
+              ),
             ),
           )
-        ],
-      ));
+      )
+  );
 }

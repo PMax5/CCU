@@ -48,10 +48,10 @@ class UserMainPageState extends State<UserMainPage> {
                           children: [
                             Image.asset(concert.image),
                             ListTile(
-                              leading: Image.asset('assets/images/mini_james.png'),
+                              leading: Image.asset(concert.artistImage),
                               title: Text(concert.name),
                               subtitle: Text(
-                                'Artist: ' + concert.username,
+                                '${concert.artistName}',
                                 style: TextStyle(color: Colors.black.withOpacity(0.6)),
                               ),
                             ),
@@ -99,5 +99,4 @@ class UserMainPageState extends State<UserMainPage> {
       )
     );
   }
-
 }

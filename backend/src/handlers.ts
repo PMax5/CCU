@@ -19,7 +19,17 @@ export class Handlers {
             name: "Test User 2",
             email: "user2@example.com",
             password: "lol",
-            imagePath: "assets/images/atm.png",
+            imagePath: "assets/images/mini_james.png",
+            type: "ARTIST",
+            description: "This is a description ok."
+        });
+
+        this.repository.createUser({
+            username: "testartist2",
+            name: "Iron Maiden",
+            email: "user3@example.com",
+            password: "lol",
+            imagePath: "assets/images/mini_concert2.png",
             type: "ARTIST",
             description: "This is a description ok."
         });
@@ -28,42 +38,54 @@ export class Handlers {
             name: "James Smith's Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/james.png"
+            image: "assets/images/james.png",
+            artistName: "Test User 2",
+            artistImage: "assets/images/mini_james.png"
         });
 
-        this.repository.createConcert( "testartist", {
+        this.repository.createConcert( "testartist2", {
             name: "Iron Maiden's Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/concert2.png"
+            image: "assets/images/concert2.png",
+            artistName: "Iron Maiden",
+            artistImage: "assets/images/mini_concert2.png"
         });
 
         this.repository.createConcert( "testartist", {
             name: "Twenty One Pilots' Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/concert3.png"
+            image: "assets/images/concert3.png",
+            artistName: "Test User 2",
+            artistImage: "assets/images/mini_james.png"
         });
 
         this.repository.createConcert( "testartist", {
             name: "K.Flay's Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/concert4.png"
+            image: "assets/images/concert4.png",
+            artistName: "Test User 2",
+            artistImage: "assets/images/mini_james.png"
         });
 
         this.repository.createConcert( "testartist", {
             name: "Lemaitre's Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/concert5.png"
+            image: "assets/images/concert5.png",
+            artistName: "Test User 2",
+            artistImage: "assets/images/mini_james.png"
         });
 
         this.repository.createConcert( "testartist", {
             name: "y.azz's Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/concert6.png"
+            image: "assets/images/concert6.png",
+            artistName: "Test User 2",
+            artistImage: "assets/images/mini_james.png"
         });
 
         console.log("Created default users and concert...");

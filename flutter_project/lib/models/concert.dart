@@ -21,7 +21,7 @@ class Concert {
     this.id = id;
     this.status = status;
     this.username = username;
-    this.artistImage = artistImage;
+    this.artistName = artistName;
     this.artistImage = artistImage;
     this.textChannel = new TextChannel(this.name + " Channel");
   }

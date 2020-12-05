@@ -6,6 +6,7 @@ import 'package:flutter_complete_guide/payment/paymentOptions.dart';
 import 'package:flutter_complete_guide/payment/paymentprocessor.dart';
 import 'package:flutter_complete_guide/payment/paypal.dart';
 import 'package:flutter_complete_guide/user/mainpage.dart';
+import 'package:flutter_complete_guide/user/voicecall.dart';
 
 import 'authentication/login.dart';
 import 'authentication/signup.dart';
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {   //ctrl + shift + R (refactor)
         "/payment/paypal": (context) => PaypalOption(),
         "/payment/mbway": (context) => MBWayOption(),
         "/payment/process": (context) => PaymentProcessor(),
-        "/user/main": (context) => UserMainPage()
+        "/user/main": (context) => UserMainPage(),
+        "/user/voicecall": (context) => VoiceCall()
       },
     );
   }

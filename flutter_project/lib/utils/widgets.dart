@@ -13,6 +13,26 @@ Widget CenteredHeaderLogo() {
   );
 }
 
+Widget CenteredProfile(String imagePath, String name) {
+  return Center(
+      child: Column (
+        children: [
+          Image.asset(imagePath),
+          Container(
+              margin: const EdgeInsets.only(top: 8),
+              child: Text(
+                  name,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black
+                  )
+              )
+          )
+        ],
+      )
+  );
+}
 
 Widget FormInputField(String hintText, String invalidInputMessage, int maxCharacters) {
   OutlineInputBorder inputBorder(Color color) {

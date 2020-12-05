@@ -137,6 +137,10 @@ class UserMainPageState extends State<UserMainPage> {
               title: Text("James Smith"),
               leading: Icon(Icons.volume_up),
               trailing:Image.asset('assets/images/mini_james.png'),
+              onTap: () {
+                // TODO: change to voice call
+                Navigator.pushNamed(context, "/user/voicecall");
+              }
             ),
             ListTile(
               title: Text("Chat Rooms",

@@ -137,7 +137,9 @@ class LoginState extends State<Login> {
             title: Text("Log In"),
             backgroundColor: projectSettings.mainColor
         ),
-        body: this.buildForm(context)
+        body: SingleChildScrollView(
+          child:this.buildForm(context)
+        ),
     );
   }
 

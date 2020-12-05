@@ -19,7 +19,7 @@ export class Handlers {
             name: "Test User 2",
             email: "user2@example.com",
             password: "lol",
-            imagePath: "assets/images/atm.png",
+            imagePath: "assets/images/james.png",
             type: "ARTIST",
             description: "This is a description ok."
         });
@@ -28,7 +28,9 @@ export class Handlers {
             name: "My Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/atm.png"
+            image: "assets/images/atm.png",
+            artistName: "Test User 2",
+            artistImage: "assets/images/james.png"
         });
 
         console.log("Created default users and concert...");

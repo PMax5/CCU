@@ -7,7 +7,9 @@ export interface Concert {
     id ?: number,
     participants ?: string[],
     username ?: string,
-    status ?: number
+    status ?: number,
+    artistName ?: string,
+    artistImage ?: string
 }
 
 export interface Channel {

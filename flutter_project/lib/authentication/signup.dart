@@ -109,7 +109,9 @@ class SignUpState extends State<SignUp> {
         title: Text("Sign Up"),
         backgroundColor: projectSettings.mainColor
       ),
-      body: this.buildForm(context)
+      body:SingleChildScrollView(
+        child: this.buildForm(context)
+      ),
     );
   }
   

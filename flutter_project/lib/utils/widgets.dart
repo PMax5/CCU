@@ -13,6 +13,26 @@ Widget CenteredHeaderLogo() {
   );
 }
 
+Widget CenteredProfile(String imagePath, String name) {
+  return Center(
+      child: Column (
+        children: [
+          Image.asset(imagePath),
+          Container(
+              margin: const EdgeInsets.only(top: 8),
+              child: Text(
+                  name,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black
+                  )
+              )
+          )
+        ],
+      )
+  );
+}
 
 Widget FormInputField(String hintText, String invalidInputMessage, int maxCharacters) {
   OutlineInputBorder inputBorder(Color color) {
@@ -95,9 +115,13 @@ Widget MainMenu(BuildContext context, Widget mainPage) {
                     ),
                     Image.asset('assets/images/divider.png'),
                     ListTile(
-                      title: Text("James Smith"),
-                      leading: Icon(Icons.volume_up),
-                      trailing:Image.asset('assets/images/mini_james.png'),
+                        title: Text("James Smith"),
+                        leading: Icon(Icons.volume_up),
+                        trailing:Image.asset('assets/images/mini_james.png'),
+                        onTap: () {
+                          // TODO: change to voice call
+                          Navigator.pushNamed(context, "/user/voicecall");
+                        }
                     ),
                     ListTile(
                       title: Text("Chat Rooms",
@@ -123,7 +147,44 @@ Widget MainMenu(BuildContext context, Widget mainPage) {
                     ),
                   ],
                 ),
-                Text("Test")
+                ListView(
+                    children: [
+                      Divider(
+                        color: Colors.grey,
+                        height: 10,
+                        indent: 10,
+                        endIndent: 10,
+                      ),
+                      ListTile(
+                        title: Text("Profile",
+                            style: TextStyle(fontSize: 20)),
+                        leading: Icon(Icons.person, size: 35),
+                        onTap: () { //TODO: redirecionar para ecra de perfil
+                          Navigator.pushNamed(context, "/login");
+                        },
+                      ),
+                      Divider(
+                        color: Colors.grey,
+                        height: 10,
+                        indent: 10,
+                        endIndent: 10,
+                      ),
+                      ListTile(
+                          title: Text("Log Out",
+                              style: TextStyle(fontSize: 20)),
+                          leading: Icon(Icons.logout, size: 35),
+                          onTap: () { //
+                            Navigator.pushNamed(context, "/");
+                          }
+                      ),
+                      Divider(
+                        color: Colors.grey,
+                        height: 10,
+                        indent: 10,
+                        endIndent: 10,
+                      ),
+                    ]
+                )
               ]
           ),
         ),

@@ -15,7 +15,7 @@ class SignUpState extends State<SignUp> {
   Settings projectSettings = new Settings();
   Map<String, String> formValues = new Map<String, String>();
 
-  Widget buildFormInputField(String identifier, String hintText, String invalidInputMessage) {
+  Widget buildFormInputField(String identifier, String hintText, String invalidInputMessage, bool obscure) {
 
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
@@ -38,6 +38,7 @@ class SignUpState extends State<SignUp> {
                       focusedErrorBorder: inputBorder(Colors.red),
                       hintText: hintText
                   ),
+                  obscureText: obscure,
                   validator: (value) {
                     if (value.isEmpty)
                       return invalidInputMessage;
@@ -66,9 +67,9 @@ class SignUpState extends State<SignUp> {
                     padding: EdgeInsets.only(bottom: 40),
                     child: CenteredHeaderLogo()
                 ),
-                this.buildFormInputField('email', 'user@example.com', 'Enter an email address.'),
-                this.buildFormInputField('username', 'Username', 'Enter an username.'),
-                this.buildFormInputField('password', 'Password', 'Enter a password.'),
+                this.buildFormInputField('email', 'user@example.com', 'Enter an email address.', false),
+                this.buildFormInputField('username', 'Username', 'Enter an username.', false),
+                this.buildFormInputField('password', 'Password', 'Enter a password.', true),
                 Center(
                     child: Container(
                         width: projectSettings.textInputWidth,
@@ -108,7 +109,9 @@ class SignUpState extends State<SignUp> {
         title: Text("Sign Up"),
         backgroundColor: projectSettings.mainColor
       ),
-      body: this.buildForm(context)
+      body:SingleChildScrollView(
+        child: this.buildForm(context)
+      ),
     );
   }
   

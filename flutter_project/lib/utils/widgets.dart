@@ -298,3 +298,29 @@ Widget LargeBottomButton(BuildContext context, String buttonText, String pageTo)
       )
   );
 }
+
+Widget BackButtonLogoHeader(BuildContext context) {
+  return Row(
+      children: [
+        IconButton(
+          padding: const EdgeInsets.only(top:40, left: 8.0),
+          icon: const BackButtonIcon(),
+          color: Colors.black,
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+          onPressed: () {
+            Navigator.maybePop(context);
+          },
+        ),
+        Expanded(
+            child: Align(
+                alignment: Alignment(-0.23, 0.0),
+                child:
+                Padding(
+                    padding: EdgeInsets.only(top: 40),
+                    child: projectSettings.logo
+                )
+            )
+        )
+      ]
+  );
+}

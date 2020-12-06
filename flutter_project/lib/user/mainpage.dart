@@ -16,7 +16,7 @@ class UserMainPageState extends State<UserMainPage> {
 
   ConcertService concertService = new ConcertService();
 
-  Widget createFanMenu(BuildContext context) {
+  Widget createFanMenu(BuildContext context, String userUsername) {
     return MainMenu(
       context,
         FutureBuilder(
@@ -39,7 +39,7 @@ class UserMainPageState extends State<UserMainPage> {
                           Navigator.pushNamed(
                               context,
                               "/user/concertInfo",
-                              arguments: concert
+                              arguments: Arguments(userUsername, concert)
                           );
                         },
                         child: Column(
@@ -66,13 +66,70 @@ class UserMainPageState extends State<UserMainPage> {
     );
   }
 
-  Widget createArtistMenu(BuildContext context) {
+  Widget createArtistMenu(BuildContext context, String userUsername) {
     //TODO: Put the artist pages here!
+    return MainMenu(
+      context,
+      FutureBuilder(
+        future: getArtistConcerts(userUsername),
+        builder: (context, artistConcerts) {
+          if (!artistConcerts.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          return ListView.builder(
+            itemCount: artistConcerts.data.length,
+            itemBuilder: (context, index) {
+              print("concerts ${artistConcerts.data[0]}");
+              Concert concert = artistConcerts.data[index];
+              return Column(
+                children: <Widget>[
+                  Card(
+                    clipBehavior: Clip.antiAlias,
+                    elevation: 5,
+                    child: new InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context,
+                            "/user/concertInfo",
+                            arguments: Arguments(userUsername, concert)
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Image.asset(concert.image),
+                          ListTile(
+                            leading: Image.asset(concert.artistImage),
+                            title: Text(concert.name),
+                            subtitle: Text(
+                              '${concert.artistName}',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
+    );
   }
 
   Future<List<Concert>> getConcerts() async {
     try {
       List<Concert> concerts = await concertService.getAllConcerts();
+      return concerts;
+    } catch(e) {
+      print(e.toString());
+    }
+  }
+
+  Future<List<Concert>> getArtistConcerts(String username) async {
+    try {
+      List<Concert> concerts = await concertService.getArtistConcerts(username);
       return concerts;
     } catch(e) {
       print(e.toString());
@@ -91,7 +148,7 @@ class UserMainPageState extends State<UserMainPage> {
               padding: EdgeInsets.only(top: 40),
               child: CenteredHeaderLogo()
             ),
-            user.type == "FAN" ? this.createFanMenu(context) : this.createArtistMenu(context)
+            user.type == "FAN" ? this.createFanMenu(context, user.username) : this.createArtistMenu(context, user.username)
           ]
         )
       )

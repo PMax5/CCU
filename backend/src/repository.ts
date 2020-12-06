@@ -64,11 +64,10 @@ export class Repository {
         concert.artistName = user.name;
         this.concerts.set(concertID, concert);
 
-        let userConcerts = user.concerts;
-        if (userConcerts === undefined)
-            userConcerts = new Array<number>();
+        if (user.concerts === undefined)
+            user.concerts = new Array<number>();
 
-        userConcerts.push(concertID);
+        user.concerts.push(concertID);
     }
 
     updateConcert(username: string, id: number, concertUpdated: Concert) {
@@ -190,10 +189,12 @@ export class Repository {
         let user = this.users.get(username);
 
         if (concert !== undefined && user !== undefined) {
+            if (user.concerts === undefined)
+                user.concerts = new Array<number>();
             user.concerts.push(id);
             return true;
         }
 
-        return false;
+        return false; 
     }
 }

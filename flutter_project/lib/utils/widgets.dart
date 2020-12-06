@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../models/concert.dart';
 import 'package:flutter_complete_guide/settings.dart';
 
 
@@ -253,83 +254,7 @@ Widget TipDialog(String title, String description, Function onOK) {
   );
 }
 
-Widget ConcertInfoMenu(BuildContext context, String title, String description, String date, String image) {
-  return MainMenu(
-      context,
-      Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: 10.0),
-            child: Image.asset(image, fit: BoxFit.fill),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: Column(
-                children: [
-                  ListTile(
-                    title: Text(
-                        title,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black)
-                    ),
-                    subtitle: Padding(
-                      padding : EdgeInsets.only(top: 6.0),
-                      child: Text(
-                        date,
-                        style: TextStyle(fontSize: 15, color: Colors.black)
-                      ),
-                    ),
-                    trailing: Container(
-                      width: 140,
-                      height: 40,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(5.0),
-                            side: BorderSide(
-                                color: Colors.black,
-                                width: 2
-                            )
-                        ),
-                        child: Text(
-                            'ARTIST PROFILE',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black
-                            )
-                        ),
-                        onPressed: () {
-                          // TODO create artist screen
-                          Navigator.pushNamed(context, "/login");
-                        },
-                      ),
-                    )
-                  ),
-                  ListTile(
-                    title: Padding(
-                      padding: EdgeInsets.only(top: 10.0),
-                      child: const Text(
-                        "About the concert",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black)
-                      ),
-                    ),
-                    subtitle: Padding(
-                      padding : EdgeInsets.only(top: 6.0),
-                      child: Text(
-                          description,
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(fontSize: 15, color: Colors.black)
-                      ),
-                    ),
-                  ),
-                ]
-            )
-          ),
-          // TODO change button according to state of ticket (if bought or not)
-          LargeBottomButton(context, 'BUY TICKET', "/payment")
-        ]
-      ));
-}
-
-Widget LargeBottomButton(BuildContext context, String buttonText, String pageTo) {
+Widget LargeBottomButton(BuildContext context, String buttonText, String pageTo, Arguments arguments) {
   return Expanded(
       child: Align(
           alignment: FractionalOffset.bottomCenter,
@@ -351,7 +276,11 @@ Widget LargeBottomButton(BuildContext context, String buttonText, String pageTo)
                     )
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, pageTo);
+                  Navigator.pushNamed(
+                      context,
+                      pageTo,
+                      arguments: arguments
+                  );
                 },
               ),
             ),
@@ -384,4 +313,11 @@ Widget BackButtonLogoHeader(BuildContext context) {
         )
       ]
   );
+}
+
+class Arguments {
+  final String logged_in_username;
+  final Concert concert;
+
+  Arguments(this.logged_in_username, this.concert);
 }

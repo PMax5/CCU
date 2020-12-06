@@ -186,11 +186,12 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                               "By cancelling this concert, you are deleting the concert info and if people \ "
                                   "already bought tickets for this concert, they will be automatically refunded.",
                                   () {
+                                cancelConcert(user.username, concert.id); // FIXME this is endConcert not cancel
                                 Navigator.of(context).pop();
                                 Navigator.pushNamed(
                                     context,
-                                    "/payment", // TODO create cancel concert page
-                                    arguments: Arguments(user, concert)
+                                    "/user/main", // TODO create cancel concert page
+                                    arguments: user
                                 );
                               },
                                   () {
@@ -212,6 +213,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                           "By clicking on this button, your stream will start immediately and everyone \ "
                             " who bought a ticket for it will have access to the stream.",
                               () {
+                            startConcert(user.username, concert.id);
                             Navigator.of(context).pop();
                             Navigator.pushNamed(
                                 context,
@@ -270,6 +272,22 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
     try {
       List<Concert> concerts = await concertService.getArtistConcerts(username);
       return concerts;
+    } catch(e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> startConcert(String username, int concertId) async {
+    try {
+      await concertService.startConcert(username, concertId);
+    } catch(e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> cancelConcert(String username, int concertId) async {
+    try {
+      await concertService.endConcert(username, concertId);
     } catch(e) {
       print(e.toString());
     }

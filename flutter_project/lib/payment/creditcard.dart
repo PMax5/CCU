@@ -101,7 +101,11 @@ class CreditCardState extends State<CreditCardOption> {
                                                 "Do you wish to continue with this purchase?",
                                                     () {
                                                   Navigator.of(context).pop();
-                                                  Navigator.pushNamed(context, "/payment/process");
+                                                  Navigator.pushNamed(
+                                                      context,
+                                                      "/payment/process",
+                                                      arguments: ModalRoute.of(context).settings.arguments
+                                                  );
                                                 },
                                                     () {
                                                   Navigator.of(context).pop();

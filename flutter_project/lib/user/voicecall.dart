@@ -97,8 +97,8 @@ class VoiceCallState extends State<VoiceCall> {
                                 "Are you sure you want to quit this voice call?",
                                 "You will not be able to join the voice call again.",
                                     () {
-                                  Navigator.of(context).pop();
-                                  Navigator.pushNamed(context, "/login");
+                                  Navigator.pop(context);
+                                  Navigator.maybePop(context);
                                 },
                                     () {
                                   Navigator.of(context).pop();

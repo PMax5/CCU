@@ -40,10 +40,7 @@ class UserMainPageState extends State<UserMainPage> {
                           Navigator.pushNamed(
                               context,
                               "/user/concertInfo",
-                              arguments: {
-                                "concert": concert,
-                                "user": user
-                              }
+                              arguments: Arguments(user, concert)
                           );
                         },
                         child: Column(
@@ -71,66 +68,55 @@ class UserMainPageState extends State<UserMainPage> {
   }
 
   Widget createArtistMenu(BuildContext context, User user) {
+    //TODO: Put the artist pages here!
     return MainMenu(
       context,
       user,
       FutureBuilder(
-        future: getConcerts(user),
-        builder: (context, concerts) {
-          if (!concerts.hasData) {
-            return Container(
-              padding: EdgeInsets.only(top: 48),
-              child: Text(
-                "You haven't created any concerts yet...",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Color.fromRGBO(170, 170, 170, 1),
-                    fontSize: 18
-                ),
-              )
-            );
+        future: getArtistConcerts(user.username),
+        builder: (context, artistConcerts) {
+          if (!artistConcerts.hasData) {
+            return Center(child: CircularProgressIndicator());
           }
           return ListView.builder(
-            itemCount: concerts.data.length,
-              itemBuilder: (context, index) {
-                Concert concert = concerts.data[index];
-                return Column(
-                  children: <Widget>[
-                    Card(
-                      clipBehavior: Clip.antiAlias,
-                      elevation: 5,
-                      child: new InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context,
-                              "/user/concertInfo",
-                              arguments: {
-                                "concert": concert,
-                                "user": user
-                              }
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Image.asset(concert.image),
-                            ListTile(
-                              leading: Image.asset(concert.artistImage),
-                              title: Text(concert.name),
-                              subtitle: Text(
-                                '${concert.artistName}',
-                                style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                              ),
+            itemCount: artistConcerts.data.length,
+            itemBuilder: (context, index) {
+              print("concerts ${artistConcerts.data[0]}");
+              Concert concert = artistConcerts.data[index];
+              return Column(
+                children: <Widget>[
+                  Card(
+                    clipBehavior: Clip.antiAlias,
+                    elevation: 5,
+                    child: new InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context,
+                            "/user/concertInfo",
+                            arguments: Arguments(user, concert)
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Image.asset(concert.image),
+                          ListTile(
+                            leading: Image.asset(concert.artistImage),
+                            title: Text(concert.name),
+                            subtitle: Text(
+                              '${concert.artistName}',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                );
-              }
+                  ),
+                ],
+              );
+            },
           );
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -141,6 +127,15 @@ class UserMainPageState extends State<UserMainPage> {
         concerts = await concertService.getAllConcerts();
       else
         concerts = await concertService.getArtistConcerts(user.name);
+      return concerts;
+    } catch(e) {
+      print(e.toString());
+    }
+  }
+
+  Future<List<Concert>> getArtistConcerts(String username) async {
+    try {
+      List<Concert> concerts = await concertService.getArtistConcerts(username);
       return concerts;
     } catch(e) {
       print(e.toString());

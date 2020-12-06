@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
+import 'package:flutter_complete_guide/services/ConcertService.dart';
 import '../settings.dart';
 
 class PaymentProcessor extends StatefulWidget {
@@ -12,6 +13,8 @@ class PaymentProcessor extends StatefulWidget {
 }
 
 class PaymentProcessorState extends State<PaymentProcessor> {
+
+  ConcertService concertService = new ConcertService();
 
   Settings projectSettings = new Settings();
 
@@ -75,7 +78,7 @@ class PaymentProcessorState extends State<PaymentProcessor> {
                         )
                     ),
                     onPressed: () {
-                      Navigator.popUntil(context, ModalRoute.withName("/"));
+                      Navigator.popUntil(context, ModalRoute.withName("/user/main"));
                     },
                   ),
                 )
@@ -119,12 +122,17 @@ class PaymentProcessorState extends State<PaymentProcessor> {
                         backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                       ),
                       onPressed: () {
-                        Navigator.popUntil(context, ModalRoute.withName("/"));
+                        Navigator.popUntil(context, ModalRoute.withName("/user/main"));
                       }
                   )
               )
           )
       );
+    }
+
+    if (isValid) {
+      Arguments arguments = ModalRoute.of(context).settings.arguments;
+      buyTicket(arguments.logged_in.username, arguments.concert.id);
     }
 
     return widgets;
@@ -136,13 +144,22 @@ class PaymentProcessorState extends State<PaymentProcessor> {
         padding: EdgeInsets.only(top: 48),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: paymentValid(false)
+            children: paymentValid(true)
         )
     );
   }
 
+  void buyTicket(String username, int concertId) async {
+    try {
+      await concertService.purchaseTicket(username, concertId);
+    } catch(e) {
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
             title: Text("Payment"),

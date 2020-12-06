@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/authentication/type.dart';
+import 'package:flutter_complete_guide/authentication/signup_profile.dart';
 import 'package:flutter_complete_guide/payment/creditcard.dart';
 import 'package:flutter_complete_guide/payment/mbway.dart';
 import 'package:flutter_complete_guide/payment/paymentOptions.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_complete_guide/payment/paymentprocessor.dart';
 import 'package:flutter_complete_guide/payment/paypal.dart';
 import 'package:flutter_complete_guide/user/mainpage.dart';
 import 'package:flutter_complete_guide/user/concertInfo.dart';
+import 'package:flutter_complete_guide/user/concertStream.dart';
 import 'package:flutter_complete_guide/user/voicecall.dart';
 import 'package:flutter_complete_guide/user/userchat.dart';
 
@@ -17,7 +19,7 @@ import 'mainscreen.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {   //ctrl + shift + R (refactor)
+class MyApp extends StatelessWidget {   
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {   //ctrl + shift + R (refactor)
         "/login": (context) => Login(),
         "/signup": (context) => SignUp(),
         "/signup/type": (context) => SignUpType(),
+        "/signup/profile": (context) => SignUpProfile(),
         "/payment": (context) => PaymentOptions(),
         "/payment/creditcard": (context) => CreditCardOption(),
         "/payment/paypal": (context) => PaypalOption(),
@@ -36,6 +39,7 @@ class MyApp extends StatelessWidget {   //ctrl + shift + R (refactor)
         "/payment/process": (context) => PaymentProcessor(),
         "/user/main": (context) => UserMainPage(),
         "/user/concertInfo": (context) => ConcertInfoPage(),
+        "/user/concertStream": (context) => ConcertStream(),
         "/user/voicecall": (context) => VoiceCall(),
         "/user/userchat": (context) => UserChat(),
       },

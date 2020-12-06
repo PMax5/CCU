@@ -72,7 +72,7 @@ class MainPage extends StatelessWidget {
                       )
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, "/user/concertInfo");
+                    Navigator.pushNamed(context, "/signup");
                   },
                 ),
               )

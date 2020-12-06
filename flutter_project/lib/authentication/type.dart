@@ -108,11 +108,11 @@ class SignUpTypeState extends State<SignUpType> {
                               ),
                               onPressed: () {
                                 formValues["type"] = userType == Type.FAN ? "FAN" : "ARTIST";
-
-                                // TODO: Route to next page.
-                                /*if (userType == Type.FAN)
-
-                                else*/
+                                Navigator.pushNamed(
+                                    context,
+                                    "/signup/profile",
+                                    arguments: formValues
+                                );
                               }
                           )
                       )

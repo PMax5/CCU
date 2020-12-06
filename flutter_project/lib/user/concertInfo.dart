@@ -47,7 +47,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                               ),
                             ),
                             trailing: Container(
-                              width: 140,
+                              width: (user.type == 'FAN' ? 140 : 100),
                               height: 40,
                               child: RaisedButton(
                                 shape: RoundedRectangleBorder(
@@ -91,13 +91,12 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                       ]
                   )
               ),
-              // TODO change button according to state of ticket (if bought or not)
-              ConcertActionButton(concert, user)
+              (user.type == 'FAN' ? FanActionButton(concert, user) : ArtistActionButtons(concert, user))
             ]
         ));
   }
 
-  Widget ConcertActionButton(Concert concert, User user) {
+  Widget FanActionButton(Concert concert, User user) {
     return FutureBuilder(
         future: getFanConcerts(user.username),
         builder: (context, bought_concerts) {
@@ -110,165 +109,163 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
               bought = true;
             }
           });
-          if (user.type == "FAN") {
-            if (bought) {
-              // TODO change this to go to stream
-              return BottomButtonWithDialog(
-                  context, 'GO TO STREAM', "/payment", Arguments(user, concert),
-                  "Voice call with the artist",
-                  "By going to the stream, you’re enabled to win a voice call with the \ "
-                    "artist along with other fans at the end of the concert. You’ll receive \ "
-                    "a notification in case this happens.", 350
-              );
-            }
-            return LargeBottomButton(context, 'BUY TICKET', "/payment", Arguments(user, concert));
-          }
-          // TODO change this to go to stream
-          // FIXME not aligned
-          return Row(
-            children: [
-              Expanded(
-                child: Align(
-                  alignment: FractionalOffset.bottomCenter,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
-                    child: Container(
-                      width: 175,
-                      height: projectSettings.smallButtonHeight,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(5.0),
-                            side: BorderSide(
-                                color: Colors.black,
-                                width: 2
-                            )
-                        ),
-                        child: Text(
-                            'CANCEL STREAM',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black
-                            )
-                        ),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (_) => ConfirmationDialog(
-                                  "Are you sure you want to cancel this concert?",
-                                  "By cancelling this concert, you are deleting the concert info and if people \ "
-                                      "already bought tickets for this concert, they will be automatically refunded.",
-                                      () {
-                                    Navigator.of(context).pop();
-                                    Navigator.pushNamed(
-                                        context,
-                                        "/payment", // TODO create cancel concert page
-                                        arguments: Arguments(user, concert)
-                                    );
-                                  },
-                                      () {
-                                    Navigator.of(context).pop();
-                                  }
-                              )
+          if (bought) {
+            // TODO change this to go to stream
+            return BottomButton(
+                'GO TO STREAM',
+                () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => ConfirmationDialog(
+                        "Voice call with the artist",
+                        "By going to the stream, you’re enabled to win a voice call with the \ "
+                            "artist along with other fans at the end of the concert. You’ll receive \ "
+                            "a notification in case this happens.",
+                            () {
+                          Navigator.of(context).pop();
+                          Navigator.pushNamed(
+                              context,
+                              "/payment",
+                              arguments: Arguments(user, concert)
                           );
                         },
-                      ),
-                    ),
-                  )
-                )
-              ),
-              BottomButtonWithDialog(
-                context, 'START STREAM', "/payment", Arguments(user, concert),
-                "Are you sure you want to start the concert?",
-                "By clicking on this button, your stream will start immediately and everyone \ "
-                " who bought a ticket for it will have access to the stream.",
-                175
-              )
-            ]
+                            () {
+                          Navigator.of(context).pop();
+                        }
+                    )
+                  );
+                },
+                350
+            );
+          }
+          return BottomButton(
+              'BUY TICKET',
+              () {
+                Navigator.pushNamed(
+                    context,
+                    "/payment",
+                    arguments:  Arguments(user, concert)
+                );
+              },
+              350
           );
     });
   }
 
-  Widget LargeBottomButton(BuildContext context, String buttonText, String pageTo, Arguments arguments) {
+  Widget ArtistActionButtons(Concert concert, User user) {
+    // TODO change this to go to stream
+    // FIXME not aligned
     return Expanded(
         child: Align(
-            alignment: FractionalOffset.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 20.0),
-              child: Container(
-                width: 350,
-                height: projectSettings.smallButtonHeight,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(5.0),
+          alignment: FractionalOffset.bottomCenter,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
+                child: Container(
+                  width: 165,
+                  height: projectSettings.smallButtonHeight,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(5.0),
+                        side: BorderSide(
+                            color: Colors.black,
+                            width: 2
+                        )
+                    ),
+                    child: Text(
+                        'CANCEL STREAM',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black
+                        )
+                    ),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) => ConfirmationDialog(
+                              "Are you sure you want to cancel this concert?",
+                              "By cancelling this concert, you are deleting the concert info and if people \ "
+                                  "already bought tickets for this concert, they will be automatically refunded.",
+                                  () {
+                                Navigator.of(context).pop();
+                                Navigator.pushNamed(
+                                    context,
+                                    "/payment", // TODO create cancel concert page
+                                    arguments: Arguments(user, concert)
+                                );
+                              },
+                                  () {
+                                Navigator.of(context).pop();
+                              }
+                          )
+                      );
+                    },
                   ),
-                  color: projectSettings.mainColor,
-                  child: Text(
-                      buttonText,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white
-                      )
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(
-                        context,
-                        pageTo,
-                        arguments: arguments
-                    );
-                  },
                 ),
               ),
-            )
+              PinkButton(
+                'START STREAM',
+                () {
+                  showDialog(
+                      context: context,
+                      builder: (_) => ConfirmationDialog(
+                          "Are you sure you want to start the concert?",
+                          "By clicking on this button, your stream will start immediately and everyone \ "
+                            " who bought a ticket for it will have access to the stream.",
+                              () {
+                            Navigator.of(context).pop();
+                            Navigator.pushNamed(
+                                context,
+                                "/payment",
+                                arguments: Arguments(user, concert)
+                            );
+                          },
+                              () {
+                            Navigator.of(context).pop();
+                          }
+                      )
+                  );
+                },
+                165
+              ),
+            ]
+          )
         )
     );
   }
 
-  // FIXME repeated code
-  Widget BottomButtonWithDialog(BuildContext context, String buttonText, String pageTo, Arguments arguments, String title, String text, double width) {
+  Widget BottomButton(String buttonText, Function() onPressed, double width) {
     return Expanded(
         child: Align(
             alignment: FractionalOffset.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 20.0),
-              child: Container(
-                width: width,
-                height: projectSettings.smallButtonHeight,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(5.0),
-                  ),
-                  color: projectSettings.mainColor,
-                  child: Text(
-                      buttonText,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white
-                      )
-                  ),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (_) => ConfirmationDialog(
-                            title,
-                            text,
-                                () {
-                              Navigator.of(context).pop();
-                              Navigator.pushNamed(
-                                  context,
-                                  pageTo,
-                                  arguments: arguments
-                              );
-                            },
-                                () {
-                              Navigator.of(context).pop();
-                            }
-                        )
-                    );
-                  },
-                ),
-              ),
-            )
+            child: PinkButton(buttonText, onPressed, width)
         )
+    );
+  }
+
+  Widget PinkButton(String buttonText, Function() onPressed, double width) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 20.0),
+      child: Container(
+        width: width,
+        height: projectSettings.smallButtonHeight,
+        child: RaisedButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(5.0),
+            ),
+            color: projectSettings.mainColor,
+            child: Text(
+                buttonText,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white
+                )
+            ),
+            onPressed: onPressed
+        ),
+      ),
     );
   }
 

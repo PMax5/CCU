@@ -112,7 +112,9 @@ class MBWayState extends State<MBWayOption> {
             title: Text("Payment"),
             backgroundColor: projectSettings.mainColor
         ),
-        body: this.buildForm(context)
+        body: SingleChildScrollView(
+          child: this.buildForm(context)
+        )
     );
   }
 

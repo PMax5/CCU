@@ -320,14 +320,14 @@ class VoiceCallState extends State<VoiceCall> {
 
   @override
   Widget build(BuildContext context) {
-    String userType = ModalRoute.of(context).settings.arguments;
+    User user = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
         appBar: AppBar(
           title: Text("Voice Call"),
           backgroundColor: projectSettings.mainColor,
         ),
-        body: userType == "FAN" ? this.fansVoiceCall(context) : this.artistsVoiceCall(context)
+        body: user == "FAN" ? this.fansVoiceCall(context) : this.artistsVoiceCall(context)
     );
   }
 }

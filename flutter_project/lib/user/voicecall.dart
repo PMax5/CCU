@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
+import '../models/user.dart';
 
 class VoiceCall extends StatefulWidget {
   VoiceCall({Key key}) : super(key: key);
@@ -8,8 +9,6 @@ class VoiceCall extends StatefulWidget {
   @override
   VoiceCallState createState() => VoiceCallState();
 }
-
-
 
 class VoiceCallState extends State<VoiceCall> {
   bool _soundOFF = false, _microOFF = false;
@@ -203,7 +202,7 @@ class VoiceCallState extends State<VoiceCall> {
                         context: context,
                         builder: (_) => ConfirmationDialog(
                             "Are you sure you want to quit this voice call?",
-                            "You will not be able to join the voice call again.",
+                            "You quit the voice call with your favourite artist.",
                                 () {
                               Navigator.pop(context);
                               Navigator.maybePop(context);
@@ -321,12 +320,14 @@ class VoiceCallState extends State<VoiceCall> {
 
   @override
   Widget build(BuildContext context) {
+    String userType = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
         appBar: AppBar(
           title: Text("Voice Call"),
           backgroundColor: projectSettings.mainColor,
         ),
-        body: this.artistsVoiceCall(context)
+        body: userType == "FAN" ? this.fansVoiceCall(context) : this.artistsVoiceCall(context)
     );
   }
 }

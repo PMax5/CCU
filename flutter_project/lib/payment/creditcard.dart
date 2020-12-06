@@ -132,7 +132,9 @@ class CreditCardState extends State<CreditCardOption> {
             title: Text("Payment"),
             backgroundColor: projectSettings.mainColor
         ),
-        body: this.buildForm(context)
+        body: SingleChildScrollView(
+          child:this.buildForm(context)
+        ),
     );
   }
 

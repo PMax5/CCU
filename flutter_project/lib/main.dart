@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/authentication/type.dart';
+import 'package:flutter_complete_guide/authentication/signup_profile.dart';
 import 'package:flutter_complete_guide/payment/creditcard.dart';
 import 'package:flutter_complete_guide/payment/mbway.dart';
 import 'package:flutter_complete_guide/payment/paymentOptions.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {   //ctrl + shift + R (refactor)
         "/login": (context) => Login(),
         "/signup": (context) => SignUp(),
         "/signup/type": (context) => SignUpType(),
+        "/signup/profile": (context) => SignUpProfile(),
         "/payment": (context) => PaymentOptions(),
         "/payment/creditcard": (context) => CreditCardOption(),
         "/payment/paypal": (context) => PaypalOption(),

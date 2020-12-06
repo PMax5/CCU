@@ -161,7 +161,11 @@ class PaymentOptionsState extends State<PaymentOptions> {
                                   if (route == null)
                                     return;
 
-                                  Navigator.pushNamed(context, route);
+                                  Navigator.pushNamed(
+                                      context,
+                                      route,
+                                      arguments: ModalRoute.of(context).settings.arguments
+                                  );
                                 }
                             )
                         )

@@ -7,7 +7,6 @@ class Settings {
   final double smallButtonHeight = 52;
   final Color mainColor = Color.fromRGBO(149, 0, 62, 1);
   final Image logo = Image.asset('assets/images/logo.png', fit: BoxFit.cover);
-  final Image general_profile = Image.asset('assets/images/profile_general.png', fit: BoxFit.cover);
 
   Widget headerPayment(String option, String imagePath) {
 

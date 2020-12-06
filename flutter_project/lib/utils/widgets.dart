@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/settings.dart';
+import 'package:flutter_complete_guide/models/user.dart';
 
 
 Settings projectSettings = new Settings();
@@ -70,9 +71,9 @@ Widget FormInputField(String hintText, String invalidInputMessage, int maxCharac
       )
   );
 }
-Widget MainMenu(BuildContext context, Widget mainPage) {
+Widget MainMenu(BuildContext context, User user, Widget mainPage) {
   return DefaultTabController(
-    length: 4,
+    length: user.type == "FAN" ? 4 : 3,
     child: Column(
       children: <Widget>[
         Padding(
@@ -93,10 +94,14 @@ Widget MainMenu(BuildContext context, Widget mainPage) {
                     unselectedLabelColor: Color.fromRGBO(100, 100, 100, 1),
                     labelColor: projectSettings.mainColor,
                     indicatorColor: projectSettings.mainColor,
-                    tabs: [
+                    tabs: user.type == "FAN" ? [
                       Tab(icon: Icon(Icons.library_music)),
                       Tab(icon: Icon(Icons.forum)),
                       Tab(icon: Icon(Icons.notifications)),
+                      Tab(icon: Icon(Icons.menu))
+                    ] : [
+                      Tab(icon: Icon(Icons.library_music)),
+                      Tab(icon: Icon(Icons.forum)),
                       Tab(icon: Icon(Icons.menu))
                     ]
                 )
@@ -105,86 +110,15 @@ Widget MainMenu(BuildContext context, Widget mainPage) {
         Container(
           height: MediaQuery.of(context).size.height - 150,
           child: TabBarView(
-              children: [
+              children: user.type == "FAN" ? [
                 mainPage,
-                ListView(
-                  children: [
-                    ListTile(
-                      title: Text("Voice Calls",
-                          style: TextStyle(fontSize: 20)),
-                    ),
-                    Image.asset('assets/images/divider.png'),
-                    ListTile(
-                        title: Text("James Smith"),
-                        leading: Icon(Icons.volume_up),
-                        trailing:Image.asset('assets/images/mini_james.png'),
-                        onTap: () {
-                          // TODO: change to voice call
-                          Navigator.pushNamed(context, "/user/voicecall");
-                        }
-                    ),
-                    ListTile(
-                      title: Text("Chat Rooms",
-                          style: TextStyle(fontSize: 20)),
-                    ),
-                    Image.asset('assets/images/divider.png'),
-                    ListTile(
-                      title: Text("James Smith's Concert"),
-                      leading: Icon(Icons.sms),
-                    ),
-                  ],
-                ),
-                ListView(
-                  children: [
-                    ListTile(
-                      title: Text("Notification History",
-                          style: TextStyle(fontSize: 20)),
-                    ),
-                    Image.asset('assets/images/divider.png'),
-                    ListTile(
-                      title: Text("New James Smith’s Concert"),
-                      trailing: Icon(Icons.delete),
-                    ),
-                  ],
-                ),
-                ListView(
-                    children: [
-                      Divider(
-                        color: Colors.grey,
-                        height: 10,
-                        indent: 10,
-                        endIndent: 10,
-                      ),
-                      ListTile(
-                        title: Text("Profile",
-                            style: TextStyle(fontSize: 20)),
-                        leading: Icon(Icons.person, size: 35),
-                        onTap: () { //TODO: redirecionar para ecra de perfil
-                          Navigator.pushNamed(context, "/login");
-                        },
-                      ),
-                      Divider(
-                        color: Colors.grey,
-                        height: 10,
-                        indent: 10,
-                        endIndent: 10,
-                      ),
-                      ListTile(
-                          title: Text("Log Out",
-                              style: TextStyle(fontSize: 20)),
-                          leading: Icon(Icons.logout, size: 35),
-                          onTap: () { //
-                            Navigator.pushNamed(context, "/");
-                          }
-                      ),
-                      Divider(
-                        color: Colors.grey,
-                        height: 10,
-                        indent: 10,
-                        endIndent: 10,
-                      ),
-                    ]
-                )
+                ChatRooms(context),
+                Notifications(context),
+                ExtraMenu(context)
+              ] : [
+                mainPage,
+                ChatRooms(context),
+                ExtraMenu(context)
               ]
           ),
         ),
@@ -193,6 +127,92 @@ Widget MainMenu(BuildContext context, Widget mainPage) {
   );
 }
 
+Widget ChatRooms(BuildContext context) {
+  return ListView(
+    children: [
+      ListTile(
+        title: Text("Voice Calls",
+            style: TextStyle(fontSize: 20)),
+      ),
+      Image.asset('assets/images/divider.png'),
+      ListTile(
+          title: Text("James Smith"),
+          leading: Icon(Icons.volume_up),
+          trailing:Image.asset('assets/images/mini_james.png'),
+          onTap: () {
+            // TODO: change to voice call
+            Navigator.pushNamed(context, "/user/voicecall");
+          }
+      ),
+      ListTile(
+        title: Text("Chat Rooms",
+            style: TextStyle(fontSize: 20)),
+      ),
+      Image.asset('assets/images/divider.png'),
+      ListTile(
+        title: Text("James Smith's Concert"),
+        leading: Icon(Icons.sms),
+      ),
+    ],
+  );
+}
+
+Widget Notifications(BuildContext context) {
+  return ListView(
+    children: [
+      ListTile(
+        title: Text("Notification History",
+            style: TextStyle(fontSize: 20)),
+      ),
+      Image.asset('assets/images/divider.png'),
+      ListTile(
+        title: Text("New James Smith’s Concert"),
+        trailing: Icon(Icons.delete),
+      ),
+    ],
+  );
+}
+
+Widget ExtraMenu(BuildContext context) {
+  return ListView(
+      children: [
+        Divider(
+          color: Colors.grey,
+          height: 10,
+          indent: 10,
+          endIndent: 10,
+        ),
+        ListTile(
+          title: Text("Profile",
+              style: TextStyle(fontSize: 20)),
+          leading: Icon(Icons.person, size: 35),
+          onTap: () { //TODO: redirecionar para ecra de perfil
+            Navigator.pushNamed(context, "/login");
+          },
+        ),
+        Divider(
+          color: Colors.grey,
+          height: 10,
+          indent: 10,
+          endIndent: 10,
+        ),
+        ListTile(
+            title: Text("Log Out",
+                style: TextStyle(fontSize: 20)),
+            leading: Icon(Icons.logout, size: 35),
+            onTap: () { //
+              Navigator.pushNamed(context, "/");
+            }
+        ),
+        Divider(
+          color: Colors.grey,
+          height: 10,
+          indent: 10,
+          endIndent: 10,
+        ),
+      ]
+  );
+}
 
 Widget ConfirmationDialog(String title, String content, Function onConfirm, Function onBack) {
   return AlertDialog(
@@ -253,9 +273,10 @@ Widget TipDialog(String title, String description, Function onOK) {
   );
 }
 
-Widget ConcertInfoMenu(BuildContext context, String title, String description, String date, String image) {
+Widget ConcertInfoMenu(BuildContext context, String title, String description, String date, String image, User user) {
   return MainMenu(
       context,
+      user,
       Column(
         children: [
           Padding(

@@ -45,7 +45,7 @@ class SignUpProfileState extends State<SignUpProfile> {
             backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(200, 200, 200, 0.8))
           ),
           onPressed: () {
-            //TODO: this works kinda weird, fix later?
+            //TODO: this works kinda weird, fix later
             setState(() {
               if (formValues["type"] == "FAN")
                 profileImagePath = 'assets/images/profile_fan.png';
@@ -108,8 +108,10 @@ class SignUpProfileState extends State<SignUpProfile> {
             padding: EdgeInsets.only(bottom: 14),
             child: Container(
                 width: projectSettings.textInputWidth,
-                height: projectSettings.textInputHeight + 50,
+                height: projectSettings.textInputHeight + 100,
                 child: TextFormField(
+                    maxLines: 5,
+                    maxLength: 500,
                     decoration: InputDecoration(
                         enabledBorder: inputBorder(Colors.black),
                         focusedBorder: inputBorder(Colors.black),
@@ -156,19 +158,19 @@ class SignUpProfileState extends State<SignUpProfile> {
                             arguments: user
                         );
                       }
+                      else {
+                        showDialog(
+                            context: context,
+                            builder: (_) => TipDialog(
+                                "Notice",
+                                "E-mail or username already taken.",
+                                    () {
+                                  Navigator.of(context).pop();
+                                }
+                            )
+                        );
+                      }
                     });
-                  }
-                  else {
-                    showDialog(
-                      context: context,
-                      builder: (_) => TipDialog(
-                          "Notice",
-                          "Something went wrong, please try again.",
-                          () {
-                            Navigator.of(context).pop();
-                          }
-                      )
-                    );
                   }
                 }
             )

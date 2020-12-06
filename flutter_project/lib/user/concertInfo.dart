@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/concert.dart';
+import '../models/user.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 
 class ConcertInfoPage extends StatefulWidget {
@@ -15,7 +16,9 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
   @override
   Widget build(BuildContext context) {
 
-    Concert concert = ModalRoute.of(context).settings.arguments;
+    Map args = ModalRoute.of(context).settings.arguments as Map;
+    Concert concert = args["concert"];
+    User user = args["user"];
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -27,7 +30,8 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                 concert.name,
                 concert.description,
                 "10th November 2020 9 p.m.", //FIXME
-                concert.image
+                concert.image,
+                user
               )
             ]
           )

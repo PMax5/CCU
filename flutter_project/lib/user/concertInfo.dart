@@ -110,7 +110,6 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
             }
           });
           if (bought) {
-            // TODO change this to go to stream
             return BottomButton(
                 'GO TO STREAM',
                 () {
@@ -125,7 +124,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                           Navigator.of(context).pop();
                           Navigator.pushNamed(
                               context,
-                              "/payment",
+                              "/user/concertStream",
                               arguments: Arguments(user, concert)
                           );
                         },
@@ -153,8 +152,6 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
   }
 
   Widget ArtistActionButtons(Concert concert, User user) {
-    // TODO change this to go to stream
-    // FIXME not aligned
     return Expanded(
         child: Align(
           alignment: FractionalOffset.bottomCenter,
@@ -218,7 +215,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                             Navigator.of(context).pop();
                             Navigator.pushNamed(
                                 context,
-                                "/payment",
+                                "/user/concertStream",
                                 arguments: Arguments(user, concert)
                             );
                           },

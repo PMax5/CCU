@@ -327,7 +327,7 @@ class VoiceCallState extends State<VoiceCall> {
           title: Text("Voice Call"),
           backgroundColor: projectSettings.mainColor,
         ),
-        body: user == "FAN" ? this.fansVoiceCall(context) : this.artistsVoiceCall(context)
+        body: user.type == "FAN" ? this.fansVoiceCall(context) : this.artistsVoiceCall(context)
     );
   }
 }

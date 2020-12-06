@@ -76,54 +76,77 @@ class UserMainPageState extends State<UserMainPage> {
         future: getArtistConcerts(user.username),
         builder: (context, artistConcerts) {
           if (!artistConcerts.hasData || artistConcerts.data.length == 0) {
-            return Container(
-                padding: EdgeInsets.only(top: 48),
-                child: Text(
-                  "You haven't created any concerts yet...",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
+            return Scaffold(
+              body: Center(
+                child: Container(
+                  padding: EdgeInsets.only(top: 48),
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    "You haven't created any concerts yet...",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
                       color: Color.fromRGBO(170, 170, 170, 1),
                       fontSize: 18
-                  ),
+                    ),
+                  )
                 )
+              ),
+              floatingActionButton: FloatingActionButton.extended(
+                onPressed: () {
+                  //TODO: link to concert creation page
+                },
+                label: Text("CREATE"),
+                icon: Icon(Icons.add),
+                backgroundColor: projectSettings.mainColor,
+              )
             );
           }
-          return ListView.builder(
-            itemCount: artistConcerts.data.length,
-            itemBuilder: (context, index) {
-              print("concerts ${artistConcerts.data[0]}");
-              Concert concert = artistConcerts.data[index];
-              return Column(
-                children: <Widget>[
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    elevation: 5,
-                    child: new InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
+          return Scaffold(
+            body: ListView.builder(
+              itemCount: artistConcerts.data.length,
+              itemBuilder: (context, index) {
+                print("concerts ${artistConcerts.data[0]}");
+                Concert concert = artistConcerts.data[index];
+                return Column(
+                  children: <Widget>[
+                    Card(
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 5,
+                      child: new InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
                             context,
                             "/user/concertInfo",
                             arguments: Arguments(user, concert)
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Image.asset(concert.image),
-                          ListTile(
-                            leading: Image.asset(concert.artistImage),
-                            title: Text(concert.name),
-                            subtitle: Text(
-                              '${concert.artistName}',
-                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Image.asset(concert.image),
+                            ListTile(
+                              leading: Image.asset(concert.artistImage),
+                              title: Text(concert.name),
+                              subtitle: Text(
+                                '${concert.artistName}',
+                                style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              );
-            },
+                  ],
+                );
+              },
+            ),
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: () {
+                //TODO: link to concert creation page
+              },
+              label: Text("CREATE"),
+              icon: Icon(Icons.add),
+              backgroundColor: projectSettings.mainColor,
+            )
           );
         },
       ),
@@ -163,18 +186,7 @@ class UserMainPageState extends State<UserMainPage> {
             user.type == "FAN" ? this.createFanMenu(context, user) : this.createArtistMenu(context, user)
           ]
         )
-      ),
-      floatingActionButton: new Visibility(
-        visible: (user.type == "ARTIST"),
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            //TODO: link to concert creation page
-          },
-          label: Text("CREATE"),
-          icon: Icon(Icons.add),
-          backgroundColor: projectSettings.mainColor,
-        ),
-      ),
+      )
     );
   }
 }

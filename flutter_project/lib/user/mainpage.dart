@@ -21,7 +21,7 @@ class UserMainPageState extends State<UserMainPage> {
       context,
         user,
         FutureBuilder(
-          future: getConcerts(user),
+          future: getConcerts(),
           builder: (context, concerts) {
             if (!concerts.hasData) {
               return Center(child: CircularProgressIndicator());
@@ -75,8 +75,18 @@ class UserMainPageState extends State<UserMainPage> {
       FutureBuilder(
         future: getArtistConcerts(user.username),
         builder: (context, artistConcerts) {
-          if (!artistConcerts.hasData) {
-            return Center(child: CircularProgressIndicator());
+          if (!artistConcerts.hasData || artistConcerts.data.length == 0) {
+            return Container(
+                padding: EdgeInsets.only(top: 48),
+                child: Text(
+                  "You haven't created any concerts yet...",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Color.fromRGBO(170, 170, 170, 1),
+                      fontSize: 18
+                  ),
+                )
+            );
           }
           return ListView.builder(
             itemCount: artistConcerts.data.length,
@@ -120,13 +130,9 @@ class UserMainPageState extends State<UserMainPage> {
     );
   }
 
-  Future<List<Concert>> getConcerts(User user) async {
+  Future<List<Concert>> getConcerts() async {
     try {
-      List<Concert> concerts;
-      if (user.type == "FAN")
-        concerts = await concertService.getAllConcerts();
-      else
-        concerts = await concertService.getArtistConcerts(user.name);
+      List<Concert> concerts = await concertService.getAllConcerts();
       return concerts;
     } catch(e) {
       print(e.toString());
@@ -135,8 +141,8 @@ class UserMainPageState extends State<UserMainPage> {
 
   Future<List<Concert>> getArtistConcerts(String username) async {
     try {
-      List<Concert> concerts = await concertService.getArtistConcerts(username);
-      return concerts;
+      List<Concert> artistConcerts = await concertService.getArtistConcerts(username);
+      return artistConcerts;
     } catch(e) {
       print(e.toString());
     }

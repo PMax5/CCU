@@ -91,7 +91,9 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                       ]
                   )
               ),
-              (user.type == 'FAN' ? FanActionButton(concert, user) : ArtistActionButtons(concert, user))
+              (user.type == 'FAN' && concert.status != 2 ? FanActionButton(concert, user) :
+              user.type == 'ARTIST' && concert.status != 2 ? ArtistActionButtons(concert, user) :
+              Container())
             ]
         ));
   }

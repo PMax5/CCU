@@ -21,7 +21,7 @@ class UserMainPageState extends State<UserMainPage> {
       context,
         user,
         FutureBuilder(
-          future: getConcerts(),
+          future: getAvailableConcerts(),
           builder: (context, concerts) {
             if (!concerts.hasData) {
               return Center(child: CircularProgressIndicator());
@@ -68,7 +68,6 @@ class UserMainPageState extends State<UserMainPage> {
   }
 
   Widget createArtistMenu(BuildContext context, User user) {
-    //TODO: Put the artist pages here!
     return MainMenu(
       context,
       user,
@@ -91,7 +90,6 @@ class UserMainPageState extends State<UserMainPage> {
           return ListView.builder(
             itemCount: artistConcerts.data.length,
             itemBuilder: (context, index) {
-              print("concerts ${artistConcerts.data[0]}");
               Concert concert = artistConcerts.data[index];
               return Column(
                 children: <Widget>[
@@ -130,10 +128,10 @@ class UserMainPageState extends State<UserMainPage> {
     );
   }
 
-  Future<List<Concert>> getConcerts() async {
+  Future<List<Concert>> getAvailableConcerts() async {
     try {
       List<Concert> concerts = await concertService.getAllConcerts();
-      return concerts;
+      return concerts.where((c) => c.status != 2).toList();
     } catch(e) {
       print(e.toString());
     }

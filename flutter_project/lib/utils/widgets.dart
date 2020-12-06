@@ -114,12 +114,12 @@ Widget MainMenu(BuildContext context, User user, Widget mainPage) {
           child: TabBarView(
               children: user.type == "FAN" ? [
                 mainPage,
-                ChatRooms(context),
+                ChatRooms(context, user.type),
                 Notifications(context),
                 ExtraMenu(context)
               ] : [
                 mainPage,
-                ChatRooms(context),
+                ChatRooms(context, user.type),
                 ExtraMenu(context)
               ]
           ),
@@ -129,7 +129,7 @@ Widget MainMenu(BuildContext context, User user, Widget mainPage) {
   );
 }
 
-Widget ChatRooms(BuildContext context) {
+Widget ChatRooms(BuildContext context, String userType) {
   return ListView(
     children: [
       ListTile(
@@ -142,8 +142,23 @@ Widget ChatRooms(BuildContext context) {
           leading: Icon(Icons.volume_up),
           trailing:Image.asset('assets/images/mini_james.png'),
           onTap: () {
-            // TODO: change to voice call
-            Navigator.pushNamed(context, "/user/voicecall");
+            if (userType == "FAN")
+              Navigator.pushNamed(context, "/user/voicecall");
+            else {
+              showDialog(
+                  context: context,
+                  builder: (_) => ConfirmationDialog(
+                      "Are you sure you want to start this voice call?",
+                      "You will start a voice call with three of your fans.",
+                          () {
+                        Navigator.of(context).pop();
+                        Navigator.pushNamed(context, "/user/voicecall",
+                            arguments:
+                            ModalRoute.of(context).settings.arguments);
+                      }, () {
+                    Navigator.of(context).pop();
+                  }));
+            }
           }
       ),
       ListTile(

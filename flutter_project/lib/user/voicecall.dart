@@ -9,8 +9,6 @@ class VoiceCall extends StatefulWidget {
   VoiceCallState createState() => VoiceCallState();
 }
 
-
-
 class VoiceCallState extends State<VoiceCall> {
   bool _soundOFF = false, _microOFF = false;
   bool _fan1OFF = false, _fan2OFF = false, _fan3OFF = false;
@@ -326,7 +324,7 @@ class VoiceCallState extends State<VoiceCall> {
           title: Text("Voice Call"),
           backgroundColor: projectSettings.mainColor,
         ),
-        body: this.artistsVoiceCall(context)
+        body: this.fansVoiceCall(context)
     );
   }
 }

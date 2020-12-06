@@ -16,7 +16,7 @@ class UserMainPageState extends State<UserMainPage> {
 
   ConcertService concertService = new ConcertService();
 
-  Widget createFanMenu(BuildContext context, String userUsername) {
+  Widget createFanMenu(BuildContext context, User user) {
     return MainMenu(
       context,
         FutureBuilder(
@@ -39,7 +39,7 @@ class UserMainPageState extends State<UserMainPage> {
                           Navigator.pushNamed(
                               context,
                               "/user/concertInfo",
-                              arguments: Arguments(userUsername, concert)
+                              arguments: Arguments(user, concert)
                           );
                         },
                         child: Column(
@@ -66,12 +66,12 @@ class UserMainPageState extends State<UserMainPage> {
     );
   }
 
-  Widget createArtistMenu(BuildContext context, String userUsername) {
+  Widget createArtistMenu(BuildContext context, User user) {
     //TODO: Put the artist pages here!
     return MainMenu(
       context,
       FutureBuilder(
-        future: getArtistConcerts(userUsername),
+        future: getArtistConcerts(user.username),
         builder: (context, artistConcerts) {
           if (!artistConcerts.hasData) {
             return Center(child: CircularProgressIndicator());
@@ -91,7 +91,7 @@ class UserMainPageState extends State<UserMainPage> {
                         Navigator.pushNamed(
                             context,
                             "/user/concertInfo",
-                            arguments: Arguments(userUsername, concert)
+                            arguments: Arguments(user, concert)
                         );
                       },
                       child: Column(
@@ -148,7 +148,7 @@ class UserMainPageState extends State<UserMainPage> {
               padding: EdgeInsets.only(top: 40),
               child: CenteredHeaderLogo()
             ),
-            user.type == "FAN" ? this.createFanMenu(context, user.username) : this.createArtistMenu(context, user.username)
+            user.type == "FAN" ? this.createFanMenu(context, user) : this.createArtistMenu(context, user)
           ]
         )
       )

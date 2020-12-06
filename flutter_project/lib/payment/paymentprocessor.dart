@@ -132,7 +132,7 @@ class PaymentProcessorState extends State<PaymentProcessor> {
 
     if (isValid) {
       Arguments arguments = ModalRoute.of(context).settings.arguments;
-      buyTicket(arguments.logged_in_username, arguments.concert.id);
+      buyTicket(arguments.logged_in.username, arguments.concert.id);
     }
 
     return widgets;

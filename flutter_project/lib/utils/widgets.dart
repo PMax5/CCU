@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/concert.dart';
+import '../models/user.dart';
 import 'package:flutter_complete_guide/settings.dart';
 
 
@@ -254,41 +255,6 @@ Widget TipDialog(String title, String description, Function onOK) {
   );
 }
 
-Widget LargeBottomButton(BuildContext context, String buttonText, String pageTo, Arguments arguments) {
-  return Expanded(
-      child: Align(
-          alignment: FractionalOffset.bottomCenter,
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 20.0),
-            child: Container(
-              width: 350,
-              height: projectSettings.smallButtonHeight,
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(5.0),
-                ),
-                color: projectSettings.mainColor,
-                child: Text(
-                    buttonText,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white
-                    )
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(
-                      context,
-                      pageTo,
-                      arguments: arguments
-                  );
-                },
-              ),
-            ),
-          )
-      )
-  );
-}
-
 Widget BackButtonLogoHeader(BuildContext context) {
   return Row(
       children: [
@@ -316,8 +282,8 @@ Widget BackButtonLogoHeader(BuildContext context) {
 }
 
 class Arguments {
-  final String logged_in_username;
+  final User logged_in;
   final Concert concert;
 
-  Arguments(this.logged_in_username, this.concert);
+  Arguments(this.logged_in, this.concert);
 }

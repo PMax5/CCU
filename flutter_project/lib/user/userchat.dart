@@ -80,7 +80,8 @@ class UserChatState extends State<UserChat> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Container(
-              margin: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: new EdgeInsets.all(10.0),
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -104,7 +105,8 @@ class UserChatState extends State<UserChat> {
                 ),
               ),
               Container(
-              margin: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: new EdgeInsets.all(10.0),
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -128,7 +130,8 @@ class UserChatState extends State<UserChat> {
                 ),
               ),
               Container(
-              margin: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: new EdgeInsets.all(10.0),
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

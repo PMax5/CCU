@@ -74,6 +74,8 @@ class UserChatState extends State<UserChat> {
               backgroundColor: projectSettings.mainColor,
           ),
       body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.only(top: 360.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
@@ -170,6 +172,7 @@ class UserChatState extends State<UserChat> {
             )
           ],
         ),
+      ),
       ),
     );
   }

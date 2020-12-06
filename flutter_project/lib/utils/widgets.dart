@@ -131,6 +131,9 @@ Widget MainMenu(BuildContext context, Widget mainPage) {
                     ListTile(
                       title: Text("James Smith's Concert"),
                       leading: Icon(Icons.sms),
+                      onTap: () {  
+                        Navigator.pushNamed(context, "/user/userchat");
+                      },
                     ),
                   ],
                 ),

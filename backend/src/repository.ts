@@ -191,7 +191,12 @@ export class Repository {
         if (concert !== undefined && user !== undefined) {
             if (user.concerts === undefined)
                 user.concerts = new Array<number>();
+
             user.concerts.push(id);
+            
+            if (concert.participants !== undefined)
+                concert.participants.push(user);
+            
             return true;
         }
 

@@ -209,7 +209,6 @@ export class Handlers {
     sendConcertMessage(req: Request, res: Response) {
         let messages = this.repository.sendConcertMessage(Number(req.params.id), req.body);
 
-        console.log(messages);
         res.json(messages);
     }
 

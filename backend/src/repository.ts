@@ -216,7 +216,7 @@ export class Repository {
             user.concerts.forEach((concertId: number) => {
                 let concert = this.concerts.get(concertId);
 
-                if (concert !== undefined && concert.participants != undefined && concert.participants.includes(username)) {
+                if (concert !== undefined && ((concert.participants != undefined && concert.participants.includes(username)) || concert.username === username)) {
                     let channel = this.channels.get(concert.id!);
                     allChannels.push({
                         name: concert.name + " Channel",

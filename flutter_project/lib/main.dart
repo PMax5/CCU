@@ -6,6 +6,7 @@ import 'package:flutter_complete_guide/payment/mbway.dart';
 import 'package:flutter_complete_guide/payment/paymentOptions.dart';
 import 'package:flutter_complete_guide/payment/paymentprocessor.dart';
 import 'package:flutter_complete_guide/payment/paypal.dart';
+import 'package:flutter_complete_guide/user/chatRoom.dart';
 import 'package:flutter_complete_guide/user/mainpage.dart';
 import 'package:flutter_complete_guide/user/createConcert.dart';
 import 'package:flutter_complete_guide/user/concertInfo.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         "/user/concertStream": (context) => ConcertStream(),
         "/user/userProfile": (context) => UserProfile(),
         "/user/voicecall": (context) => VoiceCall(),
-        "/user/userchat": (context) => UserChat(),
+        "/user/userchat": (context) => ChatRoom(),
       },
     );
   }

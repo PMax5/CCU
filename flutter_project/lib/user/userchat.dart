@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/models/user.dart';
-import 'package:flutter_complete_guide/models/concert.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import 'package:flutter_complete_guide/services/ConcertService.dart';
-import '../settings.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/user/chatMessage.dart';
 
 class UserChat extends StatefulWidget {
@@ -24,8 +20,8 @@ class UserChatState extends State<UserChat> {
   UserChatState({this.text});
   
   void _handleSubmitted(String text) {
-    _textController.clear(); 
-    ChatMessage message =new ChatMessage(
+    _textController.clear();
+    ChatMessage message = new ChatMessage(
       text:text);
     setState(() {
       _messages.insert(0,message);
@@ -102,7 +98,7 @@ class UserChatState extends State<UserChat> {
                         child: new Text("I love you, James!"),
                       )
                     ],
-                  ), 
+                  ),
                 ],
                 ),
               ),

@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_complete_guide/user/mainpage.dart';
+import 'package:flutter_complete_guide/services/ConcertService.dart';
 import '../models/concert.dart';
 import '../models/user.dart';
 import 'package:flutter_complete_guide/settings.dart';
 import 'package:flutter_complete_guide/models/user.dart';
 
 Settings projectSettings = new Settings();
+ConcertService _concertService = new ConcertService();
+List<String> channelNames = List<String>();
 
 Widget CenteredHeaderLogo() {
   return Center(child: projectSettings.logo);
@@ -116,49 +118,97 @@ Widget MainMenu(BuildContext context, User user, Widget mainPage) {
   );
 }
 
+Future<List<GeneralChannel>> getAllChannels(String username) async {
+  try {
+    List<GeneralChannel> channels = await _concertService.getConcertsChannels(username);
+    return channels;
+  } catch(e) {
+    print(e.toString());
+  }
+}
+
 Widget ChatRooms(BuildContext context, User user) {
-  return ListView(
-    children: [
-      ListTile(
-        title: Text("Voice Calls", style: TextStyle(fontSize: 20)),
-      ),
-      Image.asset('assets/images/divider.png'),
-      ListTile(
-          title: Text("James Smith"),
-          leading: Icon(Icons.volume_up),
-          trailing: Image.asset('assets/images/mini_james.png'),
-          onTap: () {
-            if (user.type == "FAN") {
-              Navigator.pushNamed(context, "/user/voicecall",
-                  arguments: user);
-            }
-            else {
-              showDialog(
-                  context: context,
-                  builder: (_) => ConfirmationDialog(
-                          "Are you sure you want to start this voice call?",
-                          "You will start a voice call with three of your fans.",
-                          () {
-                        Navigator.of(context).pop();
-                        Navigator.pushNamed(context, "/user/voicecall",
-                            arguments: user);
-                      }, () {
-                        Navigator.of(context).pop();
-                      }));
-            }
-          }),
-      ListTile(
-        title: Text("Chat Rooms", style: TextStyle(fontSize: 20)),
-      ),
-      Image.asset('assets/images/divider.png'),
-      ListTile(
-        title: Text("James Smith's Concert"),
-        leading: Icon(Icons.sms),
-        onTap: () {
-          Navigator.pushNamed(context, "/user/userchat");
-        },
-      ),
-    ],
+
+  List<GeneralChannel> textChannels = new List<GeneralChannel>();
+  List<GeneralChannel> voiceChannels = new List<GeneralChannel>();
+  channelNames.clear();
+
+  return FutureBuilder(
+    future: getAllChannels(user.username),
+    builder: (context, channels) {
+      if (!channels.hasData) {
+        return Center(child: CircularProgressIndicator());
+      } else {
+        channels.data.forEach((channel) => {
+          if (!channelNames.contains(channel.name)) {
+            channelNames.add(channel.name),
+            channel.voice ? voiceChannels.add(channel) : textChannels.add(channel)
+          }
+        });
+      }
+
+      return ListView(
+        children: [
+          ListTile(
+            title: Text("Voice Calls", style: TextStyle(fontSize: 20)),
+          ),
+          Image.asset('assets/images/divider.png'),
+          ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: voiceChannels.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                  title: Text(voiceChannels[index].name),
+                  leading: Icon(Icons.volume_up),
+                  trailing: Image.asset(voiceChannels[index].imagePath),
+                  onTap: () {
+                    if (user.type == "FAN") {
+                      Navigator.pushNamed(context, "/user/voicecall",
+                          arguments: user);
+                    }
+                    else {
+                      showDialog(
+                          context: context,
+                          builder: (_) => ConfirmationDialog(
+                              "Are you sure you want to start this voice call?",
+                              "You will start a voice call with three of your fans.",
+                                  () {
+                                Navigator.of(context).pop();
+                                Navigator.pushNamed(context, "/user/voicecall",
+                                    arguments: user);
+                              }, () {
+                            Navigator.of(context).pop();
+                          }));
+                    }
+                  });
+            },
+          ),
+          ListTile(
+            title: Text("Chat Rooms", style: TextStyle(fontSize: 20)),
+          ),
+          Image.asset('assets/images/divider.png'),
+          ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: textChannels.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(textChannels[index].name),
+                leading: Icon(Icons.sms),
+                onTap: () {
+                  Navigator.pushNamed(
+                      context,
+                      "/user/userchat",
+                      arguments: user
+                  );
+                },
+              );
+            },
+          ),
+        ]
+      );
+    },
   );
 }
 

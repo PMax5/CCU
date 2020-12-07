@@ -93,7 +93,7 @@ class ConcertStreamState extends State<ConcertStream> {
     return Scaffold(
       body: Stack(
           children: <Widget> [
-            Image.asset('assets/images/concert5.png', width: double.infinity, height: double.infinity,fit: BoxFit.cover),
+            Image.asset(concert.image, width: double.infinity, height: double.infinity,fit: BoxFit.cover),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

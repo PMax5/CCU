@@ -17,7 +17,17 @@ class ConcertStreamState extends State<ConcertStream> {
 
   ConcertService concertService = new ConcertService();
 
-  Widget endStreamButton() {
+  Widget endStreamAlignedButton(User user, int concertId) {
+    return Align(
+        alignment: Alignment.bottomRight,
+        child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: endStreamButton(user, concertId)
+        )
+    );
+  }
+
+  Widget endStreamButton(User user, int concertId) {
     return Container(
         width: 100,
         height: 45,
@@ -46,10 +56,7 @@ class ConcertStreamState extends State<ConcertStream> {
                           "and no one will have access to it.",
                           () {
                         SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-                        Arguments arguments = ModalRoute.of(context).settings.arguments;
-                        User user = arguments.logged_in;
-                        Concert concert = arguments.concert;
-                        endConcert(user.username, concert.id);
+                        endConcert(user.username, concertId);
                         Navigator.of(context).pop();
                         Navigator.pushNamed(
                             context,
@@ -77,7 +84,12 @@ class ConcertStreamState extends State<ConcertStream> {
 
   @override
   Widget build(BuildContext context) {
+    Arguments arguments = ModalRoute.of(context).settings.arguments;
+    User user = arguments.logged_in;
+    Concert concert = arguments.concert;
+
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
+
     return Scaffold(
       body: Stack(
           children: <Widget> [
@@ -111,7 +123,7 @@ class ConcertStreamState extends State<ConcertStream> {
                         Navigator.pushNamed(
                             context,
                             "/user/userchat",
-                            arguments:  ModalRoute.of(context).settings.arguments
+                            arguments:  arguments
                         );
                       },
                     )
@@ -119,13 +131,7 @@ class ConcertStreamState extends State<ConcertStream> {
                 )
               ]
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: endStreamButton()
-              )
-            )
+            (user.type == 'ARTIST' ? endStreamAlignedButton(user, concert.id) : Container())
           ]
       )
     );

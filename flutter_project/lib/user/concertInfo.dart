@@ -16,6 +16,57 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
 
   ConcertService concertService = new ConcertService();
 
+  Widget ExtraButton(User user, Concert concert) {
+    if (user.type == 'ARTIST' && concert.status == 2) {
+      return Container(
+          width: 100,
+          height: 45,
+          child: FlatButton(
+            disabledColor: Color.fromRGBO(230, 230, 230, 1.0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(5.0),
+                  side: BorderSide(
+                      color: Colors.black,
+                      width: 1
+                  )
+              ),
+              child: Text(
+                  'ENDED',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black
+                  )
+              )
+          )
+      );
+    }
+    return Container(
+      width: (user.type == 'FAN' ? 140 : 100),
+      height: 40,
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(5.0),
+            side: BorderSide(
+                color: Colors.black,
+                width: 2
+            )
+        ),
+        child: Text(
+            (user.type == 'FAN' ? 'ARTIST PROFILE' : 'EDIT'),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+            )
+        ),
+        onPressed: () {
+          // TODO create artist profile and edit concert page
+          Navigator.pushNamed(context, (user.type == 'FAN' ? "/login" : "/login"));
+        },
+      ),
+    );
+  }
+
   Widget ConcertInfoMenu(BuildContext context, Arguments arguments) {
 
     Concert concert = arguments.concert;
@@ -46,30 +97,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                                   style: TextStyle(fontSize: 15, color: Colors.black)
                               ),
                             ),
-                            trailing: Container(
-                              width: (user.type == 'FAN' ? 140 : 100),
-                              height: 40,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(5.0),
-                                    side: BorderSide(
-                                        color: Colors.black,
-                                        width: 2
-                                    )
-                                ),
-                                child: Text(
-                                    (user.type == 'FAN' ? 'ARTIST PROFILE' : 'EDIT'),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black
-                                    )
-                                ),
-                                onPressed: () {
-                                  // TODO create artist profile and edit concert page
-                                  Navigator.pushNamed(context, (user.type == 'FAN' ? "/login" : "/login"));
-                                },
-                              ),
-                            )
+                            trailing: ExtraButton(user, concert)
                         ),
                         ListTile(
                           title: Padding(

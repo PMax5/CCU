@@ -17,31 +17,6 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
   ConcertService concertService = new ConcertService();
 
   Widget ExtraButton(User user, Concert concert) {
-    if (user.type == 'ARTIST' && concert.status == 2) {
-      return Container(
-          width: 100,
-          height: 45,
-          child: FlatButton(
-            disabledColor: Color.fromRGBO(230, 230, 230, 1.0),
-              shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(5.0),
-                  side: BorderSide(
-                      color: Colors.black,
-                      width: 1
-                  )
-              ),
-              child: Text(
-                  'ENDED',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black
-                  )
-              ),
-              onPressed: () {}
-          )
-      );
-    }
     return Container(
       width: (user.type == 'FAN' ? 140 : 100),
       height: 40,
@@ -120,9 +95,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                       ]
                   )
               ),
-              (user.type == 'FAN' && concert.status != 2 ? FanActionButton(concert, user) :
-              user.type == 'ARTIST' && concert.status != 2 ? ArtistActionButtons(concert, user) :
-              Container())
+              (user.type == 'FAN' ? FanActionButton(concert, user) : ArtistActionButtons(concert, user))
             ]
         ));
   }

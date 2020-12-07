@@ -18,7 +18,8 @@ class CreateConcert extends StatefulWidget {
 class CreateConcertState extends State<CreateConcert> {
   Settings projectSettings = new Settings();
   ConcertService concertService = new ConcertService();
-  String concertImagePath = 'assets/images/james.png'; //TODO: should be general
+  String concertImagePath =
+      'http://web.ist.utl.pt/ist189407/assets/images/james.png'; //TODO: should be general
   final createConcertFormKey = GlobalKey<FormState>();
   Map<String, String> formValues = new Map<String, String>();
 

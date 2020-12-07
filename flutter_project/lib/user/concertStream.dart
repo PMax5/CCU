@@ -14,7 +14,6 @@ class ConcertStream extends StatefulWidget {
 }
 
 class ConcertStreamState extends State<ConcertStream> {
-
   ConcertService concertService = new ConcertService();
 
   Widget endStreamAlignedButton(User user, int concertId) {
@@ -22,9 +21,7 @@ class ConcertStreamState extends State<ConcertStream> {
         alignment: Alignment.bottomRight,
         child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: endStreamButton(user, concertId)
-        )
-    );
+            child: endStreamButton(user, concertId)));
   }
 
   Widget endStreamButton(User user, int concertId) {
@@ -34,59 +31,44 @@ class ConcertStreamState extends State<ConcertStream> {
         child: RaisedButton(
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(5.0),
-                side: BorderSide(
-                    color: Colors.black,
-                    width: 2
-                )
-            ),
-            child: Text(
-                'End Stream',
+                side: BorderSide(color: Colors.black, width: 2)),
+            child: Text('End Stream',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black
-                )
-            ),
+                    fontWeight: FontWeight.bold, color: Colors.black)),
             onPressed: () {
               showDialog(
                   context: context,
                   builder: (_) => ConfirmationDialog(
-                      "Are you sure you want to end the concert?",
-                      "By clicking on this button, your stream will end immediately \ "
-                          "and no one will have access to it.",
-                          () {
-                        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+                          "Are you sure you want to end the concert?",
+                          "By clicking on this button, your stream will end immediately \ "
+                              "and no one will have access to it.", () {
+                        SystemChrome.setPreferredOrientations(
+                            [DeviceOrientation.portraitUp]);
                         endConcert(user.username, concertId);
                         Navigator.of(context).pop();
-                        Navigator.pushNamed(
-                            context,
-                            "/user/main",
-                            arguments: user
-                        );
-                      },
-                          () {
+                        Navigator.pushNamed(context, "/user/main",
+                            arguments: user);
+                      }, () {
                         Navigator.of(context).pop();
-                      }
-                  )
-              );
-            }
-        )
-    );
+                      }));
+            }));
   }
 
   Future<void> endConcert(String username, int concertId) async {
     try {
       await concertService.endConcert(username, concertId);
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
     }
   }
 
   Future<GeneralChannel> getConcertChannel(String username) async {
     try {
-      List<GeneralChannel> channels = await concertService.getConcertsChannels(username);
+      List<GeneralChannel> channels =
+          await concertService.getConcertsChannels(username);
       return channels[0];
-    } catch(e) {
+    } catch (e) {
       print("Could not load concert text channel.");
     }
   }
@@ -100,53 +82,45 @@ class ConcertStreamState extends State<ConcertStream> {
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
 
     return Scaffold(
-      body: Stack(
-          children: <Widget> [
-            Image.asset(concert.image, width: double.infinity, height: double.infinity,fit: BoxFit.cover),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: FractionalOffset.topLeft,
-                  child: IconButton(
-                    padding: const EdgeInsets.only(top:20, left: 20.0),
-                    icon: const BackButtonIcon(),
-                    color: Colors.white,
-                    tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-                    onPressed: () {
-                      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-                      Navigator.maybePop(context);
-                    },
-                  )
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: FractionalOffset.topRight,
-                    child: IconButton(
-                      padding: const EdgeInsets.only(top:20, right: 20.0),
-                      icon: Icon(Icons.forum),
-                      iconSize: 40,
-                      color: Colors.white,
-                      onPressed: () {
-                        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+        body: Stack(children: <Widget>[
+      Image.network(concert.image,
+          width: double.infinity, height: double.infinity, fit: BoxFit.cover),
+      Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Align(
+            alignment: FractionalOffset.topLeft,
+            child: IconButton(
+              padding: const EdgeInsets.only(top: 20, left: 20.0),
+              icon: const BackButtonIcon(),
+              color: Colors.white,
+              tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+              onPressed: () {
+                SystemChrome.setPreferredOrientations(
+                    [DeviceOrientation.portraitUp]);
+                Navigator.maybePop(context);
+              },
+            )),
+        Expanded(
+            child: Align(
+                alignment: FractionalOffset.topRight,
+                child: IconButton(
+                  padding: const EdgeInsets.only(top: 20, right: 20.0),
+                  icon: Icon(Icons.forum),
+                  iconSize: 40,
+                  color: Colors.white,
+                  onPressed: () {
+                    SystemChrome.setPreferredOrientations(
+                        [DeviceOrientation.portraitUp]);
 
-                        getConcertChannel(user.username).then((channel) => {
-                          Navigator.pushNamed(
-                              context,
-                              "/user/userchat",
-                              arguments: ChannelArguments(user, channel)
-                          )
+                    getConcertChannel(user.username).then((channel) => {
+                          Navigator.pushNamed(context, "/user/userchat",
+                              arguments: ChannelArguments(user, channel))
                         });
-
-                      },
-                    )
-                  )
-                )
-              ]
-            ),
-            (user.type == 'ARTIST' ? endStreamAlignedButton(user, concert.id) : Container())
-          ]
-      )
-    );
+                  },
+                )))
+      ]),
+      (user.type == 'ARTIST'
+          ? endStreamAlignedButton(user, concert.id)
+          : Container())
+    ]));
   }
 }

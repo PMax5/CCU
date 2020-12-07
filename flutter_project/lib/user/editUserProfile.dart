@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/user.dart';
@@ -14,21 +13,20 @@ class EditUserProfile extends StatefulWidget {
 }
 
 class EditUserProfileState extends State<EditUserProfile> {
-
   Settings projectSettings = new Settings();
   UserService userService = new UserService();
   Map<String, String> formValues = new Map<String, String>();
   String profileImagePath = '';
   User user;
 
-  Widget buildImagePreview() { /*FIXME I WANT DYNAMIC PLEASE*/
-   profileImagePath = user.imagePath;
-   Image profileImage = Image.asset(profileImagePath, fit: BoxFit.cover);
-   formValues["imagePath"] = profileImagePath;
+  Widget buildImagePreview() {
+    /*FIXME I WANT DYNAMIC PLEASE*/
+    profileImagePath = user.imagePath;
+    Image profileImage = Image.network(profileImagePath,
+        fit: BoxFit.cover, width: 100, height: 100);
+    formValues["imagePath"] = profileImagePath;
 
-    return Center(
-        child: profileImage
-    );
+    return Center(child: profileImage);
   }
 
   Widget buildEditImageButton() {
@@ -36,23 +34,22 @@ class EditUserProfileState extends State<EditUserProfile> {
       child: Container(
         width: projectSettings.textInputWidth - 180,
         height: projectSettings.textInputHeight - 20,
-        child: ElevatedButton(
-          child: Text(
-            "EDIT IMAGE",
-            style: TextStyle(
-              fontWeight: FontWeight.bold
-            ),
-          ),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(200, 200, 200, 0.8))
-          ),
+        child: RaisedButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(5.0),
+              side: BorderSide(color: Colors.black, width: 2)),
+          child: Text('EDIT IMAGE',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
           onPressed: () {
             //FIXME: I WANT PICKERIMAGE PLEASE
             setState(() {
               if (user.type == "FAN")
-                profileImagePath = 'assets/images/concert6.png';
+                profileImagePath =
+                    'http://web.ist.utl.pt/ist189407/assets/images/concert6.png';
               else
-                profileImagePath = 'assets/images/concert5.png';
+                profileImagePath =
+                    'http://web.ist.utl.pt/ist189407/assets/images/concert5.png';
             });
           },
         ),
@@ -61,12 +58,10 @@ class EditUserProfileState extends State<EditUserProfile> {
   }
 
   Widget buildNameInputField() {
-
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
           borderSide: BorderSide(color: color, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(6.0))
-      );
+          borderRadius: BorderRadius.all(Radius.circular(6.0)));
     }
 
     return Center(
@@ -81,8 +76,7 @@ class EditUserProfileState extends State<EditUserProfile> {
                         focusedBorder: inputBorder(Colors.black),
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: user.name
-                    ),
+                        hintText: user.name),
                     onChanged: (value) {
                       if (value.isEmpty)
                         return "Enter a name for your profile";
@@ -90,19 +84,14 @@ class EditUserProfileState extends State<EditUserProfile> {
                         formValues["name"] = value;
                         return null;
                       }
-                    }
-                )
-            )
-        )
-    );
+                    }))));
   }
 
   Widget buildDescriptionInputField() {
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
           borderSide: BorderSide(color: color, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(6.0))
-      );
+          borderRadius: BorderRadius.all(Radius.circular(6.0)));
     }
 
     return Center(
@@ -119,8 +108,7 @@ class EditUserProfileState extends State<EditUserProfile> {
                         focusedBorder: inputBorder(Colors.black),
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: user.description
-                    ),
+                        hintText: user.description),
                     onChanged: (value) {
                       if (value.isEmpty)
                         return "Enter a description for your profile";
@@ -128,76 +116,57 @@ class EditUserProfileState extends State<EditUserProfile> {
                         formValues["description"] = value;
                         return null;
                       }
-                    }
-                )
-            )
-        )
-    );
+                    }))));
   }
-  Widget buildCancelButton(BuildContext context){
-	return Center(
-	        child: Container(
-	            width: projectSettings.textInputWidth,
-	            height: projectSettings.textInputHeight,
-	            child: ElevatedButton(
-	                child: Text(
-	                    "Cancel",
-	                    style: TextStyle(
-	                        fontWeight: FontWeight.bold
-	                    )
-	                ),
-	                style: ButtonStyle(
-	                  backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
-	                ),
-	                onPressed: () {
-                        Navigator.pop(context);
-	                }
-	            )
-	        )
-	    );
 
-
+  Widget buildCancelButton(BuildContext context) {
+    return Center(
+        child: Container(
+            width: projectSettings.textInputWidth,
+            height: projectSettings.textInputHeight,
+            child: ElevatedButton(
+                child: Text("Cancel",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      projectSettings.mainColor),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                })));
   }
+
   Widget buildSaveButton(BuildContext context, GlobalKey<FormState> key) {
     return Center(
         child: Container(
             width: projectSettings.textInputWidth,
             height: projectSettings.textInputHeight,
             child: ElevatedButton(
-                child: Text(
-                    "Save",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold
-                    )
-                ),
+                child:
+                    Text("Save", style: TextStyle(fontWeight: FontWeight.bold)),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      projectSettings.mainColor),
                 ),
                 onPressed: () {
                   editProfile().then((newUser) {
                     if (newUser != null) {
                       Navigator.popUntil(context, ModalRoute.withName("/"));
-                      Navigator.pushNamed(context, "/user/main", arguments: newUser);
-                      Navigator.pushNamed(context, "/user/userProfile", arguments: newUser);
-
-                    }
-                    else {
+                      Navigator.pushNamed(context, "/user/main",
+                          arguments: newUser);
+                      Navigator.pushNamed(context, "/user/userProfile",
+                          arguments: newUser);
+                    } else {
                       showDialog(
                           context: context,
-                          builder: (_) => TipDialog(
-                              "Notice",
-                              "Sorry try to update you profile in a few minutes.",
+                          builder: (_) => TipDialog("Notice",
+                                  "Sorry try to update you profile in a few minutes.",
                                   () {
                                 Navigator.of(context).pop();
-                              }
-                          )
-                      );
+                              }));
                     }
                   });
-                }
-            )
-        )
-    );
+                })));
   }
 
   Widget buildForm(BuildContext context) {
@@ -225,12 +194,13 @@ class EditUserProfileState extends State<EditUserProfile> {
               child: buildEditImageButton(),
             ),
             buildNameInputField(),
-            (user.type == 'ARTIST' ? buildDescriptionInputField() : Container()),
+            (user.type == 'ARTIST'
+                ? buildDescriptionInputField()
+                : Container()),
             Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: buildCancelButton(context)
-            ),
-            buildSaveButton(context, EditUserProfileFormKey)
+                padding: EdgeInsets.only(bottom: 20),
+                child: buildSaveButton(context, EditUserProfileFormKey)),
+            buildCancelButton(context)
           ],
         ),
       ),
@@ -239,9 +209,13 @@ class EditUserProfileState extends State<EditUserProfile> {
 
   Future<User> editProfile() async {
     try {
-      User user_result = await userService.updateUser(this.user.username, formValues["name"], formValues["imagePath"], this.user.type == "ARTIST" ? formValues["description"] : null);
+      User user_result = await userService.updateUser(
+          this.user.username,
+          formValues["name"],
+          formValues["imagePath"],
+          this.user.type == "ARTIST" ? formValues["description"] : null);
       return user_result;
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
     }
   }
@@ -252,12 +226,8 @@ class EditUserProfileState extends State<EditUserProfile> {
     return Scaffold(
       appBar: AppBar(
           title: Text("Edit Profile"),
-          backgroundColor: projectSettings.mainColor
-      ),
-      body:SingleChildScrollView(
-          child: this.buildForm(context)
-      ),
+          backgroundColor: projectSettings.mainColor),
+      body: SingleChildScrollView(child: this.buildForm(context)),
     );
   }
 }
-

@@ -216,14 +216,15 @@ export class Repository {
             user.concerts.forEach((concertId: number) => {
                 let concert = this.concerts.get(concertId);
 
-                if (concert !== undefined && ((concert.participants != undefined && concert.participants.includes(username)) || concert.username === username)) {
-                    let channel = this.channels.get(concert.id!);
-                    allChannels.push({
-                        name: concert.name + " Channel",
-                        concertId: concert.id,
-                        voice: false
-                    });
-
+                if (concert !== undefined) {
+                    if ((concert.participants != undefined && concert.participants.includes(username)) || concert.username === username) {
+                        allChannels.push({
+                            name: concert.name + " Channel",
+                            concertId: concert.id,
+                            voice: false
+                        });
+                    }                    
+                    
                     if (user.type === "ARTIST" && concert.username === user.username) {
                         allChannels.push({
                             name: concert.name,

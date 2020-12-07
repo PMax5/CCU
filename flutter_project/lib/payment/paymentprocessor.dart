@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
@@ -13,21 +12,18 @@ class PaymentProcessor extends StatefulWidget {
 }
 
 class PaymentProcessorState extends State<PaymentProcessor> {
-
   ConcertService concertService = new ConcertService();
 
   Settings projectSettings = new Settings();
 
   List<Widget> paymentValid(bool isValid) {
-    String image = "assets/images/check.png";
+    String image = "http://web.ist.utl.pt/ist189407/assets/images/check.png";
     String message = "Payment was processed succesfully";
 
-    List<Widget> widgets = [
-      CenteredHeaderLogo()
-    ];
+    List<Widget> widgets = [CenteredHeaderLogo()];
 
     if (!isValid) {
-      image = "assets/images/cross.png";
+      image = "http://web.ist.utl.pt/ist189407/assets/images/cross.png";
       message = "Error processing payment";
     } else {
       widgets.add(projectSettings.createStep(3));
@@ -36,28 +32,18 @@ class PaymentProcessorState extends State<PaymentProcessor> {
     widgets.addAll([
       Padding(
           padding: EdgeInsets.only(top: 100),
-          child: Center(
-              child: Image.asset(image, fit: BoxFit.cover)
-          )
-      ),
+          child: Center(child: Image.network(image, fit: BoxFit.cover))),
       Padding(
           padding: EdgeInsets.only(top: 25, bottom: 80),
           child: Center(
-              child: Text(
-                  message,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22
-                  )
-              )
-          )
-      )
+              child: Text(message,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22))))
     ]);
 
     if (!isValid) {
       widgets.addAll([
-          Center(
-              child: Padding(
+        Center(
+            child: Padding(
                 padding: EdgeInsets.only(bottom: 20),
                 child: Container(
                   width: projectSettings.textInputWidth,
@@ -65,69 +51,48 @@ class PaymentProcessorState extends State<PaymentProcessor> {
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(5.0),
-                        side: BorderSide(
-                            color: Colors.black,
-                            width: 2
-                        )
-                    ),
-                    child: Text(
-                        'INITIAL PAGE',
+                        side: BorderSide(color: Colors.black, width: 2)),
+                    child: Text('INITIAL PAGE',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black
-                        )
-                    ),
+                            fontWeight: FontWeight.bold, color: Colors.black)),
                     onPressed: () {
-                      Navigator.popUntil(context, ModalRoute.withName("/user/main"));
+                      Navigator.popUntil(
+                          context, ModalRoute.withName("/user/main"));
                     },
                   ),
-                )
-              )
-          ),
-          Center(
-              child: Container(
-                  width: projectSettings.textInputWidth,
-                  height: projectSettings.textInputHeight,
-                  child: ElevatedButton(
-                      child: Text(
-                          "RETRY PAYMENT",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
-                      ),
-                      onPressed: () {
-                        Navigator.popUntil(context, ModalRoute.withName("/payment"));
-                      }
-                  )
-              )
-          )
+                ))),
+        Center(
+            child: Container(
+                width: projectSettings.textInputWidth,
+                height: projectSettings.textInputHeight,
+                child: ElevatedButton(
+                    child: Text("RETRY PAYMENT",
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          projectSettings.mainColor),
+                    ),
+                    onPressed: () {
+                      Navigator.popUntil(
+                          context, ModalRoute.withName("/payment"));
+                    })))
       ]);
     } else {
-      widgets.add(
-          Center(
-              child: Container(
-                  width: projectSettings.textInputWidth,
-                  height: projectSettings.textInputHeight,
-                  child: ElevatedButton(
-                      child: Text(
-                          "INITIAL PAGE",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
-                      ),
-                      onPressed: () {
-                        Navigator.popUntil(context, ModalRoute.withName("/user/main"));
-                      }
-                  )
-              )
-          )
-      );
+      widgets.add(Center(
+          child: Container(
+              width: projectSettings.textInputWidth,
+              height: projectSettings.textInputHeight,
+              child: ElevatedButton(
+                  child: Text("INITIAL PAGE",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        projectSettings.mainColor),
+                  ),
+                  onPressed: () {
+                    Navigator.popUntil(
+                        context, ModalRoute.withName("/user/main"));
+                  }))));
     }
 
     if (isValid) {
@@ -139,34 +104,26 @@ class PaymentProcessorState extends State<PaymentProcessor> {
   }
 
   Widget buildPage(BuildContext context) {
-
     return Padding(
         padding: EdgeInsets.only(top: 48),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: paymentValid(true)
-        )
-    );
+            children: paymentValid(true)));
   }
 
   void buyTicket(String username, int concertId) async {
     try {
       await concertService.purchaseTicket(username, concertId);
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
-            title: Text("Payment"),
-            backgroundColor: projectSettings.mainColor
-        ),
-        body: this.buildPage(context)
-    );
+            title: Text("Payment"), backgroundColor: projectSettings.mainColor),
+        body: this.buildPage(context));
   }
-
 }

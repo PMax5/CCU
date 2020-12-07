@@ -11,7 +11,7 @@ export class Handlers {
             name: "Test User",
             email: "user@example.com",
             password: "lol",
-            imagePath: "https://s3.amazonaws.com/arc-authors/washpost/e8d90017-3451-40a4-a668-901221acbb76.png",
+            imagePath: "http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png",
             type: "FAN",
             concerts: [0]
         };
@@ -23,7 +23,7 @@ export class Handlers {
             name: "Test User 2",
             email: "user2@example.com",
             password: "lol",
-            imagePath: "assets/images/mini_james.png",
+            imagePath: "http://web.ist.utl.pt/ist189407/assets/images/profile_artist.png",
             type: "ARTIST",
             description: "This is a description ok."
         });
@@ -33,7 +33,7 @@ export class Handlers {
             name: "Iron Maiden",
             email: "user3@example.com",
             password: "lol",
-            imagePath: "assets/images/mini_concert2.png",
+            imagePath: "http://web.ist.utl.pt/ist189407/assets/images/mini_concert2.png",
             type: "ARTIST",
             description: "This is a description ok."
         });
@@ -44,9 +44,9 @@ export class Handlers {
                 + "This unique date is part of the European tour scheduled for autumn, which will feature \"I love you\", \ "
                 + "the first James Smith’s original album in six years.",
             link: "https://www.google.com",
-            image: "assets/images/james.png",
+            image: "http://web.ist.utl.pt/ist189407/assets/images/james.png",
             artistName: "Test User 2",
-            artistImage: "assets/images/mini_james.png",
+            artistImage: "http://web.ist.utl.pt/ist189407/assets/images/mini_james.png",
             participants: [
                 "test"
             ]
@@ -56,45 +56,45 @@ export class Handlers {
             name: "Iron Maiden's Concert",
             description: "The concert of your life",
             link: "https://www.google.com",
-            image: "assets/images/concert2.png",
+            image: "http://web.ist.utl.pt/ist189407/assets/images/concert2.png",
             artistName: "Iron Maiden",
-            artistImage: "assets/images/mini_concert2.png"
+            artistImage: "http://web.ist.utl.pt/ist189407/assets/images/mini_concert2.png"
         });
 
         this.repository.createConcert( "testartist", {
             name: "Twenty One Pilots' Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/concert3.png",
+            image: "http://web.ist.utl.pt/ist189407/assets/images/concert3.png",
             artistName: "Test User 2",
-            artistImage: "assets/images/mini_james.png"
+            artistImage: "http://web.ist.utl.pt/ist189407/assets/images/mini_james.png"
         });
 
         this.repository.createConcert( "testartist", {
             name: "K.Flay's Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/concert4.png",
+            image: "http://web.ist.utl.pt/ist189407/assets/images/concert4.png",
             artistName: "Test User 2",
-            artistImage: "assets/images/mini_james.png"
+            artistImage: "http://web.ist.utl.pt/ist189407/assets/images/mini_james.png"
         });
 
         this.repository.createConcert( "testartist", {
             name: "Lemaitre's Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/concert5.png",
+            image: "http://web.ist.utl.pt/ist189407/assets/images/concert5.png",
             artistName: "Test User 2",
-            artistImage: "assets/images/mini_james.png"
+            artistImage: "http://web.ist.utl.pt/ist189407/assets/images/mini_james.png"
         });
 
         this.repository.createConcert( "testartist", {
             name: "y.azz's Concert",
             description: "A Concert",
             link: "https://www.google.com",
-            image: "assets/images/concert6.png",
+            image: "http://web.ist.utl.pt/ist189407/assets/images/concert6.png",
             artistName: "Test User 2",
-            artistImage: "assets/images/mini_james.png"
+            artistImage: "http://web.ist.utl.pt/ist189407/assets/images/mini_james.png"
         });
 
         this.repository.sendConcertMessage(0, {

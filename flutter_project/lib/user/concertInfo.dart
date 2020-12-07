@@ -44,7 +44,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
         Column(children: [
           Padding(
             padding: EdgeInsets.only(top: 10.0),
-            child: Image.asset(concert.image, fit: BoxFit.fill),
+            child: Image.network(concert.image, fit: BoxFit.fill),
           ),
           Padding(
               padding: const EdgeInsets.all(6.0),

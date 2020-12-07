@@ -6,48 +6,39 @@ class Settings {
   final double smallButtonWidth = 150;
   final double smallButtonHeight = 52;
   final Color mainColor = Color.fromRGBO(149, 0, 62, 1);
-  final Image logo = Image.asset('assets/images/logo.png', fit: BoxFit.cover);
+  final Image logo = Image.network(
+      'http://web.ist.utl.pt/ist189407/assets/images/logo.png',
+      fit: BoxFit.cover);
 
   Widget headerPayment(String option, String imagePath) {
-
     Widget headerTitle;
     Widget text = Padding(
         padding: EdgeInsets.only(top: 10, bottom: 30),
-        child: Text(
-            option,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 25
-            )
-        )
-    );
+        child: Text(option,
+            textAlign: TextAlign.center, style: TextStyle(fontSize: 25)));
 
     if (imagePath != null) {
       headerTitle = ListTile(
         title: text,
         trailing: Padding(
-          padding: EdgeInsets.only(right: 60),
-          child:  Image.asset(imagePath, fit: BoxFit.cover)
-        ),
+            padding: EdgeInsets.only(right: 60),
+            child: Image.network(imagePath, fit: BoxFit.cover)),
       );
     } else {
-      headerTitle = ListTile(
-        title: text
-      );
+      headerTitle = ListTile(title: text);
     }
 
-    return Center(
-      child: headerTitle
-    );
+    return Center(child: headerTitle);
   }
 
   Widget createStep(int currentStep) {
     return Center(
         child: Padding(
             padding: EdgeInsets.only(bottom: 20),
-            child: Image.asset("assets/images/progress_" + currentStep.toString() + ".png", fit: BoxFit.cover)
-        )
-    );
+            child: Image.network(
+                "http://web.ist.utl.pt/ist189407/assets/images/progress_" +
+                    currentStep.toString() +
+                    ".png",
+                fit: BoxFit.cover)));
   }
-
 }

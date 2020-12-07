@@ -19,7 +19,7 @@ Widget CenteredProfile(String imagePath, String name) {
   return Center(
       child: Column(
     children: [
-      Image.asset(imagePath),
+      Image.network(imagePath),
       Container(
           margin: const EdgeInsets.only(top: 8),
           child: Text(name,
@@ -120,15 +120,15 @@ Widget MainMenu(BuildContext context, User user, Widget mainPage) {
 
 Future<List<GeneralChannel>> getAllChannels(String username) async {
   try {
-    List<GeneralChannel> channels = await _concertService.getConcertsChannels(username);
+    List<GeneralChannel> channels =
+        await _concertService.getConcertsChannels(username);
     return channels;
-  } catch(e) {
+  } catch (e) {
     print(e.toString());
   }
 }
 
 Widget ChatRooms(BuildContext context, User user) {
-
   List<GeneralChannel> textChannels = new List<GeneralChannel>();
   List<GeneralChannel> voiceChannels = new List<GeneralChannel>();
   channelNames.clear();
@@ -140,74 +140,73 @@ Widget ChatRooms(BuildContext context, User user) {
         return Center(child: CircularProgressIndicator());
       } else {
         channels.data.forEach((channel) => {
-          if (!channelNames.contains(channel.name)) {
-            channelNames.add(channel.name),
-            channel.voice ? voiceChannels.add(channel) : textChannels.add(channel)
-          }
-        });
+              if (!channelNames.contains(channel.name))
+                {
+                  channelNames.add(channel.name),
+                  channel.voice
+                      ? voiceChannels.add(channel)
+                      : textChannels.add(channel)
+                }
+            });
       }
 
-      return ListView(
-        children: [
-          ListTile(
-            title: Text("Voice Calls", style: TextStyle(fontSize: 20)),
-          ),
-          Image.asset('assets/images/divider.png'),
-          ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: voiceChannels.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                  title: Text(voiceChannels[index].name),
-                  leading: Icon(Icons.volume_up),
-                  trailing: Image.asset(voiceChannels[index].imagePath),
-                  onTap: () {
-                    if (user.type == "FAN") {
-                      Navigator.pushNamed(context, "/user/voicecall",
-                          arguments: user);
-                    }
-                    else {
-                      showDialog(
-                          context: context,
-                          builder: (_) => ConfirmationDialog(
-                              "Are you sure you want to start this voice call?",
-                              "You will start a voice call with three of your fans.",
-                                  () {
-                                Navigator.of(context).pop();
-                                Navigator.pushNamed(context, "/user/voicecall",
-                                    arguments: user);
-                              }, () {
-                            Navigator.of(context).pop();
-                          }));
-                    }
-                  });
-            },
-          ),
-          ListTile(
-            title: Text("Chat Rooms", style: TextStyle(fontSize: 20)),
-          ),
-          Image.asset('assets/images/divider.png'),
-          ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: textChannels.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(textChannels[index].name),
-                leading: Icon(Icons.sms),
+      return ListView(children: [
+        ListTile(
+          title: Text("Voice Calls", style: TextStyle(fontSize: 20)),
+        ),
+        Image.network(
+            'http://web.ist.utl.pt/ist189407/assets/images/divider.png'),
+        ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: voiceChannels.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+                title: Text(voiceChannels[index].name),
+                leading: Icon(Icons.volume_up),
+                trailing: Image.network(voiceChannels[index].imagePath),
                 onTap: () {
-                  Navigator.pushNamed(
-                      context,
-                      "/user/userchat",
-                      arguments: ChannelArguments(user, textChannels[index])
-                  );
-                },
-              );
-            },
-          ),
-        ]
-      );
+                  if (user.type == "FAN") {
+                    Navigator.pushNamed(context, "/user/voicecall",
+                        arguments: user);
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (_) => ConfirmationDialog(
+                                "Are you sure you want to start this voice call?",
+                                "You will start a voice call with three of your fans.",
+                                () {
+                              Navigator.of(context).pop();
+                              Navigator.pushNamed(context, "/user/voicecall",
+                                  arguments: user);
+                            }, () {
+                              Navigator.of(context).pop();
+                            }));
+                  }
+                });
+          },
+        ),
+        ListTile(
+          title: Text("Chat Rooms", style: TextStyle(fontSize: 20)),
+        ),
+        Image.network(
+            'http://web.ist.utl.pt/ist189407/assets/images/divider.png'),
+        ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: textChannels.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(textChannels[index].name),
+              leading: Icon(Icons.sms),
+              onTap: () {
+                Navigator.pushNamed(context, "/user/userchat",
+                    arguments: ChannelArguments(user, textChannels[index]));
+              },
+            );
+          },
+        ),
+      ]);
     },
   );
 }
@@ -218,7 +217,8 @@ Widget Notifications(BuildContext context) {
       ListTile(
         title: Text("Notification History", style: TextStyle(fontSize: 20)),
       ),
-      Image.asset('assets/images/divider.png'),
+      Image.network(
+          'http://web.ist.utl.pt/ist189407/assets/images/divider.png'),
       ListTile(
         title: Text("New James Smith’s Concert"),
         trailing: Icon(Icons.delete),
@@ -240,9 +240,8 @@ Widget ExtraMenu(BuildContext context, User user) {
       leading: Icon(Icons.person, size: 35),
       onTap: () {
         //TODO: redirecionar para ecra de perfil
-        Navigator.pushNamed(context, "/user/userProfile", arguments: user).then((value) => {
-
-        });
+        Navigator.pushNamed(context, "/user/userProfile", arguments: user)
+            .then((value) => {});
       },
     ),
     Divider(

@@ -92,7 +92,11 @@ class UserMainPageState extends State<UserMainPage> {
               ),
               floatingActionButton: FloatingActionButton.extended(
                 onPressed: () {
-                  //TODO: link to concert creation page
+                  Navigator.pushNamed(
+                    context,
+                    "/user/concertCreate",
+                    arguments: user
+                  );
                 },
                 label: Text("CREATE"),
                 icon: Icon(Icons.add),
@@ -139,7 +143,11 @@ class UserMainPageState extends State<UserMainPage> {
             ),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
-                //TODO: link to concert creation page
+                Navigator.pushNamed(
+                    context,
+                    "/user/concertCreate",
+                    arguments: user
+                );
               },
               label: Text("CREATE"),
               icon: Icon(Icons.add),

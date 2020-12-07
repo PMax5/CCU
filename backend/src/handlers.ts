@@ -5,14 +5,18 @@ export class Handlers {
     private repository = new Repository();
 
     constructor() {
-        this.repository.createUser({
+
+        let user = {
             username: "test",
             name: "Test User",
             email: "user@example.com",
             password: "lol",
-            imagePath: "assets/images/atm.png",
-            type: "FAN"
-        });
+            imagePath: "https://s3.amazonaws.com/arc-authors/washpost/e8d90017-3451-40a4-a668-901221acbb76.png",
+            type: "FAN",
+            concerts: [0]
+        };
+
+        this.repository.createUser(user);
 
         this.repository.createUser({
             username: "testartist",
@@ -42,7 +46,10 @@ export class Handlers {
             link: "https://www.google.com",
             image: "assets/images/james.png",
             artistName: "Test User 2",
-            artistImage: "assets/images/mini_james.png"
+            artistImage: "assets/images/mini_james.png",
+            participants: [
+                "test"
+            ]
         });
 
         this.repository.createConcert( "testartist2", {
@@ -90,9 +97,15 @@ export class Handlers {
             artistImage: "assets/images/mini_james.png"
         });
 
+        this.repository.sendConcertMessage(0, {
+            message: "Hello there, how is it going!!!",
+            author: user
+        });
+
+        this.repository.startVoiceCall("testartist", 0);
+
         this.repository.purchaseTicket( "test", 1 );
-        this.repository.purchaseTicket( "test", 2 );
-        this.repository.purchaseTicket( "test", 3 );
+    
 
         console.log("Created default users and concert...");
     }
@@ -190,12 +203,12 @@ export class Handlers {
     sendConcertMessage(req: Request, res: Response) {
         let messages = this.repository.sendConcertMessage(Number(req.params.id), req.body);
 
+        console.log(messages);
         res.json(messages);
     }
 
     loadConcertMessages(req: Request, res: Response) {
         let messages = this.repository.getConcertMessages(Number(req.params.id));
-
         res.json(messages);
     }
 

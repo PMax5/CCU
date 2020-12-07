@@ -120,18 +120,37 @@ class ConcertService extends Service {
       throw new Exception("Could not get messages for concert with id=$id.");
 
     var messagesJson = json.decode(response.body);
-    List<Message> messages = messagesJson.map((messageJson) => Message.fromJson(messageJson));
+    List<Message> messages = messagesJson.map<Message>((messageJson) => Message.fromJson(messageJson)).toList();
     return messages;
   }
 
-  Future<void> sendMessage(String id, String username, String message) async {
+  Future<List<Message>> sendMessage(int id, Message message) async {
     final http.Response response = await http.post(
       this.apiURL + "/concerts/$id/sendMessage",
-      headers: this.headersPost
+      headers: this.headersPost,
+      body: jsonEncode(message)
     );
 
     if (response.statusCode != 200)
       throw new Exception("Could not send message for concert with id=$id.");
+
+    var messagesJson = json.decode(response.body);
+    List<Message> messages = messagesJson.map<Message>((messageJson) => Message.fromJson(messageJson)).toList();
+    return messages;
+  }
+
+  Future<List<GeneralChannel>> getConcertsChannels(String username) async {
+    final http.Response response = await http.get(
+      this.apiURL + "/channels/$username",
+      headers: this.headersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not load concert channels for user=$username.");
+
+    var channelsJson = json.decode(response.body);
+    List<GeneralChannel> channels = channelsJson.map<GeneralChannel>((channelJson) => GeneralChannel.fromJson(channelJson)).toList();
+    return channels;
   }
 
 }

@@ -241,6 +241,9 @@ class SignUpProfileState extends State<SignUpProfile> {
 
   Future<User> signup() async {
     try {
+      if (formValues["type"] == "FAN") {
+        formValues["description"] = "";
+      }
       User user = await authenticationService.signUp(formValues);
       return user;
     } catch(e) {

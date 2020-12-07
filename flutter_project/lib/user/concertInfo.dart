@@ -16,6 +16,58 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
 
   ConcertService concertService = new ConcertService();
 
+  Widget ExtraButton(User user, Concert concert) {
+    if (user.type == 'ARTIST' && concert.status == 2) {
+      return Container(
+          width: 100,
+          height: 45,
+          child: FlatButton(
+            disabledColor: Color.fromRGBO(230, 230, 230, 1.0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(5.0),
+                  side: BorderSide(
+                      color: Colors.black,
+                      width: 1
+                  )
+              ),
+              child: Text(
+                  'ENDED',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black
+                  )
+              ),
+              onPressed: () {}
+          )
+      );
+    }
+    return Container(
+      width: (user.type == 'FAN' ? 140 : 100),
+      height: 40,
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(5.0),
+            side: BorderSide(
+                color: Colors.black,
+                width: 2
+            )
+        ),
+        child: Text(
+            (user.type == 'FAN' ? 'ARTIST PROFILE' : 'EDIT'),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+            )
+        ),
+        onPressed: () {
+          // TODO create artist profile and edit concert page
+          Navigator.pushNamed(context, (user.type == 'FAN' ? "/login" : "/login"));
+        },
+      ),
+    );
+  }
+
   Widget ConcertInfoMenu(BuildContext context, Arguments arguments) {
 
     Concert concert = arguments.concert;
@@ -46,30 +98,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                                   style: TextStyle(fontSize: 15, color: Colors.black)
                               ),
                             ),
-                            trailing: Container(
-                              width: (user.type == 'FAN' ? 140 : 100),
-                              height: 40,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(5.0),
-                                    side: BorderSide(
-                                        color: Colors.black,
-                                        width: 2
-                                    )
-                                ),
-                                child: Text(
-                                    (user.type == 'FAN' ? 'ARTIST PROFILE' : 'EDIT'),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black
-                                    )
-                                ),
-                                onPressed: () {
-                                  // TODO create artist profile and edit concert page
-                                  Navigator.pushNamed(context, (user.type == 'FAN' ? "/login" : "/login"));
-                                },
-                              ),
-                            )
+                            trailing: ExtraButton(user, concert)
                         ),
                         ListTile(
                           title: Padding(
@@ -91,7 +120,9 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                       ]
                   )
               ),
-              (user.type == 'FAN' ? FanActionButton(concert, user) : ArtistActionButtons(concert, user))
+              (user.type == 'FAN' && concert.status != 2 ? FanActionButton(concert, user) :
+              user.type == 'ARTIST' && concert.status != 2 ? ArtistActionButtons(concert, user) :
+              Container())
             ]
         ));
   }
@@ -186,11 +217,12 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                               "By cancelling this concert, you are deleting the concert info and if people \ "
                                   "already bought tickets for this concert, they will be automatically refunded.",
                                   () {
+                                cancelConcert(user.username, concert.id); // FIXME this is endConcert not cancel
                                 Navigator.of(context).pop();
                                 Navigator.pushNamed(
                                     context,
-                                    "/payment", // TODO create cancel concert page
-                                    arguments: Arguments(user, concert)
+                                    "/user/main", // TODO create cancel concert page
+                                    arguments: user
                                 );
                               },
                                   () {
@@ -212,6 +244,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                           "By clicking on this button, your stream will start immediately and everyone \ "
                             " who bought a ticket for it will have access to the stream.",
                               () {
+                            startConcert(user.username, concert.id);
                             Navigator.of(context).pop();
                             Navigator.pushNamed(
                                 context,
@@ -270,6 +303,22 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
     try {
       List<Concert> concerts = await concertService.getArtistConcerts(username);
       return concerts;
+    } catch(e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> startConcert(String username, int concertId) async {
+    try {
+      await concertService.startConcert(username, concertId);
+    } catch(e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> cancelConcert(String username, int concertId) async {
+    try {
+      await concertService.endConcert(username, concertId);
     } catch(e) {
       print(e.toString());
     }

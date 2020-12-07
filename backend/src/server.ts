@@ -68,6 +68,10 @@ export class Server {
         this.app.get("/concerts/:id/messages", (req, res) => {
            this.handlers.loadConcertMessages(req, res);
         });
+
+        this.app.get("/channels/:username/", (req, res) => {
+            this.handlers.getConcertChannels(req, res);
+        })
         
     }
 

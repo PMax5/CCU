@@ -152,6 +152,7 @@ class SignUpProfileState extends State<SignUpProfile> {
                   if (key.currentState.validate()) {
                     signup().then((user) {
                       if (user != null) {
+                        Navigator.popUntil(context, ModalRoute.withName("/"));
                         Navigator.pushNamed(
                             context,
                             "/user/main",
@@ -240,6 +241,9 @@ class SignUpProfileState extends State<SignUpProfile> {
 
   Future<User> signup() async {
     try {
+      if (formValues["type"] == "FAN") {
+        formValues["description"] = "";
+      }
       User user = await authenticationService.signUp(formValues);
       return user;
     } catch(e) {

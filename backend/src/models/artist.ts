@@ -27,3 +27,9 @@ export interface Message {
     authorUserName : string,
     message : string
 }
+
+export interface GeneralChannel {
+    name ?: string,
+    concertId ?: number,
+    voice ?: boolean
+}

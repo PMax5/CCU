@@ -103,12 +103,12 @@ Widget MainMenu(BuildContext context, User user, Widget mainPage) {
                       mainPage,
                       ChatRooms(context, user),
                       Notifications(context),
-                      ExtraMenu(context)
+                      ExtraMenu(context, user)
                     ]
                   : [
                       mainPage,
                       ChatRooms(context, user),
-                      ExtraMenu(context)
+                      ExtraMenu(context, user)
                     ]),
         ),
       ],
@@ -177,7 +177,7 @@ Widget Notifications(BuildContext context) {
   );
 }
 
-Widget ExtraMenu(BuildContext context) {
+Widget ExtraMenu(BuildContext context, User user) {
   return ListView(children: [
     Divider(
       color: Colors.grey,
@@ -190,7 +190,7 @@ Widget ExtraMenu(BuildContext context) {
       leading: Icon(Icons.person, size: 35),
       onTap: () {
         //TODO: redirecionar para ecra de perfil
-        Navigator.pushNamed(context, "/login");
+        Navigator.pushNamed(context, "/user/userProfile", arguments: user);
       },
     ),
     Divider(

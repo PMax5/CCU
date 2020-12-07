@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/authentication/login.dart';
 import 'package:flutter_complete_guide/payment/paymentOptions.dart';
 import 'authentication/signup.dart';
+import 'package:flutter/services.dart';
 import 'settings.dart';
 
 class MainPage extends StatelessWidget {
@@ -14,6 +15,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Scaffold(
       body: Stack(
         children: <Widget> [

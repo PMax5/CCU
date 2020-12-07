@@ -10,7 +10,7 @@ export class Handlers {
             name: "Test User",
             email: "user@example.com",
             password: "lol",
-            imagePath: "assets/images/atm.png",
+            imagePath: "assets/images/profile_fan.png",
             type: "FAN"
         });
 
@@ -90,11 +90,16 @@ export class Handlers {
             artistImage: "assets/images/mini_james.png"
         });
 
+        this.repository.purchaseTicket( "test", 1 );
+        this.repository.purchaseTicket( "test", 2 );
+        this.repository.purchaseTicket( "test", 3 );
+
         console.log("Created default users and concert...");
     }
 
     createUser(req: Request, res: Response) {
         let user = req.body;
+
         if (this.repository.getUser(user.username) === undefined) {
             this.repository.createUser(req.body);
             return res.sendStatus(200);
@@ -204,6 +209,16 @@ export class Handlers {
         let result = this.repository.purchaseTicket(req.params.username, Number(req.params.id));
 
         result ? res.sendStatus(200) : res.sendStatus(500);
+    }
+
+    getConcertChannels(req: Request, res: Response) {
+        let channels = this.repository.getConcertChannels(req.params.username);
+
+        if (channels !== undefined)
+            return res.status(200).json(channels);
+
+        return res.sendStatus(500);
+
     }
 
 }

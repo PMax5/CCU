@@ -200,7 +200,7 @@ export class Repository {
             user.concerts.push(id);
 
             if (concert.participants !== undefined)
-                concert.participants.push(user);
+                concert.participants.push(username);
 
             return true;
         }

@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -17,7 +16,6 @@ class CreateConcert extends StatefulWidget {
 }
 
 class CreateConcertState extends State<CreateConcert> {
-
   Settings projectSettings = new Settings();
   ConcertService concertService = new ConcertService();
   String concertImagePath = 'assets/images/james.png'; //TODO: should be general
@@ -31,12 +29,11 @@ class CreateConcertState extends State<CreateConcert> {
 
     return Center(
       child: Padding(
-        padding: EdgeInsets.only(bottom: 10),
-        child: Image(
-          image: AssetImage(concertImagePath),
-          fit: BoxFit.cover,
-        )
-      ),
+          padding: EdgeInsets.only(bottom: 10),
+          child: Image(
+            image: AssetImage(concertImagePath),
+            fit: BoxFit.cover,
+          )),
     );
   }
 
@@ -44,8 +41,7 @@ class CreateConcertState extends State<CreateConcert> {
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
           borderSide: BorderSide(color: color, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(6.0))
-      );
+          borderRadius: BorderRadius.all(Radius.circular(6.0)));
     }
 
     return Center(
@@ -60,8 +56,7 @@ class CreateConcertState extends State<CreateConcert> {
                         focusedBorder: inputBorder(Colors.black),
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: "Concert Name"
-                    ),
+                        hintText: "Concert Name"),
                     validator: (value) {
                       if (value.isEmpty)
                         return "Enter a name for your concert";
@@ -69,11 +64,7 @@ class CreateConcertState extends State<CreateConcert> {
                         formValues["name"] = value;
                         return null;
                       }
-                    }
-                )
-            )
-        )
-    );
+                    }))));
   }
 
   Widget buildDateInputField(BuildContext context) {
@@ -84,24 +75,22 @@ class CreateConcertState extends State<CreateConcert> {
         child: OutlineButton(
           child: Text(
             "${selectedDateTime.toLocal()}".split(' ')[0],
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           ),
           color: Colors.white,
           borderSide: BorderSide(color: Colors.black, width: 2.0),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6.0)
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
           onPressed: () {
             selectDate(context);
             String year = "${selectedDateTime.year.toString()}";
-            String month = "${selectedDateTime.month.toString().padLeft(2,'0')}";
-            String day = "${selectedDateTime.day.toString().padLeft(2,'0')}";
+            String month =
+                "${selectedDateTime.month.toString().padLeft(2, '0')}";
+            String day = "${selectedDateTime.day.toString().padLeft(2, '0')}";
             String hours = "${selectedDateTime.hour.toString()}";
             String minutes = "${selectedDateTime.minute.toString()}";
-            String date = year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+            String date =
+                year + "-" + month + "-" + day + " " + hours + ":" + minutes;
             print(date);
             formValues["date"] = date;
           },
@@ -112,28 +101,27 @@ class CreateConcertState extends State<CreateConcert> {
 
   Future<Null> selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDateTime,
-        firstDate: DateTime(2020, 12),
-        lastDate: DateTime(2050),
-        builder: (BuildContext context, Widget child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: ColorScheme.fromSwatch(
-                primarySwatch: Colors.pink,
-                primaryColorDark: Colors.pink,
-                accentColor: Colors.pink,
-              ),
-              dialogBackgroundColor:Colors.white,
+      context: context,
+      initialDate: selectedDateTime,
+      firstDate: DateTime(2020, 12),
+      lastDate: DateTime(2050),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: createMaterialColor(projectSettings.mainColor),
+              primaryColorDark: createMaterialColor(projectSettings.mainColor),
+              accentColor: createMaterialColor(projectSettings.mainColor),
             ),
-            child: child,
-          );
-        },
+            dialogBackgroundColor: Colors.white,
+          ),
+          child: child,
+        );
+      },
     );
     if (picked != null && picked != selectedDateTime)
       setState(() {
         selectedDateTime = picked;
-
       });
   }
 
@@ -145,24 +133,22 @@ class CreateConcertState extends State<CreateConcert> {
         child: OutlineButton(
           child: Text(
             "${selectedDateTime.hour.toString()}:${selectedDateTime.minute.toString()}",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           ),
           color: Colors.white,
           borderSide: BorderSide(color: Colors.black, width: 2.0),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6.0)
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
           onPressed: () {
             selectTime(context);
             String year = "${selectedDateTime.year.toString()}";
-            String month = "${selectedDateTime.month.toString().padLeft(2,'0')}";
-            String day = "${selectedDateTime.day.toString().padLeft(2,'0')}";
+            String month =
+                "${selectedDateTime.month.toString().padLeft(2, '0')}";
+            String day = "${selectedDateTime.day.toString().padLeft(2, '0')}";
             String hours = "${selectedDateTime.hour.toString()}";
             String minutes = "${selectedDateTime.minute.toString()}";
-            String date = year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+            String date =
+                year + "-" + month + "-" + day + " " + hours + ":" + minutes;
             print(date);
             formValues["date"] = date;
           },
@@ -177,30 +163,30 @@ class CreateConcertState extends State<CreateConcert> {
       initialTime: TimeOfDay.fromDateTime(selectedDateTime),
       builder: (BuildContext context, Widget child) {
         return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: ColorScheme.fromSwatch(
-              primarySwatch: Colors.pink,
-              primaryColorDark: Colors.pink,
-              accentColor: Colors.pink,
+            data: ThemeData.light().copyWith(
+              colorScheme: ColorScheme.fromSwatch(
+                primarySwatch: createMaterialColor(projectSettings.mainColor),
+                primaryColorDark:
+                    createMaterialColor(projectSettings.mainColor),
+                accentColor: createMaterialColor(projectSettings.mainColor),
+              ),
+              dialogBackgroundColor: Colors.white,
             ),
-            dialogBackgroundColor:Colors.white,
-          ),
-          child: MediaQuery(
-            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-            child: child,
-          )
-        );
+            child: MediaQuery(
+              data:
+                  MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+              child: child,
+            ));
       },
     );
     if (picked != null && picked != TimeOfDay.fromDateTime(selectedDateTime))
       setState(() {
         selectedDateTime = DateTime(
-          selectedDateTime.year,
-          selectedDateTime.month,
-          selectedDateTime.day,
-          picked.hour,
-          picked.minute
-        );
+            selectedDateTime.year,
+            selectedDateTime.month,
+            selectedDateTime.day,
+            picked.hour,
+            picked.minute);
       });
   }
 
@@ -208,8 +194,7 @@ class CreateConcertState extends State<CreateConcert> {
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
           borderSide: BorderSide(color: color, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(6.0))
-      );
+          borderRadius: BorderRadius.all(Radius.circular(6.0)));
     }
 
     return Center(
@@ -225,8 +210,7 @@ class CreateConcertState extends State<CreateConcert> {
                         focusedBorder: inputBorder(Colors.black),
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: "Description"
-                    ),
+                        hintText: "Description"),
                     validator: (value) {
                       if (value.isEmpty)
                         return "Enter a description for your concert";
@@ -234,19 +218,14 @@ class CreateConcertState extends State<CreateConcert> {
                         formValues["description"] = value;
                         return null;
                       }
-                    }
-                )
-            )
-        )
-    );
+                    }))));
   }
 
   Widget buildLinkField() {
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
           borderSide: BorderSide(color: color, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(6.0))
-      );
+          borderRadius: BorderRadius.all(Radius.circular(6.0)));
     }
 
     return Center(
@@ -261,8 +240,7 @@ class CreateConcertState extends State<CreateConcert> {
                         focusedBorder: inputBorder(Colors.black),
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: "Link"
-                    ),
+                        hintText: "Link"),
                     validator: (value) {
                       if (value.isEmpty)
                         return "Enter a link for your profile";
@@ -270,11 +248,7 @@ class CreateConcertState extends State<CreateConcert> {
                         formValues["link"] = value;
                         return null;
                       }
-                    }
-                )
-            )
-        )
-    );
+                    }))));
   }
 
   Widget buildCancelButton(BuildContext context, User user) {
@@ -282,72 +256,52 @@ class CreateConcertState extends State<CreateConcert> {
       child: Container(
         width: 170,
         height: projectSettings.textInputHeight,
-        child: ElevatedButton(
-          child: Text(
-            "CANCEL",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: projectSettings.mainColor,
-            ),
-          ),
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(255, 255, 255, 1))
-          ),
+        child: RaisedButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(5.0),
+              side: BorderSide(color: Colors.black, width: 2)),
+          child: Text('CANCEL',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
           onPressed: () {
-            Navigator.pushNamed(
-                context,
-                "/user/main",
-                arguments: user
-            );
+            Navigator.pushNamed(context, "/user/main", arguments: user);
           },
         ),
       ),
     );
   }
 
-  Widget buildCreateButton(BuildContext context, GlobalKey<FormState> key, User user) {
+  Widget buildCreateButton(
+      BuildContext context, GlobalKey<FormState> key, User user) {
     return Center(
-      child: Container(
-        width: 170,
-        height: projectSettings.textInputHeight,
-        child: ElevatedButton(
-          child: Text(
-            "CREATE",
-            style: TextStyle(
-              fontWeight: FontWeight.bold
-            )
-          ),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
-          ),
-          onPressed: () {
-            if (key.currentState.validate()) {
-              createConcert(user).then((concert) {
-                if (concert != null) {
-                  Navigator.pushNamed(
-                      context,
-                      "/user/main",
-                      arguments: user
-                  );
-                }
-                else {
-                  showDialog(
-                      context: context,
-                      builder: (_) => TipDialog(
-                          "Notice",
-                          "Something went wrong, check your inserted information.",
-                              () {
-                            Navigator.of(context).pop();
-                          }
-                      )
-                  );
-                }
-              });
-            }
-          }
-        )
-      )
-    );
+        child: Container(
+            width: 170,
+            height: projectSettings.textInputHeight,
+            child: ElevatedButton(
+                child: Text("CREATE",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      projectSettings.mainColor),
+                ),
+                onPressed: () {
+                  if (key.currentState.validate()) {
+                    createConcert(user).then((concert) {
+                      if (concert != null) {
+                        Navigator.pushNamed(context, "/user/main",
+                            arguments: user);
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (_) => TipDialog("Notice",
+                                    "Something went wrong, check your inserted information.",
+                                    () {
+                                  Navigator.of(context).pop();
+                                }));
+                      }
+                    });
+                  }
+                })));
   }
 
   Widget concertCreationForm(BuildContext context, User user) {
@@ -364,12 +318,11 @@ class CreateConcertState extends State<CreateConcert> {
               Padding(
                 padding: EdgeInsets.only(bottom: 15),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    buildDateInputField(context),
-                    buildHourInputField(context),
-                  ]
-                ),
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      buildDateInputField(context),
+                      buildHourInputField(context),
+                    ]),
               ),
               buildDescriptionField(),
               buildLinkField(),
@@ -382,17 +335,36 @@ class CreateConcertState extends State<CreateConcert> {
               ),
             ],
           ),
-        )
-    );
+        ));
   }
 
   Future<Concert> createConcert(User user) async {
     try {
-      Concert concert = await concertService.createConcert(formValues, user.username);
+      Concert concert =
+          await concertService.createConcert(formValues, user.username);
       return concert;
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
     }
+  }
+
+  MaterialColor createMaterialColor(Color color) {
+    List strengths = <double>[.05];
+    Map swatch = <int, Color>{};
+    final int r = color.red, g = color.green, b = color.blue;
+
+    for (int i = 1; i < 10; i++) {
+      strengths.add(0.1 * i);
+    }
+    strengths.forEach((strength) {
+      final double ds = 0.5 - strength;
+      swatch[(strength * 1000).round()] = Color.fromRGBO(
+          r + ((ds < 0 ? r : (255 - r)) * ds).round(),
+          g + ((ds < 0 ? r : (255 - g)) * ds).round(),
+          b + ((ds < 0 ? r : (255 - b)) * ds).round(),
+          1);
+    });
+    return MaterialColor(color.value, swatch);
   }
 
   @override
@@ -404,13 +376,9 @@ class CreateConcertState extends State<CreateConcert> {
 
     return Scaffold(
         body: SingleChildScrollView(
-            child: Column(
-                children: <Widget>[
-                  BackButtonLogoHeader(context),
-                  concertCreationForm(context, user)
-                ]
-            )
-        )
-    );
+            child: Column(children: <Widget>[
+      BackButtonLogoHeader(context),
+      concertCreationForm(context, user)
+    ])));
   }
 }

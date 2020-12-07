@@ -13,7 +13,6 @@ class ConcertInfoPage extends StatefulWidget {
 }
 
 class ConcertInfoPageState extends State<ConcertInfoPage> {
-
   ConcertService concertService = new ConcertService();
 
   Widget ExtraButton(User user, Concert concert) {
@@ -23,81 +22,66 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
       child: RaisedButton(
         shape: RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(5.0),
-            side: BorderSide(
-                color: Colors.black,
-                width: 2
-            )
-        ),
-        child: Text(
-            (user.type == 'FAN' ? 'ARTIST PROFILE' : 'EDIT'),
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black
-            )
-        ),
+            side: BorderSide(color: Colors.black, width: 2)),
+        child: Text((user.type == 'FAN' ? 'ARTIST PROFILE' : 'EDIT'),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
         onPressed: () {
           // TODO create artist profile and edit concert page
-          Navigator.pushNamed(context, (user.type == 'FAN' ? "/login" : "/login"));
+          Navigator.pushNamed(
+              context, (user.type == 'FAN' ? "/login" : "/login"));
         },
       ),
     );
   }
 
   Widget ConcertInfoMenu(BuildContext context, Arguments arguments) {
-
     Concert concert = arguments.concert;
     User user = arguments.logged_in;
 
     return MainMenu(
         context,
         user,
-        Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 10.0),
-                child: Image.asset(concert.image, fit: BoxFit.fill),
-              ),
-              Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: Column(
-                      children: [
-                        ListTile(
-                            title: Text(
-                                concert.name,
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black)
-                            ),
-                            subtitle: Padding(
-                              padding : EdgeInsets.only(top: 6.0),
-                              child: Text(
-                                  "10th November 2020 9 p.m.", // FIXME
-                                  style: TextStyle(fontSize: 15, color: Colors.black)
-                              ),
-                            ),
-                            trailing: ExtraButton(user, concert)
-                        ),
-                        ListTile(
-                          title: Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: const Text(
-                                "About the concert",
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black)
-                            ),
-                          ),
-                          subtitle: Padding(
-                            padding : EdgeInsets.only(top: 6.0),
-                            child: Text(
-                                concert.description,
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(fontSize: 15, color: Colors.black)
-                            ),
-                          ),
-                        ),
-                      ]
-                  )
-              ),
-              (user.type == 'FAN' ? FanActionButton(concert, user) : ArtistActionButtons(concert, user))
-            ]
-        ));
+        Column(children: [
+          Padding(
+            padding: EdgeInsets.only(top: 10.0),
+            child: Image.asset(concert.image, fit: BoxFit.fill),
+          ),
+          Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Column(children: [
+                ListTile(
+                    title: Text(concert.name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.black)),
+                    subtitle: Padding(
+                      padding: EdgeInsets.only(top: 6.0),
+                      child: Text("10th November 2020 9 p.m.", // FIXME
+                          style: TextStyle(fontSize: 15, color: Colors.black)),
+                    ),
+                    trailing: ExtraButton(user, concert)),
+                ListTile(
+                  title: Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: const Text("About the concert",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.black)),
+                  ),
+                  subtitle: Padding(
+                    padding: EdgeInsets.only(top: 6.0),
+                    child: Text(concert.description,
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(fontSize: 15, color: Colors.black)),
+                  ),
+                ),
+              ])),
+          (user.type == 'FAN'
+              ? FanActionButton(concert, user)
+              : ArtistActionButtons(concert, user))
+        ]));
   }
 
   Widget FanActionButton(Concert concert, User user) {
@@ -114,54 +98,34 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
             }
           });
           if (bought) {
-            return BottomButton(
-                'GO TO STREAM',
-                () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => ConfirmationDialog(
-                        "Voice call with the artist",
-                        "By going to the stream, you’re enabled to win a voice call with the \ "
-                            "artist along with other fans at the end of the concert. You’ll receive \ "
-                            "a notification in case this happens.",
-                            () {
-                          Navigator.of(context).pop();
-                          Navigator.pushNamed(
-                              context,
-                              "/user/concertStream",
-                              arguments: Arguments(user, concert)
-                          );
-                        },
-                            () {
-                          Navigator.of(context).pop();
-                        }
-                    )
-                  );
-                },
-                350
-            );
+            return BottomButton('GO TO STREAM', () {
+              showDialog(
+                  context: context,
+                  builder: (_) => ConfirmationDialog(
+                          "Voice call with the artist",
+                          "By going to the stream, you’re enabled to win a voice call with the \ "
+                              "artist along with other fans at the end of the concert. You’ll receive \ "
+                              "a notification in case this happens.", () {
+                        Navigator.of(context).pop();
+                        Navigator.pushNamed(context, "/user/concertStream",
+                            arguments: Arguments(user, concert));
+                      }, () {
+                        Navigator.of(context).pop();
+                      }));
+            }, 350);
           }
-          return BottomButton(
-              'BUY TICKET',
-              () {
-                Navigator.pushNamed(
-                    context,
-                    "/payment",
-                    arguments:  Arguments(user, concert)
-                );
-              },
-              350
-          );
-    });
+          return BottomButton('BUY TICKET', () {
+            Navigator.pushNamed(context, "/payment",
+                arguments: Arguments(user, concert));
+          }, 350);
+        });
   }
 
   Widget ArtistActionButtons(Concert concert, User user) {
     return Expanded(
         child: Align(
-          alignment: FractionalOffset.bottomCenter,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            alignment: FractionalOffset.bottomCenter,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                 padding: EdgeInsets.only(right: 20.0, bottom: 20.0),
                 child: Container(
@@ -170,82 +134,57 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(5.0),
-                        side: BorderSide(
-                            color: Colors.black,
-                            width: 2
-                        )
-                    ),
-                    child: Text(
-                        'CANCEL STREAM',
+                        side: BorderSide(color: Colors.black, width: 2)),
+                    child: Text('CANCEL CONCERT',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black
-                        )
-                    ),
+                            fontWeight: FontWeight.bold, color: Colors.black)),
                     onPressed: () {
                       showDialog(
                           context: context,
                           builder: (_) => ConfirmationDialog(
-                              "Are you sure you want to cancel this concert?",
-                              "By cancelling this concert, you are deleting the concert info and if people \ "
-                                  "already bought tickets for this concert, they will be automatically refunded.",
+                                  "Are you sure you want to cancel this concert?",
+                                  "By cancelling this concert, you are deleting the concert info and if people \ "
+                                      "already bought tickets for this concert, they will be automatically refunded.",
                                   () {
-                                cancelConcert(user.username, concert.id); // FIXME this is endConcert not cancel
+                                cancelConcert(
+                                    user.username,
+                                    concert
+                                        .id); // FIXME this is endConcert not cancel
                                 Navigator.of(context).pop();
-                                Navigator.pushNamed(
-                                    context,
+                                Navigator.pushNamed(context,
                                     "/user/main", // TODO create cancel concert page
-                                    arguments: user
-                                );
-                              },
-                                  () {
+                                    arguments: user);
+                              }, () {
                                 Navigator.of(context).pop();
-                              }
-                          )
-                      );
+                              }));
                     },
                   ),
                 ),
               ),
-              PinkButton(
-                'START STREAM',
-                () {
-                  showDialog(
-                      context: context,
-                      builder: (_) => ConfirmationDialog(
-                          "Are you sure you want to start the concert?",
-                          "By clicking on this button, your stream will start immediately and everyone \ "
-                            " who bought a ticket for it will have access to the stream.",
-                              () {
-                            startConcert(user.username, concert.id);
-                            Navigator.of(context).pop();
-                            Navigator.pushNamed(
-                                context,
-                                "/user/concertStream",
-                                arguments: Arguments(user, concert)
-                            );
-                          },
-                              () {
-                            Navigator.of(context).pop();
-                          }
-                      )
-                  );
-                },
-                165
-              ),
-            ]
-          )
-        )
-    );
+              PinkButton('START STREAM', () {
+                showDialog(
+                    context: context,
+                    builder: (_) => ConfirmationDialog(
+                            "Are you sure you want to start the concert?",
+                            "By clicking on this button, your stream will start immediately and everyone \ "
+                                " who bought a ticket for it will have access to the stream.",
+                            () {
+                          startConcert(user.username, concert.id);
+                          Navigator.of(context).pop();
+                          Navigator.pushNamed(context, "/user/concertStream",
+                              arguments: Arguments(user, concert));
+                        }, () {
+                          Navigator.of(context).pop();
+                        }));
+              }, 165),
+            ])));
   }
 
   Widget BottomButton(String buttonText, Function() onPressed, double width) {
     return Expanded(
         child: Align(
             alignment: FractionalOffset.bottomCenter,
-            child: PinkButton(buttonText, onPressed, width)
-        )
-    );
+            child: PinkButton(buttonText, onPressed, width)));
   }
 
   Widget PinkButton(String buttonText, Function() onPressed, double width) {
@@ -259,15 +198,10 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
               borderRadius: new BorderRadius.circular(5.0),
             ),
             color: projectSettings.mainColor,
-            child: Text(
-                buttonText,
+            child: Text(buttonText,
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white
-                )
-            ),
-            onPressed: onPressed
-        ),
+                    fontWeight: FontWeight.bold, color: Colors.white)),
+            onPressed: onPressed),
       ),
     );
   }
@@ -276,7 +210,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
     try {
       List<Concert> concerts = await concertService.getArtistConcerts(username);
       return concerts;
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
     }
   }
@@ -284,7 +218,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
   Future<void> startConcert(String username, int concertId) async {
     try {
       await concertService.startConcert(username, concertId);
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
     }
   }
@@ -292,7 +226,7 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
   Future<void> cancelConcert(String username, int concertId) async {
     try {
       await concertService.endConcert(username, concertId);
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
     }
   }
@@ -303,14 +237,9 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
 
     return Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              BackButtonLogoHeader(context),
-              ConcertInfoMenu(context, arguments)
-            ]
-          )
-        )
-    );
+            child: Column(children: <Widget>[
+      BackButtonLogoHeader(context),
+      ConcertInfoMenu(context, arguments)
+    ])));
   }
-
 }

@@ -37,7 +37,8 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )
-              )
+              ),
+              onPressed: () {}
           )
       );
     }

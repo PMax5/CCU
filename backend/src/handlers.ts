@@ -10,7 +10,7 @@ export class Handlers {
             name: "Test User",
             email: "user@example.com",
             password: "lol",
-            imagePath: "assets/images/atm.png",
+            imagePath: "assets/images/profile_fan.png",
             type: "FAN"
         });
 

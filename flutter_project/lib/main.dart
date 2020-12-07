@@ -11,6 +11,7 @@ import 'package:flutter_complete_guide/user/concertInfo.dart';
 import 'package:flutter_complete_guide/user/concertStream.dart';
 import 'package:flutter_complete_guide/user/voicecall.dart';
 import 'package:flutter_complete_guide/user/userchat.dart';
+import 'package:flutter_complete_guide/user/userProfile.dart';
 
 import 'authentication/login.dart';
 import 'authentication/signup.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         "/user/main": (context) => UserMainPage(),
         "/user/concertInfo": (context) => ConcertInfoPage(),
         "/user/concertStream": (context) => ConcertStream(),
+        "/user/userProfile": (context) => UserProfile(),
         "/user/voicecall": (context) => VoiceCall(),
         "/user/userchat": (context) => UserChat(),
       },

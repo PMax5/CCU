@@ -29,11 +29,12 @@ class AuthenticationService extends Service {
       'password': formValues['password'],
       'type': formValues['type'],
       'name': formValues['name'],
-      'imagePath': formValues['imagePath']
+      'imagePath': formValues['imagePath'],
+      'description': formValues['description']
     };
 
-    if (formValues['type'] == "ARTIST")
-      json['description'] = formValues['description'];
+    /*if (formValues['type'] == "ARTIST")
+      json['description'] = formValues['description'];*/
 
     final http.Response response = await http.post(
       this.apiURL + "/user/signup",

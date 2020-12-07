@@ -2,34 +2,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/user.dart';
-import 'package:flutter_complete_guide/services/AuthenticationService.dart';
+import 'package:flutter_complete_guide/services/UserService.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
 
-class SignUpProfile extends StatefulWidget {
-  SignUpProfile({Key key}) : super(key: key);
+class EditUserProfile extends StatefulWidget {
+  EditUserProfile({Key key}) : super(key: key);
 
   @override
-  SignUpProfileState createState() => SignUpProfileState();
+  EditUserProfileState createState() => EditUserProfileState();
 }
 
-class SignUpProfileState extends State<SignUpProfile> {
+class EditUserProfileState extends State<EditUserProfile> {
 
   Settings projectSettings = new Settings();
-  AuthenticationService authenticationService = new AuthenticationService();
+  UserService userService = new UserService();
   Map<String, String> formValues;
-  String profileImagePath = 'assets/images/profile_general.png';
+  String profileImagePath = '';
 
-  Widget buildImagePreview() {
-    Image profileImage = Image.asset(profileImagePath, fit: BoxFit.cover);
-    formValues["imagePath"] = profileImagePath;
+  Widget buildImagePreview(user) { /*FIXME I WANT DYNAMIC PLEASE*/
+   profileImagePath = user.imagePath;
+   Image profileImage = Image.asset(profileImagePath, fit: BoxFit.cover);
+   formValues["imagePath"] = profileImagePath;
 
     return Center(
         child: profileImage
     );
   }
 
-  Widget buildEditImageButton() {
+  Widget buildEditImageButton(user) {
     return Center(
       child: Container(
         width: projectSettings.textInputWidth - 180,
@@ -45,12 +46,12 @@ class SignUpProfileState extends State<SignUpProfile> {
             backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(200, 200, 200, 0.8))
           ),
           onPressed: () {
-            //TODO: this works kinda weird, fix later
+            //FIXME: I WANT PICKERIMAGE PLEASE
             setState(() {
-              if (formValues["type"] == "FAN")
-                profileImagePath = 'assets/images/profile_fan.png';
+              if (user.type == "FAN")
+                profileImagePath = 'assets/images/concert6.png';
               else
-                profileImagePath = 'assets/images/profile_artist.png';
+                profileImagePath = 'assets/images/concert5.png';
             });
           },
         ),
@@ -58,7 +59,7 @@ class SignUpProfileState extends State<SignUpProfile> {
     );
   }
 
-  Widget buildNameInputField() {
+  Widget buildNameInputField(user) {
 
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
@@ -79,7 +80,7 @@ class SignUpProfileState extends State<SignUpProfile> {
                         focusedBorder: inputBorder(Colors.black),
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: "Name"
+                        hintText: user.name
                     ),
                     validator: (value) {
                       if (value.isEmpty)
@@ -95,7 +96,7 @@ class SignUpProfileState extends State<SignUpProfile> {
     );
   }
 
-  Widget buildDescriptionInputField() {
+  Widget buildDescriptionInputField(user) {
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
           borderSide: BorderSide(color: color, width: 2.0),
@@ -117,7 +118,7 @@ class SignUpProfileState extends State<SignUpProfile> {
                         focusedBorder: inputBorder(Colors.black),
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: "Description"
+                        hintText: user.description
                     ),
                     validator: (value) {
                       if (value.isEmpty)
@@ -132,7 +133,30 @@ class SignUpProfileState extends State<SignUpProfile> {
         )
     );
   }
+  Widget buildCancelButton(BuildContext context){
+	return Center(
+	        child: Container(
+	            width: projectSettings.textInputWidth,
+	            height: projectSettings.textInputHeight,
+	            child: ElevatedButton(
+	                child: Text(
+	                    "Cancel",
+	                    style: TextStyle(
+	                        fontWeight: FontWeight.bold
+	                    )
+	                ),
+	                style: ButtonStyle(
+	                  backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
+	                ),
+	                onPressed: () {
+                        Navigator.pop(context);
+	                }
+	            )
+	        )
+	    );
 
+
+  }
   Widget buildSaveButton(BuildContext context, GlobalKey<FormState> key) {
     return Center(
         child: Container(
@@ -150,21 +174,16 @@ class SignUpProfileState extends State<SignUpProfile> {
                 ),
                 onPressed: () {
                   if (key.currentState.validate()) {
-                    signup().then((user) {
+                    editProfile().then((user) {
                       if (user != null) {
-                        Navigator.popUntil(context, ModalRoute.withName("/"));
-                        Navigator.pushNamed(
-                            context,
-                            "/user/main",
-                            arguments: user
-                        );
+                        Navigator.pop(context,user);
                       }
                       else {
                         showDialog(
                             context: context,
                             builder: (_) => TipDialog(
                                 "Notice",
-                                "Sorry try to create the account in a few minutes.",
+                                "Sorry try to update you profile in a few minutes.",
                                     () {
                                   Navigator.of(context).pop();
                                 }
@@ -180,39 +199,40 @@ class SignUpProfileState extends State<SignUpProfile> {
   }
 
   Widget buildForm(BuildContext context) {
-    formValues = ModalRoute.of(context).settings.arguments;
-    final signUpProfileFormKey = GlobalKey<FormState>();
+    User user = ModalRoute.of(context).settings.arguments;
+    final EditUserProfileFormKey = GlobalKey<FormState>();
 
     return Padding(
       padding: EdgeInsets.only(top: 48),
       child: Form(
-        key: signUpProfileFormKey,
+        key: EditUserProfileFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(bottom: 10),
-              child: buildImagePreview(),
+              child: buildImagePreview(user),
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 30),
-              child: buildEditImageButton(),
+              child: buildEditImageButton(user),
             ),
-            buildNameInputField(),
-            (user.type == 'ARTIST' ? buildDescriptionInputField() : Container()),
-            buildSaveButton(context, signUpProfileFormKey)
+            buildNameInputField(user),
+            (user.type == 'ARTIST' ? buildDescriptionInputField(user) : Container()),
+            buildCancelButton(context),
+            buildSaveButton(context, EditUserProfileFormKey)
           ],
         ),
       ),
     );
   }
 
-  Future<User> signup() async {
+  Future<User> editProfile() async {
     try {
       if (formValues["type"] == "FAN") {
         formValues["description"] = "";
       }
-      User user = await authenticationService.signUp(formValues);
+      User user = await userService.updateUser(formValues);
       return user;
     } catch(e) {
       print(e.toString());
@@ -223,7 +243,7 @@ class SignUpProfileState extends State<SignUpProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("User Profile"),
+          title: Text("Edit Profile"),
           backgroundColor: projectSettings.mainColor
       ),
       body:SingleChildScrollView(

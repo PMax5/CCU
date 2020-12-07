@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         "/user/concertInfo": (context) => ConcertInfoPage(),
         "/user/concertStream": (context) => ConcertStream(),
         "/user/userProfile": (context) => UserProfile(),
+        "/user/editProfile": (context) => EditUserProfile(),
         "/user/voicecall": (context) => VoiceCall(),
         "/user/userchat": (context) => UserChat(),
       },

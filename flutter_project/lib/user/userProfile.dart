@@ -14,19 +14,8 @@ class UserProfile extends StatefulWidget {
 class UserProfileState extends State<UserProfile> {
 
   Settings projectSettings = new Settings();
-  Map<String, String> formValues;
-  String profileImagePath = 'assets/images/profile_general.png';
 
-  Widget buildImagePreview() {
-    Image profileImage = Image.asset(profileImagePath, fit: BoxFit.cover);
-    formValues["imagePath"] = profileImagePath;
-
-    return Center(
-        child: profileImage
-    );
-  }
-
-  Widget buildEditButton() {
+  Widget buildEditButton(User user) {
     return Center(
       child: Container(
         width: 120,
@@ -47,7 +36,11 @@ class UserProfileState extends State<UserProfile> {
               )
           ),
           onPressed: () {
-
+              Navigator.pushNamed(
+                  context,
+                  "/user/editProfile",
+                  arguments: user
+              );
           },
         ),
       ),
@@ -106,7 +99,7 @@ class UserProfileState extends State<UserProfile> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 30, bottom: 30),
-              child: buildEditButton(),
+              child: buildEditButton(user),
             ),
             (user.type == 'ARTIST' ? buildDescription(user) : Container())
           ],

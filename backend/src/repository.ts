@@ -1,5 +1,5 @@
 import {User} from './models/authentication';
-import {Channel, Concert, Message, VoiceChannel} from "./models/artist";
+import {Channel, Concert, Message, VoiceChannel, GeneralChannel} from "./models/artist";
 
 export class Repository {
 
@@ -66,6 +66,17 @@ export class Repository {
 
         if (user.concerts === undefined)
             user.concerts = new Array<number>();
+            
+        let channel = {
+            messages: new Array<Message>(),
+            name: concert.name
+        }
+
+        this.channels.set(concertID, channel);
+
+        let userConcerts = user.concerts;
+        if (userConcerts === undefined)
+            userConcerts = new Array<number>();
 
         user.concerts.push(concertID);
     }
@@ -106,13 +117,6 @@ export class Repository {
 
         if (concert !== undefined && concert.username === username) {
             concert.status = this.STATUS_STARTED;
-
-            let channel = {
-                messages: new Array<Message>(),
-                name: concert.name
-            }
-
-            this.channels.set(id, channel);
             return true;
         }
 
@@ -191,7 +195,6 @@ export class Repository {
         if (concert !== undefined && user !== undefined) {
             if (user.concerts === undefined)
                 user.concerts = new Array<number>();
-
             user.concerts.push(id);
             
             if (concert.participants !== undefined)
@@ -201,5 +204,38 @@ export class Repository {
         }
 
         return false; 
+    }
+
+    getConcertChannels(username: string) {
+        let user = this.users.get(username);
+        let allChannels = new Array<GeneralChannel>();
+
+        if (user !== undefined) {
+            user.concerts.forEach((concertId: number) => {
+               let concert = this.concerts.get(concertId);
+
+               if (concert !== undefined) {
+                let channel = this.channels.get(concert.id!);
+                allChannels.push({
+                    name: concert.name + " Channel",
+                    concertId: concert.id,
+                    voice: false
+                });
+ 
+                let voiceChannel = this.voiceChannels.get(concert.username!);
+                if (voiceChannel !== undefined && 
+                 voiceChannel.participants !== undefined && 
+                 voiceChannel.participants.includes(username)) {
+                    allChannels.push({
+                        name:concert.name,
+                        concertId: concert.id,
+                        voice: true
+                    })
+                }
+               }
+            });
+        }
+
+        return allChannels;
     }
 }

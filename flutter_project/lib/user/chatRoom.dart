@@ -23,7 +23,7 @@ class ChatRoomState extends State<ChatRoom> {
   List<ChatMessage> chatMessages = new List<ChatMessage>();
   ConcertService _concertService = new ConcertService();
   User user;
-  int concertId = 0;
+
   void addMessage(ChatUser user, String message) {
     chatMessages.add(new ChatMessage(
         text: message,
@@ -68,14 +68,12 @@ class ChatRoomState extends State<ChatRoom> {
     });
 
     return DashChat(
-        width: 500,
-        height: 500,
         messages: chatMessages,
         inputCursorColor: projectSettings.mainColor,
         onSend: (message) {
           addMessage(message.user,
               message.text);
-          sendMessage(this.concertId, message.text, this.user);
+          sendMessage(arguments.channel.concertId, message.text, this.user);
         },
         messageDecorationBuilder: (message, isUser) {
           return BoxDecoration(

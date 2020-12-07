@@ -21,7 +21,6 @@ class EditUserProfileState extends State<EditUserProfile> {
 
   Widget buildImagePreview() {
     /*FIXME I WANT DYNAMIC PLEASE*/
-    profileImagePath = user.imagePath;
     Image profileImage = Image.network(profileImagePath,
         fit: BoxFit.cover, width: 100, height: 100);
     formValues["imagePath"] = profileImagePath;
@@ -44,12 +43,13 @@ class EditUserProfileState extends State<EditUserProfile> {
           onPressed: () {
             //FIXME: I WANT PICKERIMAGE PLEASE
             setState(() {
-              if (user.type == "FAN")
-                profileImagePath =
+              if (user.type == "FAN") {
+                user.imagePath =
                     'http://web.ist.utl.pt/ist189407/assets/images/concert6.png';
-              else
+              } else {
                 profileImagePath =
                     'http://web.ist.utl.pt/ist189407/assets/images/concert5.png';
+              }
             });
           },
         ),
@@ -228,6 +228,7 @@ class EditUserProfileState extends State<EditUserProfile> {
   @override
   Widget build(BuildContext context) {
     user = ModalRoute.of(context).settings.arguments;
+    profileImagePath = user.imagePath;
     return Scaffold(
       appBar: AppBar(
           title: Text("Edit Profile"),

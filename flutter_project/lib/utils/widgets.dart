@@ -200,7 +200,7 @@ Widget ChatRooms(BuildContext context, User user) {
                   Navigator.pushNamed(
                       context,
                       "/user/userchat",
-                      arguments: user
+                      arguments: ChannelArguments(user, textChannels[index])
                   );
                 },
               );
@@ -326,4 +326,11 @@ class Arguments {
   final Concert concert;
 
   Arguments(this.logged_in, this.concert);
+}
+
+class ChannelArguments {
+  final User user;
+  final GeneralChannel channel;
+
+  ChannelArguments(this.user, this.channel);
 }

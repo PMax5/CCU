@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/models/concert.dart';
 import 'package:flutter_complete_guide/models/user.dart';
 import 'package:flutter_complete_guide/services/ConcertService.dart';
+import 'package:flutter_complete_guide/utils/widgets.dart';
 
 import '../settings.dart';
 
@@ -33,6 +34,7 @@ class ChatRoomState extends State<ChatRoom> {
   Future<List<Message>> loadMessages(int concertId) async {
     try {
       List<Message> messages = await _concertService.getConcertMessages(concertId);
+      chatMessages.clear();
       return messages;
     } catch(e) {
       print(e.toString());
@@ -42,6 +44,7 @@ class ChatRoomState extends State<ChatRoom> {
   Future<void> sendMessage(int concertId, String text, User user) async {
     try {
       List<Message> messages = await _concertService.sendMessage(concertId, new Message(text, user));
+      chatMessages.clear();
       insertMessages(messages);
     } catch(e) {
       print(e.toString());
@@ -58,9 +61,9 @@ class ChatRoomState extends State<ChatRoom> {
     });
   }
 
-  Widget createRoom(BuildContext context) {
+  Widget createRoom(BuildContext context, ChannelArguments arguments) {
     //TODO: Add timer.
-    loadMessages(0).then((messages) {
+    loadMessages(arguments.channel.concertId).then((messages) {
       insertMessages(messages);
     });
 
@@ -90,13 +93,14 @@ class ChatRoomState extends State<ChatRoom> {
 
   @override
   Widget build(BuildContext context) {
-    user = ModalRoute.of(context).settings.arguments;
+    ChannelArguments arguments = ModalRoute.of(context).settings.arguments;
+    user = arguments.user;
     return Scaffold(
         appBar: AppBar(
-          title: Text("James Smith's Concert"),
+          title: Text(arguments.channel.name),
           backgroundColor: projectSettings.mainColor,
         ),
-        body: createRoom(context)
+        body: createRoom(context, arguments)
     );
   }
 }

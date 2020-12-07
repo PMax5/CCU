@@ -82,6 +82,15 @@ class ConcertStreamState extends State<ConcertStream> {
     }
   }
 
+  Future<GeneralChannel> getConcertChannel(String username) async {
+    try {
+      List<GeneralChannel> channels = await concertService.getConcertsChannels(username);
+      return channels[0];
+    } catch(e) {
+      print("Could not load concert text channel.");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Arguments arguments = ModalRoute.of(context).settings.arguments;
@@ -120,11 +129,15 @@ class ConcertStreamState extends State<ConcertStream> {
                       color: Colors.white,
                       onPressed: () {
                         SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-                        Navigator.pushNamed(
-                            context,
-                            "/user/userchat",
-                            arguments:  arguments
-                        );
+
+                        getConcertChannel(user.username).then((channel) => {
+                          Navigator.pushNamed(
+                              context,
+                              "/user/userchat",
+                              arguments: ChannelArguments(user, channel)
+                          )
+                        });
+
                       },
                     )
                   )

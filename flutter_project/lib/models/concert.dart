@@ -1,3 +1,5 @@
+import 'package:flutter_complete_guide/models/user.dart';
+
 class Concert {
   String name;
   String description;
@@ -92,16 +94,48 @@ class VoiceChannel {
   }
 }
 
-class Message {
-  String username;
-  String message;
+class GeneralChannel {
+  String name;
+  int concertId;
+  bool voice;
+  String imagePath;
 
-  Message(String username, String message) {
-    this.username = username;
+  GeneralChannel(String name, int concertId, bool voice, String imagePath) {
+    this.name = name;
+    this.concertId = concertId;
+    this.voice = voice;
+    this.imagePath = imagePath;
+  }
+
+  factory GeneralChannel.fromJson(Map<String, dynamic> json) {
+    return GeneralChannel(
+      json["name"],
+      json["concertId"],
+      json["voice"],
+      json["imagePath"]
+    );
+  }
+}
+
+class Message {
+  String message;
+  User author;
+
+  Message(String message, User author) {
     this.message = message;
+    this.author = author;
   }
 
   factory Message.fromJson(Map<String, dynamic> json) {
-    return Message(json["authorUserName"], json["message"]);
+    return Message(
+        json["message"],
+        User.fromJson(json["author"])
+    );
   }
+
+  Map<String, dynamic> toJson() => {
+    'message': this.message,
+    'author': this.author.toJson()
+  };
+
 }

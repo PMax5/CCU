@@ -1,5 +1,5 @@
-import {User} from './models/authentication';
-import {Channel, Concert, Message, VoiceChannel, GeneralChannel} from "./models/artist";
+import { User } from './models/authentication';
+import { Channel, Concert, Message, VoiceChannel, GeneralChannel } from "./models/artist";
 
 export class Repository {
 
@@ -41,7 +41,7 @@ export class Repository {
                     let concert = this.concerts.get(concertId);
                     if (concert !== undefined) {
                         concert.artistName = user.name,
-                        concert.artistImage = user.image
+                            concert.artistImage = user.image
                     }
                 });
             }
@@ -56,7 +56,8 @@ export class Repository {
         let concertID = this.concerts.size;
         let user = this.users.get(username);
 
-        concert.participants = new Array<string>();
+        if (concert.participants === undefined)
+            concert.participants = new Array<string>();
         concert.id = concertID;
         concert.username = username;
         concert.status = this.STATUS_PENDING;
@@ -66,18 +67,13 @@ export class Repository {
 
         if (user.concerts === undefined)
             user.concerts = new Array<number>();
-            
+
         let channel = {
             messages: new Array<Message>(),
             name: concert.name
         }
 
         this.channels.set(concertID, channel);
-
-        let userConcerts = user.concerts;
-        if (userConcerts === undefined)
-            userConcerts = new Array<number>();
-
         user.concerts.push(concertID);
     }
 
@@ -93,16 +89,20 @@ export class Repository {
 
     getArtistConcerts(username: string) {
         let concerts = new Array<Concert>();
-        let userConcertIds = this.users.get(username).concerts;
+        let user = this.users.get(username);
 
-        if (userConcertIds !== undefined) {
-            userConcertIds.forEach((value: number) => {
-                let concert = this.concerts.get(value);
-                if (concert !== undefined)
-                    concerts.push(concert);
-            });
+        if (user !== undefined) {
+            let userConcertIds = user.concerts;
 
-            return concerts;
+            if (userConcertIds !== undefined) {
+                userConcertIds.forEach((value: number) => {
+                    let concert = this.concerts.get(value);
+                    if (concert !== undefined)
+                        concerts.push(concert);
+                });
+
+                return concerts;
+            }
         }
 
         return [];
@@ -134,9 +134,9 @@ export class Repository {
         let concert = this.concerts.get(id);
         let channel = this.channels.get(id);
 
-        if (concert !== undefined && channel !== undefined && concert.status === this.STATUS_STARTED) {
+        if (concert !== undefined && channel !== undefined) {
             let participants = concert.participants;
-            if (participants !== undefined && channel.messages !== undefined && participants.includes(message.authorUserName)) {
+            if (participants !== undefined && channel.messages !== undefined && participants.includes(message.author.username!)) {
                 channel.messages.push(message);
                 return channel.messages;
             }
@@ -149,7 +149,7 @@ export class Repository {
         let concert = this.concerts.get(id);
         let channel = this.channels.get(id);
 
-        if (concert !== undefined && channel !== undefined && channel.messages !== undefined && concert.status === this.STATUS_STARTED) {
+        if (concert !== undefined && channel !== undefined && channel.messages !== undefined) {
             return channel.messages;
         }
 
@@ -168,8 +168,10 @@ export class Repository {
                     concertId: concert.id
                 }
 
+                console.log("Starting voice call...", channel);
                 this.voiceChannels.set(username, channel);
                 return channel;
+                
             }
         }
 
@@ -196,43 +198,53 @@ export class Repository {
             if (user.concerts === undefined)
                 user.concerts = new Array<number>();
             user.concerts.push(id);
-            
+
             if (concert.participants !== undefined)
-                concert.participants.push(user);
-            
+                concert.participants.push(username);
+
             return true;
         }
 
-        return false; 
+        return false;
     }
 
     getConcertChannels(username: string) {
         let user = this.users.get(username);
         let allChannels = new Array<GeneralChannel>();
 
-        if (user !== undefined) {
+        if (user !== undefined && user.concerts !== undefined) {
             user.concerts.forEach((concertId: number) => {
-               let concert = this.concerts.get(concertId);
+                let concert = this.concerts.get(concertId);
 
-               if (concert !== undefined) {
-                let channel = this.channels.get(concert.id!);
-                allChannels.push({
-                    name: concert.name + " Channel",
-                    concertId: concert.id,
-                    voice: false
-                });
- 
-                let voiceChannel = this.voiceChannels.get(concert.username!);
-                if (voiceChannel !== undefined && 
-                 voiceChannel.participants !== undefined && 
-                 voiceChannel.participants.includes(username)) {
+                if (concert !== undefined && concert.participants != undefined && concert.participants.includes(username)) {
+                    let channel = this.channels.get(concert.id!);
                     allChannels.push({
-                        name:concert.name,
+                        name: concert.name + " Channel",
                         concertId: concert.id,
-                        voice: true
-                    })
+                        voice: false
+                    });
+
+                    if (user.type === "ARTIST" && concert.username === user.username) {
+                        allChannels.push({
+                            name: concert.name,
+                            concertId: concert.id,
+                            voice: true,
+                            imagePath: user.imagePath
+                        });
+                    } else {
+                        let voiceChannel = this.voiceChannels.get(concert.username!);
+                        if (voiceChannel !== undefined &&
+                            voiceChannel.participants !== undefined &&
+                            voiceChannel.participants.includes(username)) {
+                            allChannels.push({
+                                name: concert.name,
+                                concertId: concert.id,
+                                voice: true,
+                                imagePath: this.users.get(concert.username).imagePath
+                            })
+                        }
+                    }
                 }
-               }
             });
         }
 

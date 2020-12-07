@@ -18,10 +18,10 @@ class SignUpProfileState extends State<SignUpProfile> {
   Settings projectSettings = new Settings();
   AuthenticationService authenticationService = new AuthenticationService();
   Map<String, String> formValues;
-  String profileImagePath = 'assets/images/profile_general.png';
+  String profileImagePath = 'http://web.ist.utl.pt/ist189407/assets/images/profile_general.png';
 
   Widget buildImagePreview() {
-    Image profileImage = Image.asset(profileImagePath, fit: BoxFit.cover);
+    Image profileImage = Image.network(profileImagePath, fit: BoxFit.cover);
     formValues["imagePath"] = profileImagePath;
 
     return Center(
@@ -48,9 +48,9 @@ class SignUpProfileState extends State<SignUpProfile> {
             //TODO: this works kinda weird, fix later
             setState(() {
               if (formValues["type"] == "FAN")
-                profileImagePath = 'assets/images/profile_fan.png';
+                profileImagePath = 'http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png';
               else
-                profileImagePath = 'assets/images/profile_artist.png';
+                profileImagePath = 'http://web.ist.utl.pt/ist189407/assets/images/james.png';
             });
           },
         ),

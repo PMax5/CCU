@@ -1,3 +1,5 @@
+import {User} from './authentication';
+
 export interface Concert {
     date ?: string,
     name ?: string,
@@ -24,12 +26,13 @@ export interface VoiceChannel {
 }
 
 export interface Message {
-    authorUserName : string,
+    author : User,
     message : string
 }
 
 export interface GeneralChannel {
     name ?: string,
     concertId ?: number,
-    voice ?: boolean
+    voice ?: boolean,
+    imagePath ?: string
 }

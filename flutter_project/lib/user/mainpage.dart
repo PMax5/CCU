@@ -74,7 +74,7 @@ class UserMainPageState extends State<UserMainPage> {
       context,
       user,
       FutureBuilder(
-        future: getArtistConcerts(user.username),
+        future: getArtistCurrentConcerts(user.username),
         builder: (context, artistConcerts) {
           if (!artistConcerts.hasData || artistConcerts.data.length == 0) {
             return Scaffold(
@@ -94,7 +94,11 @@ class UserMainPageState extends State<UserMainPage> {
               ),
               floatingActionButton: FloatingActionButton.extended(
                 onPressed: () {
-                  //TODO: link to concert creation page
+                  Navigator.pushNamed(
+                    context,
+                    "/user/concertCreate",
+                    arguments: user
+                  );
                 },
                 label: Text("CREATE"),
                 icon: Icon(Icons.add),
@@ -141,7 +145,11 @@ class UserMainPageState extends State<UserMainPage> {
             ),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
-                //TODO: link to concert creation page
+                Navigator.pushNamed(
+                    context,
+                    "/user/concertCreate",
+                    arguments: user
+                );
               },
               label: Text("CREATE"),
               icon: Icon(Icons.add),
@@ -162,10 +170,10 @@ class UserMainPageState extends State<UserMainPage> {
     }
   }
 
-  Future<List<Concert>> getArtistConcerts(String username) async {
+  Future<List<Concert>> getArtistCurrentConcerts(String username) async {
     try {
       List<Concert> artistConcerts = await concertService.getArtistConcerts(username);
-      return artistConcerts;
+      return artistConcerts.where((c) => c.status != 2).toList();
     } catch(e) {
       print(e.toString());
     }

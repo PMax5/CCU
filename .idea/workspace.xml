@@ -23,8 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb23d01c-afdc-4a5c-b080-b268185b13f3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/flutter_project/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_project/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flutter_project/lib/utils/widgets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_project/lib/utils/widgets.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_project/lib/authentication/signup_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_project/lib/authentication/signup_profile.dart" afterDir="false" />
     </list>
     <list id="b0cd6bc1-8bf0-4fdf-97e7-a4253f237d7c" name="Revert &quot;Added SignUp simple form (WIP).&quot;" comment="Revert &quot;Added SignUp simple form (WIP).&quot;&#10;&#10;This reverts commit f5b939e8" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +32,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_3a_API_30_x86]" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -171,10 +171,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1089" y="614" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/301.1440.1536.832/0.0.2560.1400@0.0.2560.1400" timestamp="1606659704240" />
-    <state x="667" y="119" width="585" height="801" key="find.popup" timestamp="1607040927928">
+    <state x="667" y="119" width="585" height="801" key="find.popup" timestamp="1607302165963">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="667" y="119" width="585" height="801" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607040927928" />
+    <state x="667" y="119" width="585" height="801" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607302165963" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1605996248984">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

@@ -152,6 +152,9 @@ class SignUpProfileState extends State<SignUpProfile> {
                   if (key.currentState.validate()) {
                     signup().then((user) {
                       if (user != null) {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
                         Navigator.pushNamed(
                             context,
                             "/user/main",

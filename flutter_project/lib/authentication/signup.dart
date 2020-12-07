@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
+import 'package:flutter_complete_guide/services/AuthenticationService.dart';
+
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -86,11 +88,30 @@ class SignUpState extends State<SignUp> {
                             ),
                             onPressed: () {
                               if(signUpFormKey.currentState.validate()) {
-                                Navigator.pushNamed(
-                                  context,
-                                  "/signup/type",
-                                  arguments: formValues
-                                );
+                                try{
+                                  Map<String, String> copyOfFV = new Map<String, String>();
+                                  copyOfFv = formValues;
+                                  copyOfFv.remove('email');
+                                  await authenticationService.login(copyOfFv);
+                                   showDialog(
+                                    context: context,
+                                    builder: (_) => TipDialog(
+                                        "Notice",
+                                        "E-mail or username already taken.",
+                                            () {
+                                          Navigator.of(context).pop();
+                                        }
+                                    )
+                                  );
+                                }
+                                catch(e){
+                                  Navigator.pushNamed(
+                                    context,
+                                    "/signup/type",
+                                    arguments: formValues
+                                  );
+                                }
+                                
                               }
                             }
                         )

@@ -164,7 +164,7 @@ class SignUpProfileState extends State<SignUpProfile> {
                             context: context,
                             builder: (_) => TipDialog(
                                 "Notice",
-                                "E-mail or username already taken.",
+                                "Sorry try to create the account in a few minutes.",
                                     () {
                                   Navigator.of(context).pop();
                                 }

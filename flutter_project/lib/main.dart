@@ -12,6 +12,7 @@ import 'package:flutter_complete_guide/user/concertStream.dart';
 import 'package:flutter_complete_guide/user/voicecall.dart';
 import 'package:flutter_complete_guide/user/userchat.dart';
 import 'package:flutter_complete_guide/user/userProfile.dart';
+import 'package:flutter_complete_guide/user/editUserProfile.dart';
 
 import 'authentication/login.dart';
 import 'authentication/signup.dart';

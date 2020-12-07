@@ -17,7 +17,7 @@ class EditUserProfileState extends State<EditUserProfile> {
 
   Settings projectSettings = new Settings();
   UserService userService = new UserService();
-  Map<String, String> formValues;
+  Map<String, String> formValues = new Map<String, String>();
   String profileImagePath = '';
 
   Widget buildImagePreview(user) { /*FIXME I WANT DYNAMIC PLEASE*/
@@ -201,6 +201,12 @@ class EditUserProfileState extends State<EditUserProfile> {
   Widget buildForm(BuildContext context) {
     User user = ModalRoute.of(context).settings.arguments;
     final EditUserProfileFormKey = GlobalKey<FormState>();
+    formValues["username"] = user.username;
+    formValues["email"] = user.email;
+    formValues["name"] = user.name;
+    formValues["imagePath"] = user.imagePath;
+    formValues["type"] = user.type;
+    formValues["description"] = user.description;
 
     return Padding(
       padding: EdgeInsets.only(top: 48),
@@ -229,11 +235,10 @@ class EditUserProfileState extends State<EditUserProfile> {
 
   Future<User> editProfile() async {
     try {
-      if (formValues["type"] == "FAN") {
-        formValues["description"] = "";
-      }
-      User user = await userService.updateUser(formValues);
-      return user;
+      User user = User(formValues["username"], formValues["email"], formValues["name"],
+          formValues["imagePath"], formValues["type"], formValues["description"]);
+      User user_result = await userService.updateUser(user);
+      return user_result;
     } catch(e) {
       print(e.toString());
     }

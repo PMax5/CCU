@@ -199,7 +199,7 @@ class SignUpProfileState extends State<SignUpProfile> {
               child: buildEditImageButton(),
             ),
             buildNameInputField(),
-            (user.type == 'ARTIST' ? buildDescriptionInputField() : Container()),
+            (formValues["type"] == 'ARTIST' ? buildDescriptionInputField() : Container()),
             buildSaveButton(context, signUpProfileFormKey)
           ],
         ),

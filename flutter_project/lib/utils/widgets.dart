@@ -164,7 +164,8 @@ Widget ChatRooms(BuildContext context, User user) {
             return ListTile(
                 title: Text(voiceChannels[index].name),
                 leading: Icon(Icons.volume_up),
-                trailing: Image.network(voiceChannels[index].imagePath),
+                trailing: Image.network(voiceChannels[index].imagePath,
+                    width: 45, height: 45, fit: BoxFit.cover),
                 onTap: () {
                   if (user.type == "FAN") {
                     Navigator.pushNamed(context, "/user/voicecall",

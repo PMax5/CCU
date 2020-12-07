@@ -120,53 +120,53 @@ class EditUserProfileState extends State<EditUserProfile> {
   }
 
   Widget buildCancelButton(BuildContext context) {
-    return Center(
-        child: Container(
-            width: projectSettings.textInputWidth,
-            height: projectSettings.textInputHeight,
-            child: ElevatedButton(
-                child: Text("Cancel",
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      projectSettings.mainColor),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                })));
+    return Container(
+      width: 150,
+      height: projectSettings.smallButtonHeight,
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(5.0),
+            side: BorderSide(color: Colors.black, width: 2)),
+        child: Text('CANCEL',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
   }
 
   Widget buildSaveButton(BuildContext context, GlobalKey<FormState> key) {
-    return Center(
-        child: Container(
-            width: projectSettings.textInputWidth,
-            height: projectSettings.textInputHeight,
-            child: ElevatedButton(
-                child:
-                    Text("Save", style: TextStyle(fontWeight: FontWeight.bold)),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      projectSettings.mainColor),
-                ),
-                onPressed: () {
-                  editProfile().then((newUser) {
-                    if (newUser != null) {
-                      Navigator.popUntil(context, ModalRoute.withName("/"));
-                      Navigator.pushNamed(context, "/user/main",
-                          arguments: newUser);
-                      Navigator.pushNamed(context, "/user/userProfile",
-                          arguments: newUser);
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (_) => TipDialog("Notice",
-                                  "Sorry try to update you profile in a few minutes.",
-                                  () {
-                                Navigator.of(context).pop();
-                              }));
-                    }
-                  });
-                })));
+    return Container(
+      width: 150,
+      height: projectSettings.smallButtonHeight,
+      child: RaisedButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(5.0),
+          ),
+          color: projectSettings.mainColor,
+          child: Text('SAVE',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+          onPressed: () {
+            editProfile().then((newUser) {
+              if (newUser != null) {
+                Navigator.popUntil(context, ModalRoute.withName("/"));
+                Navigator.pushNamed(context, "/user/main", arguments: newUser);
+                Navigator.pushNamed(context, "/user/userProfile",
+                    arguments: newUser);
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (_) => TipDialog("Notice",
+                            "Sorry try to update you profile in a few minutes.",
+                            () {
+                          Navigator.of(context).pop();
+                        }));
+              }
+            });
+          }),
+    );
   }
 
   Widget buildForm(BuildContext context) {
@@ -197,10 +197,15 @@ class EditUserProfileState extends State<EditUserProfile> {
             (user.type == 'ARTIST'
                 ? buildDescriptionInputField()
                 : Container()),
-            Padding(
-                padding: EdgeInsets.only(bottom: 20),
-                child: buildSaveButton(context, EditUserProfileFormKey)),
-            buildCancelButton(context)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: buildCancelButton(context)),
+                buildSaveButton(context, EditUserProfileFormKey)
+              ],
+            )
           ],
         ),
       ),

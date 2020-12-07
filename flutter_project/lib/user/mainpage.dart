@@ -45,7 +45,8 @@ class UserMainPageState extends State<UserMainPage> {
                         children: [
                           Image.network(concert.image),
                           ListTile(
-                            leading: Image.network(concert.artistImage),
+                            leading: Image.network(concert.artistImage,
+                                width: 45, height: 45, fit: BoxFit.cover),
                             title: Text(concert.name),
                             subtitle: Text(
                               '${concert.artistName}',

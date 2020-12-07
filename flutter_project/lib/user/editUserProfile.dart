@@ -19,8 +19,9 @@ class EditUserProfileState extends State<EditUserProfile> {
   UserService userService = new UserService();
   Map<String, String> formValues = new Map<String, String>();
   String profileImagePath = '';
+  User user;
 
-  Widget buildImagePreview(user) { /*FIXME I WANT DYNAMIC PLEASE*/
+  Widget buildImagePreview() { /*FIXME I WANT DYNAMIC PLEASE*/
    profileImagePath = user.imagePath;
    Image profileImage = Image.asset(profileImagePath, fit: BoxFit.cover);
    formValues["imagePath"] = profileImagePath;
@@ -30,7 +31,7 @@ class EditUserProfileState extends State<EditUserProfile> {
     );
   }
 
-  Widget buildEditImageButton(user) {
+  Widget buildEditImageButton() {
     return Center(
       child: Container(
         width: projectSettings.textInputWidth - 180,
@@ -59,7 +60,7 @@ class EditUserProfileState extends State<EditUserProfile> {
     );
   }
 
-  Widget buildNameInputField(user) {
+  Widget buildNameInputField() {
 
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
@@ -82,7 +83,7 @@ class EditUserProfileState extends State<EditUserProfile> {
                         focusedErrorBorder: inputBorder(Colors.red),
                         hintText: user.name
                     ),
-                    validator: (value) {
+                    onChanged: (value) {
                       if (value.isEmpty)
                         return "Enter a name for your profile";
                       else {
@@ -96,7 +97,7 @@ class EditUserProfileState extends State<EditUserProfile> {
     );
   }
 
-  Widget buildDescriptionInputField(user) {
+  Widget buildDescriptionInputField() {
     OutlineInputBorder inputBorder(Color color) {
       return OutlineInputBorder(
           borderSide: BorderSide(color: color, width: 2.0),
@@ -120,7 +121,7 @@ class EditUserProfileState extends State<EditUserProfile> {
                         focusedErrorBorder: inputBorder(Colors.red),
                         hintText: user.description
                     ),
-                    validator: (value) {
+                    onChanged: (value) {
                       if (value.isEmpty)
                         return "Enter a description for your profile";
                       else {
@@ -173,25 +174,26 @@ class EditUserProfileState extends State<EditUserProfile> {
                   backgroundColor: MaterialStateProperty.all<Color>(projectSettings.mainColor),
                 ),
                 onPressed: () {
-                  if (key.currentState.validate()) {
-                    editProfile().then((user) {
-                      if (user != null) {
-                        Navigator.pop(context,user);
-                      }
-                      else {
-                        showDialog(
-                            context: context,
-                            builder: (_) => TipDialog(
-                                "Notice",
-                                "Sorry try to update you profile in a few minutes.",
-                                    () {
-                                  Navigator.of(context).pop();
-                                }
-                            )
-                        );
-                      }
-                    });
-                  }
+                  editProfile().then((newUser) {
+                    if (newUser != null) {
+                      Navigator.popUntil(context, ModalRoute.withName("/"));
+                      Navigator.pushNamed(context, "/user/main", arguments: newUser);
+                      Navigator.pushNamed(context, "/user/userProfile", arguments: newUser);
+
+                    }
+                    else {
+                      showDialog(
+                          context: context,
+                          builder: (_) => TipDialog(
+                              "Notice",
+                              "Sorry try to update you profile in a few minutes.",
+                                  () {
+                                Navigator.of(context).pop();
+                              }
+                          )
+                      );
+                    }
+                  });
                 }
             )
         )
@@ -199,7 +201,6 @@ class EditUserProfileState extends State<EditUserProfile> {
   }
 
   Widget buildForm(BuildContext context) {
-    User user = ModalRoute.of(context).settings.arguments;
     final EditUserProfileFormKey = GlobalKey<FormState>();
     formValues["username"] = user.username;
     formValues["email"] = user.email;
@@ -217,15 +218,18 @@ class EditUserProfileState extends State<EditUserProfile> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(bottom: 10),
-              child: buildImagePreview(user),
+              child: buildImagePreview(),
             ),
             Padding(
               padding: EdgeInsets.only(bottom: 30),
-              child: buildEditImageButton(user),
+              child: buildEditImageButton(),
             ),
-            buildNameInputField(user),
-            (user.type == 'ARTIST' ? buildDescriptionInputField(user) : Container()),
-            buildCancelButton(context),
+            buildNameInputField(),
+            (user.type == 'ARTIST' ? buildDescriptionInputField() : Container()),
+            Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: buildCancelButton(context)
+            ),
             buildSaveButton(context, EditUserProfileFormKey)
           ],
         ),
@@ -235,9 +239,7 @@ class EditUserProfileState extends State<EditUserProfile> {
 
   Future<User> editProfile() async {
     try {
-      User user = User(formValues["username"], formValues["email"], formValues["name"],
-          formValues["imagePath"], formValues["type"], formValues["description"]);
-      User user_result = await userService.updateUser(user);
+      User user_result = await userService.updateUser(this.user.username, formValues["name"], formValues["imagePath"], this.user.type == "ARTIST" ? formValues["description"] : null);
       return user_result;
     } catch(e) {
       print(e.toString());
@@ -246,6 +248,7 @@ class EditUserProfileState extends State<EditUserProfile> {
 
   @override
   Widget build(BuildContext context) {
+    user = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
           title: Text("Edit Profile"),

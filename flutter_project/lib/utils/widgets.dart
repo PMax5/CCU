@@ -129,10 +129,8 @@ Widget ChatRooms(BuildContext context, User user) {
           trailing: Image.asset('assets/images/mini_james.png'),
           onTap: () {
             if (user.type == "FAN") {
-              Navigator.pushNamed(context, "/user/voicecall",
-                  arguments: user);
-            }
-            else {
+              Navigator.pushNamed(context, "/user/voicecall", arguments: user);
+            } else {
               showDialog(
                   context: context,
                   builder: (_) => ConfirmationDialog(
@@ -190,7 +188,9 @@ Widget ExtraMenu(BuildContext context, User user) {
       leading: Icon(Icons.person, size: 35),
       onTap: () {
         //TODO: redirecionar para ecra de perfil
-        Navigator.pushNamed(context, "/user/userProfile", arguments: user);
+        Navigator.pushNamed(context, "/user/userProfile", arguments: user).then((value) => {
+
+        });
       },
     ),
     Divider(

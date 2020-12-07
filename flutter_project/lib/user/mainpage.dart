@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/services/UserService.dart';
 import '../models/concert.dart';
 import 'package:flutter_complete_guide/models/user.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
@@ -15,6 +16,7 @@ class UserMainPage extends StatefulWidget {
 class UserMainPageState extends State<UserMainPage> {
 
   ConcertService concertService = new ConcertService();
+  UserService _userService = new UserService();
 
   Widget createFanMenu(BuildContext context, User user) {
     return MainMenu(

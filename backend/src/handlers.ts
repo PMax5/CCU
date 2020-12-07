@@ -134,7 +134,13 @@ export class Handlers {
     updateUser(req: Request, res: Response) {
         let result = this.repository.updateUser(req.params.username, req.body);
 
-        result ? res.sendStatus(200) : res.sendStatus(500);
+        result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
+    }
+
+    getUser(req: Request, res: Response) {
+        let result = this.repository.getUser(req.params.username);
+
+        result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
     }
 
     createConcert(req: Request, res: Response) {

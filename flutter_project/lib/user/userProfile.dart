@@ -1,21 +1,18 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/services/UserService.dart';
 import '../models/user.dart';
 import '../settings.dart';
 
-class UserProfile extends StatefulWidget {
-  UserProfile({Key key}) : super(key: key);
 
-  @override
-  UserProfileState createState() => UserProfileState();
-}
-
-class UserProfileState extends State<UserProfile> {
+class UserProfile extends StatelessWidget {
 
   Settings projectSettings = new Settings();
+  UserService _userService = new UserService();
+  User user;
 
-  Widget buildEditButton(User user) {
+  Widget buildEditButton(BuildContext context) {
     return Center(
       child: Container(
         width: 120,
@@ -71,8 +68,6 @@ class UserProfileState extends State<UserProfile> {
   }
 
   Widget buildProfilePage(BuildContext context) {
-    User user = ModalRoute.of(context).settings.arguments;
-
     return Padding(
       padding: EdgeInsets.only(top: 100),
       child: Column(
@@ -99,7 +94,7 @@ class UserProfileState extends State<UserProfile> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 30, bottom: 30),
-              child: buildEditButton(user),
+              child: buildEditButton(context),
             ),
             (user.type == 'ARTIST' ? buildDescription(user) : Container())
           ],
@@ -109,6 +104,8 @@ class UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
+    user = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
           title: Text("User Profile"),

@@ -4,6 +4,7 @@ import '../models/concert.dart';
 import '../models/user.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import 'package:flutter_complete_guide/services/ConcertService.dart';
+import 'package:flutter_complete_guide/services/UserService.dart';
 
 class ConcertInfoPage extends StatefulWidget {
   ConcertInfoPage({Key key}) : super(key: key);
@@ -14,6 +15,7 @@ class ConcertInfoPage extends StatefulWidget {
 
 class ConcertInfoPageState extends State<ConcertInfoPage> {
   ConcertService concertService = new ConcertService();
+  UserService userService = new UserService();
 
   Widget ExtraButton(User user, Concert concert) {
     return Container(
@@ -26,9 +28,19 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
         child: Text((user.type == 'FAN' ? 'ARTIST PROFILE' : 'EDIT'),
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
         onPressed: () {
-          // TODO create artist profile and edit concert page
-          Navigator.pushNamed(
-              context, (user.type == 'FAN' ? "/login" : "/login"));
+          if(user.type == "FAN") {
+             // TODO create artist profile and edit concert page
+            getArtist(concert.username).then((artistUser) {
+              if (artistUser != null)
+                Navigator.pushNamed(
+                  context, "/user/userProfile", arguments: ProfileArguments(artistUser,false));
+              });
+                
+          }
+         
+          else
+            Navigator.pushNamed(
+                context, "/login");
         },
       ),
     );
@@ -226,6 +238,14 @@ class ConcertInfoPageState extends State<ConcertInfoPage> {
   Future<void> cancelConcert(String username, int concertId) async {
     try {
       await concertService.endConcert(username, concertId);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<User> getArtist(String username) async {
+    try {
+      return await userService.getUser(username);
     } catch (e) {
       print(e.toString());
     }

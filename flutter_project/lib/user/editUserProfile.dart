@@ -47,7 +47,7 @@ class EditUserProfileState extends State<EditUserProfile> {
                 user.imagePath =
                     'http://web.ist.utl.pt/ist189407/assets/images/concert6.png';
               } else {
-                profileImagePath =
+                user.imagePath =
                     'http://web.ist.utl.pt/ist189407/assets/images/concert5.png';
               }
             });
@@ -154,7 +154,7 @@ class EditUserProfileState extends State<EditUserProfile> {
                 Navigator.popUntil(context, ModalRoute.withName("/"));
                 Navigator.pushNamed(context, "/user/main", arguments: newUser);
                 Navigator.pushNamed(context, "/user/userProfile",
-                    arguments: newUser);
+                    arguments: ProfileArguments(newUser,true));
               } else {
                 showDialog(
                     context: context,

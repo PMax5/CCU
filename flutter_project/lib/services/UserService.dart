@@ -36,7 +36,7 @@ class UserService extends Service {
 
     print(response.body);
     if (response.statusCode != 200)
-      throw new Exception("Could not update user with username=${username}.");
+      throw new Exception("Could not get user with username=${username}.");
 
     var userJson = json.decode(response.body);
     User user = User.fromJson(userJson);

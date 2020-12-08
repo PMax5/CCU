@@ -1,14 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/services/UserService.dart';
+import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../models/user.dart';
 import '../settings.dart';
 
-class UserProfile extends StatelessWidget {
+class UserProfile extends StatefulWidget {
+  UserProfile({Key key}) : super(key: key);
+
+  @override
+  UserProfileState createState() => UserProfileState();
+}
+class UserProfileState extends State<UserProfile> {
   Settings projectSettings = new Settings();
   UserService _userService = new UserService();
   User user;
-
+  bool edit;
+  bool follow =false;
   Widget buildEditButton(BuildContext context) {
     return Center(
       child: Container(
@@ -18,11 +26,19 @@ class UserProfile extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(5.0),
               side: BorderSide(color: Colors.black, width: 2)),
-          child: Text('EDIT',
+          child: Text(edit ? 'EDIT' : follow ? 'UNFOLLOW': 'FOLLOW' ,
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
           onPressed: () {
-            Navigator.pushNamed(context, "/user/editProfile", arguments: user);
+            if (edit)
+              Navigator.pushNamed(context, "/user/editProfile", arguments: user);
+            else {
+              setState( () {
+              follow = !follow;  
+            });
+            // Navigator.pop(context);
+            // Navigator.pushNamed(context, "/user/userProfile", arguments: ProfileArguments(user,edit,!follow));
+            }
           },
         ),
       ),
@@ -81,8 +97,10 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    user = ModalRoute.of(context).settings.arguments;
-
+    ProfileArguments profileArguments = ModalRoute.of(context).settings.arguments;
+    user = profileArguments.user;
+    edit = profileArguments.edit;
+    // follow = profileArguments.follow;
     return Scaffold(
       appBar: AppBar(
           title: Text("User Profile"),

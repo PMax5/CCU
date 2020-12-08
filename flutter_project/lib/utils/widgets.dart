@@ -240,9 +240,7 @@ Widget ExtraMenu(BuildContext context, User user) {
       title: Text("Profile", style: TextStyle(fontSize: 20)),
       leading: Icon(Icons.person, size: 35),
       onTap: () {
-        //TODO: redirecionar para ecra de perfil
-        Navigator.pushNamed(context, "/user/userProfile", arguments: user)
-            .then((value) => {});
+        Navigator.pushNamed(context, "/user/userProfile", arguments: ProfileArguments(user, true));
       },
     ),
     Divider(
@@ -255,8 +253,7 @@ Widget ExtraMenu(BuildContext context, User user) {
         title: Text("Log Out", style: TextStyle(fontSize: 20)),
         leading: Icon(Icons.logout, size: 35),
         onTap: () {
-          //
-          Navigator.pushNamed(context, "/");
+          Navigator.popUntil(context, ModalRoute.withName("/"));
         }),
     Divider(
       color: Colors.grey,
@@ -328,6 +325,13 @@ class Arguments {
   final Concert concert;
 
   Arguments(this.logged_in, this.concert);
+}
+
+class ProfileArguments {
+  final User user;
+  final bool edit;
+
+  ProfileArguments(this.user, this.edit);
 }
 
 class ChannelArguments {

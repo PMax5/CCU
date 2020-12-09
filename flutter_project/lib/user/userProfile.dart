@@ -76,8 +76,12 @@ class UserProfileState extends State<UserProfile> {
           Padding(
             padding: EdgeInsets.only(bottom: 20),
             child: Center(
-                child: Image.network(user.imagePath,
-                    width: 100, height: 100, fit: BoxFit.fill)),
+                child: CircleAvatar(
+                radius: 60,
+                backgroundColor: Colors.white,
+                backgroundImage: NetworkImage(user.imagePath),
+                ),
+              ),
           ),
           Center(
               child: Text(user.name,

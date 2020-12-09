@@ -21,11 +21,14 @@ class SignUpProfileState extends State<SignUpProfile> {
 
 
   Widget buildImagePreview() {
-    Image profileImage = Image.network(profileImagePath, 
-    fit: BoxFit.cover, width: 100, height: 100);
-    formValues["imagePath"] = profileImagePath;
-
-    return Center(child: profileImage);
+    if (formValues["imagePath"] == null)
+      formValues["imagePath"] = profileImagePath;
+    print(profileImagePath);
+    return Center(child: CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.white,
+                backgroundImage: NetworkImage(profileImagePath),
+              ),);
   }
 
   Widget buildEditImageButton() {
@@ -44,10 +47,10 @@ class SignUpProfileState extends State<SignUpProfile> {
             //FIXME: I WANT PICKERIMAGE PLEASE
             setState(() {
               if (formValues["type"] == "FAN")
-                profileImagePath =
+                formValues['imagePath'] =
                     'http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png';
               else
-                profileImagePath =
+                formValues['imagePath'] =
                     'http://web.ist.utl.pt/ist189407/assets/images/james.png';
             });
           },
@@ -133,6 +136,7 @@ class SignUpProfileState extends State<SignUpProfile> {
                 onPressed: () {
                   if (key.currentState.validate()) {
                     signup().then((user) {
+                      print(user.imagePath);
                       if (user != null) {
                         Navigator.popUntil(context, ModalRoute.withName("/"));
                         Navigator.pushNamed(context, "/user/main",

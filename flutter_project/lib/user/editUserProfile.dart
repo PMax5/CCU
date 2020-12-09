@@ -39,11 +39,14 @@ CircleAvatar(
             */
   Widget buildImagePreview() {
     /*FIXME I WANT DYNAMIC PLEASE*/
-    Image profileImage = Image.network(user.imagePath,
-        fit: BoxFit.cover, width: 100, height: 100);
     formValues["imagePath"] = user.imagePath;
-
-    return Center(child: profileImage);
+    return Center(child: 
+                CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.white,
+                backgroundImage: NetworkImage(user.imagePath),
+              ),
+            );
   }
 
   Widget buildEditImageButton() {
@@ -58,9 +61,9 @@ CircleAvatar(
           child: Text('EDIT IMAGE',
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-          onPressed: getImage/*() {*/
+           onPressed: /* getImage */ () {
             //FIXME: I WANT PICKERIMAGE PLEASE
-           /* setState(() {
+            setState(() {
               if (user.type == "FAN") {
                 user.imagePath =
                     'http://web.ist.utl.pt/ist189407/assets/images/concert6.png';
@@ -68,8 +71,8 @@ CircleAvatar(
                 user.imagePath =
                     'http://web.ist.utl.pt/ist189407/assets/images/concert5.png';
               }
-            });*/
-          /*}*/,
+            });
+          },
         ),
       ),
     );
@@ -246,7 +249,7 @@ CircleAvatar(
   @override
   Widget build(BuildContext context) {
     user = ModalRoute.of(context).settings.arguments;
-    File _image;
+    // File _image;
     return Scaffold(
       appBar: AppBar(
           title: Text("Edit Profile"),

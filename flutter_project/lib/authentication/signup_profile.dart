@@ -21,9 +21,7 @@ class SignUpProfileState extends State<SignUpProfile> {
 
 
   Widget buildImagePreview() {
-    if (formValues["imagePath"] == null)
-      formValues["imagePath"] = profileImagePath;
-    print(profileImagePath);
+    formValues["imagePath"] = profileImagePath;
     return Center(child: CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.white,
@@ -47,10 +45,10 @@ class SignUpProfileState extends State<SignUpProfile> {
             //FIXME: I WANT PICKERIMAGE PLEASE
             setState(() {
               if (formValues["type"] == "FAN")
-                formValues['imagePath'] =
+                profileImagePath =
                     'http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png';
               else
-                formValues['imagePath'] =
+                profileImagePath =
                     'http://web.ist.utl.pt/ist189407/assets/images/james.png';
             });
           },

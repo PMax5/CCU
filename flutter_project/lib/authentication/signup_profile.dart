@@ -16,6 +16,7 @@ class SignUpProfileState extends State<SignUpProfile> {
   Settings projectSettings = new Settings();
   AuthenticationService authenticationService = new AuthenticationService();
   Map<String, String> formValues;
+  Map<String, String> formValuesUpdate = new Map<String,String>();
   String profileImagePath =
       'http://web.ist.utl.pt/ist189407/assets/images/profile_general.png';
 
@@ -44,6 +45,8 @@ class SignUpProfileState extends State<SignUpProfile> {
           onPressed: () {
             //FIXME: I WANT PICKERIMAGE PLEASE
             setState(() {
+              formValuesUpdate.addAll(formValues);
+
               if (formValues["type"] == "FAN")
                 profileImagePath =
                     'http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png';
@@ -77,6 +80,10 @@ class SignUpProfileState extends State<SignUpProfile> {
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
                         hintText: "Name"),
+                    initialValue: formValues["name"],
+                    onChanged: (value) {
+                      formValuesUpdate["name"] = value;
+                    },
                     validator: (value) {
                       if (value.isEmpty)
                         return "Enter a name for your profile";
@@ -109,6 +116,10 @@ class SignUpProfileState extends State<SignUpProfile> {
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
                         hintText: "Description"),
+                    initialValue: formValues["description"],
+                    onChanged: (value) {
+                      formValuesUpdate["description"] = value;
+                    },
                     validator: (value) {
                       if (value.isEmpty)
                         return "Enter a description for your profile";
@@ -134,7 +145,6 @@ class SignUpProfileState extends State<SignUpProfile> {
                 onPressed: () {
                   if (key.currentState.validate()) {
                     signup().then((user) {
-                      print(user.imagePath);
                       if (user != null) {
                         Navigator.popUntil(context, ModalRoute.withName("/"));
                         Navigator.pushNamed(context, "/user/main",
@@ -154,7 +164,10 @@ class SignUpProfileState extends State<SignUpProfile> {
   }
 
   Widget buildForm(BuildContext context) {
-    formValues = ModalRoute.of(context).settings.arguments;
+    if(formValuesUpdate.length == 0)
+      formValues = ModalRoute.of(context).settings.arguments;
+    else
+      formValues = formValuesUpdate;
     final signUpProfileFormKey = GlobalKey<FormState>();
 
     return Padding(

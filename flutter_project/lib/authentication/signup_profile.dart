@@ -23,11 +23,14 @@ class SignUpProfileState extends State<SignUpProfile> {
 
   Widget buildImagePreview() {
     formValues["imagePath"] = profileImagePath;
-    return Center(child: CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.white,
-                backgroundImage: NetworkImage(profileImagePath),
-              ),);
+    return Center(child: ClipOval(
+        child: Image.network(
+          profileImagePath,
+          width: 100,
+          height: 100,
+          fit: BoxFit.cover,
+        ),
+    ),);
   }
 
   Widget buildEditImageButton() {

@@ -19,7 +19,14 @@ Widget CenteredProfile(String imagePath, String name) {
   return Center(
       child: Column(
     children: [
-      Image.network(imagePath),
+      ClipOval(
+        child: Image.network(
+          imagePath,
+          width: 100,
+          height: 100,
+          fit: BoxFit.cover,
+        ),
+      ),
       Container(
           margin: const EdgeInsets.only(top: 8),
           child: Text(name,
@@ -164,8 +171,10 @@ Widget ChatRooms(BuildContext context, User user) {
             return ListTile(
                 title: Text(voiceChannels[index].name),
                 leading: Icon(Icons.volume_up),
-                trailing: Image.network(voiceChannels[index].imagePath,
-                    width: 45, height: 45, fit: BoxFit.cover),
+                trailing: ClipOval(
+                  child: Image.network(voiceChannels[index].imagePath,
+                      width: 45, height: 45, fit: BoxFit.cover),
+                ),
                 onTap: () {
                   if (user.type == "FAN") {
                     Navigator.pushNamed(context, "/user/voicecall",

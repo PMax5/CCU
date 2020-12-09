@@ -39,12 +39,11 @@ CircleAvatar(
             */
   Widget buildImagePreview() {
     /*FIXME I WANT DYNAMIC PLEASE*/
-    formValues["imagePath"] = user.imagePath;
     return Center(child: 
                 CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.white,
-                backgroundImage: NetworkImage(user.imagePath),
+                backgroundImage: NetworkImage(formValues["imagePath"]),
               ),
             );
   }
@@ -65,10 +64,10 @@ CircleAvatar(
             //FIXME: I WANT PICKERIMAGE PLEASE
             setState(() {
               if (user.type == "FAN") {
-                user.imagePath =
+                formValues["imagePath"] =
                     'http://web.ist.utl.pt/ist189407/assets/images/concert6.png';
               } else {
-                user.imagePath =
+                formValues["imagePath"] =
                     'http://web.ist.utl.pt/ist189407/assets/images/concert5.png';
               }
             });
@@ -97,15 +96,17 @@ CircleAvatar(
                         focusedBorder: inputBorder(Colors.black),
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: user.name),
+                        ),
+                    initialValue: formValues["name"],
                     onChanged: (value) {
+                      formValues["name"] = value;
+                    },
+                    validator: (value) {
                       if (value.isEmpty)
                         return "Enter a name for your profile";
-                      else {
-                        formValues["name"] = value;
-                        return null;
-                      }
-                    }))));
+                      return null;
+                    },
+                    ))));
   }
 
   Widget buildDescriptionInputField() {
@@ -129,15 +130,17 @@ CircleAvatar(
                         focusedBorder: inputBorder(Colors.black),
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: user.description),
+                        ),
+                    initialValue: formValues["description"],
                     onChanged: (value) {
+                        formValues["description"] = value;
+                    },
+                    validator: (value) {
                       if (value.isEmpty)
                         return "Enter a description for your profile";
-                      else {
-                        formValues["description"] = value;
-                        return null;
-                      }
-                    }))));
+                      return null;
+                    },
+                    ))));
   }
 
   Widget buildCancelButton(BuildContext context) {
@@ -170,34 +173,41 @@ CircleAvatar(
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
           onPressed: () {
-            editProfile().then((newUser) {
-              if (newUser != null) {
-                Navigator.popUntil(context, ModalRoute.withName("/"));
-                Navigator.pushNamed(context, "/user/main", arguments: newUser);
-                Navigator.pushNamed(context, "/user/userProfile",
-                    arguments: ProfileArguments(newUser,true));
-              } else {
-                showDialog(
-                    context: context,
-                    builder: (_) => TipDialog("Notice",
-                            "Sorry try to update you profile in a few minutes.",
-                            () {
-                          Navigator.of(context).pop();
-                        }));
-              }
-            });
+            if (key.currentState.validate()) {
+              editProfile().then((newUser) {
+                if (newUser != null) {
+                  Navigator.popUntil(context, ModalRoute.withName("/"));
+                  Navigator.pushNamed(
+                      context, "/user/main", arguments: newUser);
+                  Navigator.pushNamed(context, "/user/userProfile",
+                      arguments: ProfileArguments(newUser, true));
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (_) =>
+                          TipDialog("Notice",
+                              "Sorry try to update you profile in a few minutes.",
+                                  () {
+                                Navigator.of(context).pop();
+                              }));
+                }
+              });
+            }
           }),
     );
   }
 
   Widget buildForm(BuildContext context) {
     final EditUserProfileFormKey = GlobalKey<FormState>();
-    formValues["username"] = user.username;
-    formValues["email"] = user.email;
-    formValues["name"] = user.name;
-    formValues["imagePath"] = user.imagePath;
-    formValues["type"] = user.type;
-    formValues["description"] = user.description;
+
+    if(formValues.isEmpty) {
+      formValues["username"] = user.username;
+      formValues["email"] = user.email;
+      formValues["name"] = user.name;
+      formValues["imagePath"] = user.imagePath;
+      formValues["type"] = user.type;
+      formValues["description"] = user.description;
+    }
 
     return Padding(
       padding: EdgeInsets.only(top: 48),

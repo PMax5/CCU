@@ -82,15 +82,13 @@ class SignUpProfileState extends State<SignUpProfile> {
                         hintText: "Name"),
                     initialValue: formValues["name"],
                     onChanged: (value) {
+                      formValues["name"] = value;
                       formValuesUpdate["name"] = value;
                     },
                     validator: (value) {
                       if (value.isEmpty)
                         return "Enter a name for your profile";
-                      else {
-                        formValues["name"] = value;
-                        return null;
-                      }
+                      return null;
                     }))));
   }
 
@@ -118,15 +116,13 @@ class SignUpProfileState extends State<SignUpProfile> {
                         hintText: "Description"),
                     initialValue: formValues["description"],
                     onChanged: (value) {
+                      formValues["description"] = value;
                       formValuesUpdate["description"] = value;
                     },
                     validator: (value) {
                       if (value.isEmpty)
                         return "Enter a description for your profile";
-                      else {
-                        formValues["description"] = value;
-                        return null;
-                      }
+                      return null;
                     }))));
   }
 

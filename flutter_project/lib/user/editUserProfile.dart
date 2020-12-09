@@ -16,14 +16,32 @@ class EditUserProfileState extends State<EditUserProfile> {
   Settings projectSettings = new Settings();
   UserService userService = new UserService();
   Map<String, String> formValues = new Map<String, String>();
-  String profileImagePath = '';
   User user;
+  
 
+/*  Future getImage() async{
+    final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(){
+      _image = image;
+    }
+  } */
+/* FIXME TALVEZ POSSAMOS USAR ISTO PARA FAZER CIRCLE IMAGES EM TODO LADO
+CircleAvatar(
+              radius: 55,
+              backgroundColor: Color(0xffFDCF09),
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage('user.imagePath'),
+              ),
+            )
+
+
+            */
   Widget buildImagePreview() {
     /*FIXME I WANT DYNAMIC PLEASE*/
-    Image profileImage = Image.network(profileImagePath,
+    Image profileImage = Image.network(user.imagePath,
         fit: BoxFit.cover, width: 100, height: 100);
-    formValues["imagePath"] = profileImagePath;
+    formValues["imagePath"] = user.imagePath;
 
     return Center(child: profileImage);
   }
@@ -40,9 +58,9 @@ class EditUserProfileState extends State<EditUserProfile> {
           child: Text('EDIT IMAGE',
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-          onPressed: () {
+          onPressed: getImage/*() {*/
             //FIXME: I WANT PICKERIMAGE PLEASE
-            setState(() {
+           /* setState(() {
               if (user.type == "FAN") {
                 user.imagePath =
                     'http://web.ist.utl.pt/ist189407/assets/images/concert6.png';
@@ -50,8 +68,8 @@ class EditUserProfileState extends State<EditUserProfile> {
                 user.imagePath =
                     'http://web.ist.utl.pt/ist189407/assets/images/concert5.png';
               }
-            });
-          },
+            });*/
+          /*}*/,
         ),
       ),
     );
@@ -228,7 +246,7 @@ class EditUserProfileState extends State<EditUserProfile> {
   @override
   Widget build(BuildContext context) {
     user = ModalRoute.of(context).settings.arguments;
-    profileImagePath = user.imagePath;
+    File _image;
     return Scaffold(
       appBar: AppBar(
           title: Text("Edit Profile"),

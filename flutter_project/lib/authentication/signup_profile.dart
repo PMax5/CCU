@@ -19,8 +19,10 @@ class SignUpProfileState extends State<SignUpProfile> {
   String profileImagePath =
       'http://web.ist.utl.pt/ist189407/assets/images/profile_general.png';
 
+
   Widget buildImagePreview() {
-    Image profileImage = Image.network(profileImagePath, fit: BoxFit.cover);
+    Image profileImage = Image.network(profileImagePath, 
+    fit: BoxFit.cover, width: 100, height: 100);
     formValues["imagePath"] = profileImagePath;
 
     return Center(child: profileImage);

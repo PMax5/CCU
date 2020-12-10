@@ -73,7 +73,7 @@ class UserMainPageState extends State<UserMainPage> {
     );
   }
 
-  Widget MainMenu(BuildContext context, User user, Widget mainPage) {
+  Widget MainMenu(BuildContext context, User user) {
   return DefaultTabController(
     length: user.type == "FAN" ? 4 : 3,
     child: Column(
@@ -113,13 +113,13 @@ class UserMainPageState extends State<UserMainPage> {
           child: TabBarView(
               children: user.type == "FAN"
                   ? [
-                      mainPage,
+                      createFanMenu(context,user),
                       ChatRooms(context, user),
                       Notifications(context),
                       ExtraMenu(context, user)
                     ]
                   : [
-                      mainPage,
+                      createArtistMenu(context,user),
                       ChatRooms(context, user),
                       ExtraMenu(context, user)
                     ]),
@@ -130,13 +130,8 @@ class UserMainPageState extends State<UserMainPage> {
 }
 
   Widget createFanMenu(BuildContext context, User user) {
-    return MainMenu(
-      context,
-      user,
-      FutureBuilder(
-        future: getAvailableConcerts(),
-        builder: (context, concerts) {
-          if (concerts == null) {
+    getAvailableConcerts().then((concerts) { 
+      if (concerts == null) {
             return Scaffold(
                 body: Center(
                     child: Container(
@@ -150,58 +145,52 @@ class UserMainPageState extends State<UserMainPage> {
                               fontSize: 18),
                         ))),
                 );
-          }
-          return ListView.builder(
-            itemCount: concerts.data.length,
-            itemBuilder: (context, index) {
-              Concert concert = concerts.data[index];
-              getArtist(concert.username).then((artist) {
-                return Column(
-                  children: <Widget>[
-                    Card(
-                      clipBehavior: Clip.antiAlias,
-                      elevation: 5,
-                      child: new InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, "/user/concertInfo",
-                              arguments: Arguments(user, concert));
-                        },
-                        child: Column(
-                          children: [
-                            Image.network(concert.image),
-                            ListTile(
-                              leading: Image.network(artist.imagePath,
-                                  width: 45, height: 45, fit: BoxFit.cover),
-                              title: Text(concert.name),
-                              subtitle: Text(
-                                '${artist.name}',
-                                style: TextStyle(
-                                    color: Colors.black.withOpacity(0.6)),
-                              ),
+      }
+      return ListView.builder(
+          itemCount: concerts.data.length,
+          itemBuilder: (context, index) {
+            Concert concert = concerts.data[index];
+            getArtist(concert.username).then((artist) {
+              return Column(
+                children: <Widget>[
+                  Card(
+                    clipBehavior: Clip.antiAlias,
+                    elevation: 5,
+                    child: new InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/user/concertInfo",
+                            arguments: Arguments(user, concert));
+                      },
+                      child: Column(
+                        children: [
+                          Image.network(concert.image),
+                          ListTile(
+                            leading: Image.network(artist.imagePath,
+                                width: 45, height: 45, fit: BoxFit.cover),
+                            title: Text(concert.name),
+                            subtitle: Text(
+                              '${artist.name}',
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.6)),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                );
-              });return Column();
-              
-            },
-          );
-        },
-      ),
-    );
+                  ),
+                ],
+              );
+            });
+            return Column();
+            
+          },
+        );
+    }
   }
 
   Widget createArtistMenu(BuildContext context, User user) {
-    return MainMenu(
-      context,
-      user,
-      FutureBuilder(
-        future: getArtistCurrentConcerts(user.username),
-        builder: (context, artistConcerts) {
-          if (artistConcerts == null) {
+    getArtistCurrentConcerts(user.username).then((artistConcerts) {
+       if (artistConcerts == null) {
             return Scaffold(
                 body: Center(
                     child: Container(
@@ -225,59 +214,57 @@ class UserMainPageState extends State<UserMainPage> {
                 ));
           }
           return Scaffold(
-              body: ListView.builder(
-                itemCount: artistConcerts.data.length,
-                itemBuilder: (context, index) {
-                  Concert concert = artistConcerts.data[index];
-                  return Column(
-                    children: <Widget>[
-                      Card(
-                        clipBehavior: Clip.antiAlias,
-                        elevation: 5,
-                        child: new InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, "/user/concertInfo",
-                                arguments: Arguments(user, concert));
-                          },
-                          child: Column(
-                            children: [
-                              Image.network(concert.image),
-                              ListTile(
-                                leading: ClipOval(
-                                  child: Image.network(
-                                    user.imagePath,
-                                    width: 50,
-                                    height: 50,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                title: Text(concert.name),
-                                subtitle: Text(
-                                  '${user.name}',
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.6)),
+                    body: ListView.builder(
+                      itemCount: artistConcerts.data.length,
+                      itemBuilder: (context, index) {
+                        Concert concert = artistConcerts.data[index];
+                        return Column(
+                          children: <Widget>[
+                            Card(
+                              clipBehavior: Clip.antiAlias,
+                              elevation: 5,
+                              child: new InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, "/user/concertInfo",
+                                      arguments: Arguments(user, concert));
+                                },
+                                child: Column(
+                                  children: [
+                                    Image.network(concert.image),
+                                    ListTile(
+                                      leading: ClipOval(
+                                        child: Image.network(
+                                          user.imagePath,
+                                          width: 50,
+                                          height: 50,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      title: Text(concert.name),
+                                      subtitle: Text(
+                                        '${user.name}',
+                                        style: TextStyle(
+                                            color: Colors.black.withOpacity(0.6)),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              floatingActionButton: FloatingActionButton.extended(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/user/concertCreate",
-                      arguments: user);
-                },
-                label: Text("CREATE"),
-                icon: Icon(Icons.add),
-                backgroundColor: projectSettings.mainColor,
-              ));
-        },
-      ),
-    );
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                    floatingActionButton: FloatingActionButton.extended(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/user/concertCreate",
+                            arguments: user);
+                      },
+                      label: Text("CREATE"),
+                      icon: Icon(Icons.add),
+                      backgroundColor: projectSettings.mainColor,
+                    ));
+    }
   }
 
   Future<List<Concert>> getAvailableConcerts() async {
@@ -317,9 +304,7 @@ class UserMainPageState extends State<UserMainPage> {
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
       Padding(padding: EdgeInsets.only(top: 40), child: CenteredHeaderLogo()),
-      user.type == "FAN"
-          ? this.createFanMenu(context, user)
-          : this.createArtistMenu(context, user)
+      this.MainMenu(context, user)
     ])));
   }
 }

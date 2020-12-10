@@ -13,7 +13,6 @@ export class Handlers {
             password: "lol",
             imagePath: "http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png",
             type: "FAN",
-            concerts: [0]
         };
 
         this.repository.createUser(user);
@@ -37,7 +36,16 @@ export class Handlers {
             type: "ARTIST",
             description: "This is a description ok."
         });
-    
+
+        this.repository.createConcert( "testartist", {
+            name: "James Smith's Concert",
+            description: "The long wait is over: Portugal is scheduled to meet with James Smith at Altice Arena, in Lisbon. "
+                + "This unique date is part of the European tour scheduled for autumn, which will feature \"I love you\", \ "
+                + "the first James Smith’s original album in six years.",
+            link: "https://www.google.com",
+            image: "http://web.ist.utl.pt/ist189407/assets/images/james.png",
+        });
+
 
         console.log("Created default users ...");
     }

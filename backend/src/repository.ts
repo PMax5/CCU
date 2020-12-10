@@ -14,7 +14,26 @@ export class Repository {
     private STATUS_CANCELLED = 3;
 
     createUser(user: User) {
-        this.users.set(user.username, user);
+        if (user !== undefined)
+        {
+            let newUser = {
+                username: user.username,
+                name: user.name,
+                email: user.email,
+                password: user.password,
+                imagePath: user.imagePath,
+                description: user.description,
+                type:user.type
+                concerts: new Array<number>();
+            }
+            if (user.type == "FAN")
+            {
+                newUser.favorites = new Array<string>();
+                newUser.notifications = new Array<string>();
+            }
+            this.users.set(user.username, newUser);
+        }
+       
     }
 
     getUser(username: string) {
@@ -25,6 +44,13 @@ export class Repository {
         let user = this.users.get(username);
 
         if (user !== undefined) {
+            // user.name = userUpdated.name !== undefined ? userUpdated.name : user.name;
+            // user.imagePath = userUpdated.imagePath !== undefined ? userUpdated.imagePath: user.imagePath;
+            // user.description = userUpdated.description !== undefined ? userUpdated.description : user.description ;
+            // if (user.type == "FAN")
+            //      user.notifications = userUpdated.notifications !== undefined ? userUpdated.notifications : user.notifications;
+
+
             let newUser = {
                 username : user.username,
                 name: userUpdated.name !== undefined ? userUpdated.name : user.name,
@@ -56,8 +82,7 @@ export class Repository {
         concert.status = this.STATUS_PENDING;
         this.concerts.set(concertID, concert);
 
-        if (user.concerts === undefined)
-            user.concerts = new Array<number>();
+        user.concerts.push(concertID);
 
         let channel = {
             messages: new Array<Message>(),
@@ -65,7 +90,7 @@ export class Repository {
         }
 
         this.channels.set(concertID, channel);
-        user.concerts.push(concertID);
+        
     }
 
     getArtistConcerts(username: string) {
@@ -96,7 +121,7 @@ export class Repository {
     startConcert(username: string, id: number) {
         let concert = this.concerts.get(id);
 
-        if (concert !== undefined && concert.username === username) {
+        if (concert !== undefined && concert.username === username && concert.status == this.STATUS_PENDING) {
             concert.status = this.STATUS_STARTED;
             return true;
         }

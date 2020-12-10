@@ -7,7 +7,8 @@ export interface User {
     description ?: string,
     type ?: string,
     concerts ?: Array<number>,
-    favorites ?: Array<string>
+    favorites ?: Array<string>,
+    notifications ?: Array<string>
 }
 
 export interface Login {

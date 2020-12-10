@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
 import '../models/user.dart';
-import 'package:flutter_complete_guide/services/AuthenticationService.dart';
+import 'package:flutter_complete_guide/services/UserService.dart';
 
 
 class SignUp extends StatefulWidget {
@@ -17,7 +17,7 @@ class SignUpState extends State<SignUp> {
 
   Settings projectSettings = new Settings();
   Map<String, String> formValues = new Map<String, String>();
-  AuthenticationService authenticationService = new AuthenticationService();
+  UserService userService = new UserService();
 
   Widget buildFormInputField(String identifier, String hintText, String invalidInputMessage, bool obscure) {
 
@@ -126,7 +126,7 @@ class SignUpState extends State<SignUp> {
 
   Future<User> login() async {
     try {
-      User user = await authenticationService.login(formValues["username"], formValues["password"]);
+      User user = await userService.getUser(formValues["username"]);
       return user;
     } catch(e) {
       print(e.toString());

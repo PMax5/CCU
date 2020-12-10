@@ -43,36 +43,39 @@ class UserMainPageState extends State<UserMainPage> {
             itemCount: concerts.data.length,
             itemBuilder: (context, index) {
               Concert concert = concerts.data[index];
-              User artist = getArtist(concert.username)
-              return Column(
-                children: <Widget>[
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    elevation: 5,
-                    child: new InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, "/user/concertInfo",
-                            arguments: Arguments(user, concert));
-                      },
-                      child: Column(
-                        children: [
-                          Image.network(concert.image),
-                          ListTile(
-                            leading: Image.network(artist.imagePath,
-                                width: 45, height: 45, fit: BoxFit.cover),
-                            title: Text(concert.name),
-                            subtitle: Text(
-                              '${artist.name}',
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(0.6)),
+              getArtist(concert.username).then((artist) {
+              if(artist != null)
+                return Column(
+                  children: <Widget>[
+                    Card(
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 5,
+                      child: new InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, "/user/concertInfo",
+                              arguments: Arguments(user, concert));
+                        },
+                        child: Column(
+                          children: [
+                            Image.network(concert.image),
+                            ListTile(
+                              leading: Image.network(artist.imagePath,
+                                  width: 45, height: 45, fit: BoxFit.cover),
+                              title: Text(concert.name),
+                              subtitle: Text(
+                                '${artist.name}',
+                                style: TextStyle(
+                                    color: Colors.black.withOpacity(0.6)),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              );
+                  ],
+                );
+              })
+              
             },
           );
         },
@@ -139,7 +142,7 @@ class UserMainPageState extends State<UserMainPage> {
                                 ),
                                 title: Text(concert.name),
                                 subtitle: Text(
-                                  '${user.Name}',
+                                  '${user.name}',
                                   style: TextStyle(
                                       color: Colors.black.withOpacity(0.6)),
                                 ),

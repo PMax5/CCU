@@ -76,5 +76,9 @@ export class Handlers {
             res.sendStatus(403);
     }
 
+    createConcert(req: Request, res: Response) {
+        this.repository.createConcert(req.params.username, req.body);
+        res.sendStatus(200);
+    }
   
 }

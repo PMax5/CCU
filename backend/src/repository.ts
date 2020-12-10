@@ -21,17 +21,39 @@ export class Repository {
         return this.users.get(username);
     }   
 
+    updateUser(username: string, userUpdated: User) {
+        let user = this.users.get(username);
+
+        if (user !== undefined) {
+            let newUser = {
+                username : user.username,
+                name: userUpdated.name !== undefined ? userUpdated.name : user.name,
+                email: user.email,
+                password: user.password,
+                imagePath: userUpdated.imagePath !== undefined ? userUpdated.imagePath : user.imagePath,
+                description: userUpdated.description !== undefined ? userUpdated.description : user.description,
+                type: user.type
+            }
+
+            this.users.set(username, newUser);
+            
+            return this.users.get(username);
+        }
+
+        return undefined;
+    }
+
+
 
     createConcert(username: string, concert: Concert) {
         let concertID = this.concerts.size;
         let user = this.users.get(username);
 
-        concert.participants = new Array<string>();
         concert.id = concertID;
+        concert.participants = new Array<string>();
+       
         concert.username = username;
         concert.status = this.STATUS_PENDING;
-        concert.artistImage = user.imagePath;
-        concert.artistName = user.name;
         this.concerts.set(concertID, concert);
 
         if (user.concerts === undefined)

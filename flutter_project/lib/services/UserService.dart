@@ -6,6 +6,25 @@ import "package:http/http.dart" as http;
 
 class UserService extends Service {
 
+  Future<User> updateUser(String username, String newName, String newImagePath, String newDescription) async {
+    final http.Response response = await http.put(
+      this.apiURL + "/user/${username}/update",
+      headers: this.headersPost,
+      body: jsonEncode(<String, dynamic> {
+        'name': newName,
+        'imagePath': newImagePath,
+        'description': newDescription
+      })
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not update user with username=${username}.");
+
+    var userJson = json.decode(response.body);
+    User user2 = User.fromJson(userJson);
+    user2.password = null;
+    return user2;
+  }
   
   Future<User> getUser(String username) async {
     final http.Response response = await http.get(

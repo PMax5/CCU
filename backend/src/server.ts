@@ -21,10 +21,13 @@ export class Server {
             this.handlers.loginUser(req, res);
         });
 
-        
         this.app.get("/user/:username", (req, res) => {
             this.handlers.getUser(req, res);
         })
+
+        this.app.put("/user/:username/update", (req, res) => {
+           this.handlers.updateUser(req, res);
+        });
 
         this.app.post("/artist/:username/concerts/new", (req, res) => {
            this.handlers.createConcert(req, res);

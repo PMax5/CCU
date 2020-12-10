@@ -13,61 +13,6 @@ Widget CenteredHeaderLogo() {
   return Center(child: projectSettings.logo);
 }
 
-Widget MainMenu(BuildContext context, User user, Widget mainPage) {
-  return DefaultTabController(
-    length: user.type == "FAN" ? 4 : 3,
-    child: Column(
-      children: <Widget>[
-        Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 5,
-                      offset: Offset(0, 5), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: TabBar(
-                    unselectedLabelColor: Color.fromRGBO(100, 100, 100, 1),
-                    labelColor: projectSettings.mainColor,
-                    indicatorColor: projectSettings.mainColor,
-                    tabs: user.type == "FAN"
-                        ? [
-                            Tab(icon: Icon(Icons.library_music)),
-                            Tab(icon: Icon(Icons.forum)),
-                            Tab(icon: Icon(Icons.notifications)),
-                            Tab(icon: Icon(Icons.menu))
-                          ]
-                        : [
-                            Tab(icon: Icon(Icons.library_music)),
-                            Tab(icon: Icon(Icons.forum)),
-                            Tab(icon: Icon(Icons.menu))
-                          ]))),
-        Container(
-          height: MediaQuery.of(context).size.height - 150,
-          child: TabBarView(
-              children: user.type == "FAN"
-                  ? [
-                      mainPage,
-                      // ChatRooms(context, user),
-                      // Notifications(context),
-                      // ExtraMenu(context, user)
-                    ]
-                  : [
-                      mainPage,
-                      // ChatRooms(context, user),
-                      // ExtraMenu(context, user)
-                    ]),
-        ),
-      ],
-    ),
-  );
-}
 
 Widget CenteredProfile(String imagePath, String name) {
   return Center(
@@ -184,4 +129,11 @@ class Arguments {
   final Concert concert;
 
   Arguments(this.logged_in, this.concert);
+}
+
+class ProfileArguments {
+  final User user;
+  final bool edit;
+
+  ProfileArguments(this.user, this.edit);
 }

@@ -74,21 +74,25 @@ class SignUpProfileState extends State<SignUpProfile> {
                 width: projectSettings.textInputWidth,
                 height: projectSettings.textInputHeight + 25,
                 child: TextFormField(
-                    decoration: InputDecoration(
-                        enabledBorder: inputBorder(Colors.black),
-                        focusedBorder: inputBorder(Colors.black),
-                        errorBorder: inputBorder(Colors.red),
-                        focusedErrorBorder: inputBorder(Colors.red),
-                        hintText: "Name"),
-                    initialValue: formValues["name"],
-                    onChanged: (value) 
+                  decoration: InputDecoration(
+                      enabledBorder: inputBorder(Colors.black),
+                      focusedBorder: inputBorder(Colors.black),
+                      errorBorder: inputBorder(Colors.red),
+                      focusedErrorBorder: inputBorder(Colors.red),
+                      hintText: "Name"),
+                  initialValue: formValues["name"],
+                    onChanged: (value) {
                       formValues["name"] = value;
                     },
-                    validator: (value) {
-                      if (value.isEmpty)
-                        return "Enter a name for your profile";
-                      return null;
-                    }))));
+                  validator: (value) {
+                    if (value.isEmpty)
+                      return "Enter a name for your profile";
+                    return null;
+                  },
+                ),
+                ),
+            )
+    );
   }
 
   Widget buildDescriptionInputField() {

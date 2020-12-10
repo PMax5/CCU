@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_complete_guide/services/ConcertService.dart';
-import '../models/concert.dart';
 import '../models/user.dart';
 import 'package:flutter_complete_guide/settings.dart';
 import 'package:flutter_complete_guide/models/user.dart';
 
 Settings projectSettings = new Settings();
-ConcertService _concertService = new ConcertService();
 List<String> channelNames = List<String>();
 
 Widget CenteredHeaderLogo() {
@@ -104,7 +101,7 @@ Widget MainMenu(BuildContext context, User user, Widget mainPage) {
                             Tab(icon: Icon(Icons.forum)),
                             Tab(icon: Icon(Icons.menu))
                           ]))),
-        Container(
+        /*Container(
           height: MediaQuery.of(context).size.height - 150,
           child: TabBarView(
               children: user.type == "FAN"
@@ -119,23 +116,13 @@ Widget MainMenu(BuildContext context, User user, Widget mainPage) {
                       ChatRooms(context, user),
                       ExtraMenu(context, user)
                     ]),
-        ),
+        ),*/
       ],
     ),
   );
 }
 
-Future<List<GeneralChannel>> getAllChannels(String username) async {
-  try {
-    List<GeneralChannel> channels =
-        await _concertService.getConcertsChannels(username);
-    return channels;
-  } catch (e) {
-    print(e.toString());
-  }
-}
-
-Widget ChatRooms(BuildContext context, User user) {
+/*Widget ChatRooms(BuildContext context, User user) {
   List<GeneralChannel> textChannels = new List<GeneralChannel>();
   List<GeneralChannel> voiceChannels = new List<GeneralChannel>();
   channelNames.clear();
@@ -219,7 +206,7 @@ Widget ChatRooms(BuildContext context, User user) {
       ]);
     },
   );
-}
+}*/
 
 Widget Notifications(BuildContext context) {
   return ListView(
@@ -249,7 +236,7 @@ Widget ExtraMenu(BuildContext context, User user) {
       title: Text("Profile", style: TextStyle(fontSize: 20)),
       leading: Icon(Icons.person, size: 35),
       onTap: () {
-        Navigator.pushNamed(context, "/user/userProfile", arguments: ProfileArguments(user, true));
+        //Navigator.pushNamed(context, "/user/userProfile", arguments: ProfileArguments(user, true));
       },
     ),
     Divider(
@@ -329,7 +316,7 @@ Widget BackButtonLogoHeader(BuildContext context) {
   ]);
 }
 
-class Arguments {
+/*class Arguments {
   final User logged_in;
   final Concert concert;
 
@@ -348,4 +335,4 @@ class ChannelArguments {
   final GeneralChannel channel;
 
   ChannelArguments(this.user, this.channel);
-}
+}*/

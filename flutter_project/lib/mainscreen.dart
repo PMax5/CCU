@@ -2,9 +2,6 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/authentication/login.dart';
-import 'package:flutter_complete_guide/payment/paymentOptions.dart';
-import 'authentication/signup.dart';
 import 'package:flutter/services.dart';
 import 'settings.dart';
 

@@ -16,16 +16,13 @@ class SignUpProfileState extends State<SignUpProfile> {
   Settings projectSettings = new Settings();
   AuthenticationService authenticationService = new AuthenticationService();
   Map<String, String> formValues;
-  Map<String, String> formValuesUpdate = new Map<String,String>();
-  String profileImagePath =
-      'http://web.ist.utl.pt/ist189407/assets/images/profile_general.png';
+  Map<String, String> formValuesUpdate = new Map<String,String>();     
 
 
   Widget buildImagePreview() {
-    formValues["imagePath"] = profileImagePath;
     return Center(child: ClipOval(
         child: Image.network(
-          profileImagePath,
+          formValues['imagePath'],
           width: 100,
           height: 100,
           fit: BoxFit.cover,
@@ -48,14 +45,14 @@ class SignUpProfileState extends State<SignUpProfile> {
           onPressed: () {
             //FIXME: I WANT PICKERIMAGE PLEASE
             setState(() {
-              formValuesUpdate.addAll(formValues);
-
               if (formValues["type"] == "FAN")
-                profileImagePath =
+                formValues['imagePath'] =
                     'http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png';
               else
-                profileImagePath =
+               formValues['imagePath'] =
                     'http://web.ist.utl.pt/ist189407/assets/images/james.png';
+              formValuesUpdate.addAll(formValues);
+              
             });
           },
         ),
@@ -84,9 +81,8 @@ class SignUpProfileState extends State<SignUpProfile> {
                         focusedErrorBorder: inputBorder(Colors.red),
                         hintText: "Name"),
                     initialValue: formValues["name"],
-                    onChanged: (value) {
+                    onChanged: (value) 
                       formValues["name"] = value;
-                      formValuesUpdate["name"] = value;
                     },
                     validator: (value) {
                       if (value.isEmpty)
@@ -119,7 +115,6 @@ class SignUpProfileState extends State<SignUpProfile> {
                         hintText: "Description"),
                     initialValue: formValues["description"],
                     onChanged: (value) {
-                      formValues["description"] = value;
                       formValuesUpdate["description"] = value;
                     },
                     validator: (value) {
@@ -164,7 +159,10 @@ class SignUpProfileState extends State<SignUpProfile> {
 
   Widget buildForm(BuildContext context) {
     if(formValuesUpdate.length == 0)
+    {
       formValues = ModalRoute.of(context).settings.arguments;
+      formValues['imagePath'] =  'http://web.ist.utl.pt/ist189407/assets/images/profile_general.png';
+    }
     else
       formValues = formValuesUpdate;
     final signUpProfileFormKey = GlobalKey<FormState>();

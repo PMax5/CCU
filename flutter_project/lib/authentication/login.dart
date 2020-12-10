@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../models/user.dart';
 import 'package:flutter_complete_guide/services/AuthenticationService.dart';
@@ -123,8 +122,7 @@ class LoginState extends State<Login> {
 
   Future<User> login() async {
     try {
-      User user = await authenticationService.login(formValues['Username'], formValues['Password']);
-      return user;
+      return await authenticationService.login(formValues['Username'], formValues['Password']);
     } catch(e) {
       print(e.toString());
     }

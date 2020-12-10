@@ -1,17 +1,15 @@
 import {User} from './authentication';
 
 export interface Concert {
+    id ?: number,
     date ?: string,
     name ?: string,
     description ?: string,
     link ?: string,
     image ?: string,
-    id ?: number,
     participants ?: string[],
     username ?: string,
-    status ?: number,
-    artistName ?: string,
-    artistImage ?: string
+    status ?: number
 }
 
 export interface Channel {

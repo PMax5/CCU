@@ -17,7 +17,7 @@ class UserProfileState extends State<UserProfile> {
   User user;
   bool edit;
   bool follow;
-  bool followupdate = null;
+  bool followupdate;
   Widget buildEditButton(BuildContext context) {
     return Center(
       child: Container(

@@ -130,9 +130,12 @@ class UserMainPageState extends State<UserMainPage> {
 }
 
   Widget createFanMenu(BuildContext context, User user) {
-    getAvailableConcerts().then((concerts) { 
-      if (concerts == null) {
-            return Scaffold(
+    return FutureBuilder(
+        future: getAvailableConcerts(),
+        builder: (context, concerts) {
+          if (concerts.hasData) {
+            if(concerts.data.length == 0) {
+              return Scaffold(
                 body: Center(
                     child: Container(
                         padding: EdgeInsets.only(top: 48),
@@ -145,52 +148,60 @@ class UserMainPageState extends State<UserMainPage> {
                               fontSize: 18),
                         ))),
                 );
-      }
-      return ListView.builder(
-          itemCount: concerts.data.length,
-          itemBuilder: (context, index) {
-            Concert concert = concerts.data[index];
-            getArtist(concert.username).then((artist) {
-              return Column(
-                children: <Widget>[
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    elevation: 5,
-                    child: new InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, "/user/concertInfo",
-                            arguments: Arguments(user, concert));
-                      },
-                      child: Column(
-                        children: [
-                          Image.network(concert.image),
-                          ListTile(
-                            leading: Image.network(artist.imagePath,
-                                width: 45, height: 45, fit: BoxFit.cover),
-                            title: Text(concert.name),
-                            subtitle: Text(
-                              '${artist.name}',
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(0.6)),
-                            ),
+            }
+            return ListView.builder(
+              itemCount: concerts.data.length,
+              itemBuilder: (context, index) {
+                Concert concert = concerts.data[index];
+                return FutureBuilder(future: getArtist(concert.username),builder: (context,artist) {
+                  if(artist.hasData)
+                     return Column(
+                    children: <Widget>[
+                      Card(
+                        clipBehavior: Clip.antiAlias,
+                        elevation: 5,
+                        child: new InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, "/user/concertInfo",
+                                arguments: Arguments(user, concert));
+                          },
+                          child: Column(
+                            children: [
+                              Image.network(concert.image),
+                              ListTile(
+                                leading: Image.network(artist.data.imagePath,
+                                    width: 45, height: 45, fit: BoxFit.cover),
+                                title: Text(concert.name),
+                                subtitle: Text(
+                                  '${artist.data.name}',
+                                  style: TextStyle(
+                                      color: Colors.black.withOpacity(0.6)),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ],
-              );
-            });
-            return Column();
-            
-          },
-        );
-    }
+                    ],
+                  );
+                     return Center(child: CircularProgressIndicator());
+                 });
+                 
+              },
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+          
+      }
+    );
   }
 
   Widget createArtistMenu(BuildContext context, User user) {
-    getArtistCurrentConcerts(user.username).then((artistConcerts) {
-       if (artistConcerts == null) {
+    return FutureBuilder(
+        future: getArtistCurrentConcerts(user.username),
+        builder: (context, artistConcerts) {
+          if(artistConcerts.hasData){
+            if (artistConcerts.data.length == 0) {
             return Scaffold(
                 body: Center(
                     child: Container(
@@ -205,15 +216,15 @@ class UserMainPageState extends State<UserMainPage> {
                         ))),
                 floatingActionButton: FloatingActionButton.extended(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/user/concertCreate",
-                        arguments: user);
+                    // Navigator.pushNamed(context, "/user/concertCreate",
+                    //     arguments: user);
                   },
                   label: Text("CREATE"),
                   icon: Icon(Icons.add),
                   backgroundColor: projectSettings.mainColor,
                 ));
-          }
-          return Scaffold(
+            }
+            return Scaffold(
                     body: ListView.builder(
                       itemCount: artistConcerts.data.length,
                       itemBuilder: (context, index) {
@@ -264,12 +275,16 @@ class UserMainPageState extends State<UserMainPage> {
                       icon: Icon(Icons.add),
                       backgroundColor: projectSettings.mainColor,
                     ));
-    }
+          }
+          return Center(child: CircularProgressIndicator()); 
+        }
+      );     
   }
 
   Future<List<Concert>> getAvailableConcerts() async {
     try {
       List<Concert> concerts = await concertService.getAllConcerts();
+      print(concerts.length);
       return concerts.where((c) => c.status != 2 && c.status != 3).toList();
     } catch (e) {
       print(e.toString());

@@ -89,7 +89,6 @@ class LoginState extends State<Login> {
                                 if(loginFormKey.currentState.validate()) {
                                   login().then((user) {
                                     if (user != null) {
-                                      print("hello");
                                       Navigator.pushNamed(
                                           context,
                                           "/user/main",

@@ -23,13 +23,10 @@ export class Repository {
                 password: user.password,
                 imagePath: user.imagePath,
                 description: user.description,
-                type:user.type
-                concerts: new Array<number>();
-            }
-            if (user.type == "FAN")
-            {
-                newUser.favorites = new Array<string>();
-                newUser.notifications = new Array<string>();
+                type:user.type,
+                concerts: new Array<number>(),
+                favorites:user.type==='FAN'? new Array<string>() : undefined,
+                notifications:user.type==='FAN'? new Array<string>() : undefined
             }
             this.users.set(user.username, newUser);
         }

@@ -46,7 +46,6 @@ export class Handlers {
             image: "http://web.ist.utl.pt/ist189407/assets/images/james.png",
         });
 
-
         console.log("Created default users ...");
     }
 

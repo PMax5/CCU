@@ -125,6 +125,7 @@ class LoginState extends State<Login> {
       return await authenticationService.login(formValues['Username'], formValues['Password']);
     } catch(e) {
       print(e.toString());
+      return null;
     }
   }
 

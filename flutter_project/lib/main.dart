@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/authentication/type.dart';
 import 'package:flutter_complete_guide/authentication/signup_profile.dart';
-
+import 'package:flutter_complete_guide/user/mainpage.dart';
 
 import 'authentication/login.dart';
 import 'authentication/signup.dart';
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         "/signup": (context) => SignUp(),
         "/signup/type": (context) => SignUpType(),
         "/signup/profile": (context) => SignUpProfile(),
+        "/user/main": (context) => UserMainPage(),
       },
     );
   }

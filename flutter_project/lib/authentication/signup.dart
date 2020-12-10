@@ -130,6 +130,7 @@ class SignUpState extends State<SignUp> {
       return user;
     } catch(e) {
       print(e.toString());
+      return null;
     }
   }
 

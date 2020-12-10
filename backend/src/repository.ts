@@ -68,4 +68,40 @@ export class Repository {
         user.concerts.push(concertID);
     }
 
+    getArtistConcerts(username: string) {
+        let concerts = new Array<Concert>();
+        let user = this.users.get(username);
+
+        if (user !== undefined) {
+            let userConcertIds = user.concerts;
+
+            if (userConcertIds !== undefined) {
+                userConcertIds.forEach((value: number) => {
+                    let concert = this.concerts.get(value);
+                    if (concert !== undefined)
+                        concerts.push(concert);
+                });
+
+                return concerts;
+            }
+        }
+
+        return [];
+    }
+
+    getAllConcerts() {
+        return this.concerts;
+    }
+
+    startConcert(username: string, id: number) {
+        let concert = this.concerts.get(id);
+
+        if (concert !== undefined && concert.username === username) {
+            concert.status = this.STATUS_STARTED;
+            return true;
+        }
+
+        return false;
+    }
+
 }

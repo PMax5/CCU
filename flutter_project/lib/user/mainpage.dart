@@ -17,6 +17,10 @@ class UserMainPageState extends State<UserMainPage> {
   ConcertService concertService = new ConcertService();
   UserService userService = new UserService();
 
+  Widget ChatRooms(BuildContext context, User user) {
+    return Container();
+  }
+
   Widget ExtraMenu(BuildContext context, User user) {
     return ListView(children: [
       Divider(
@@ -110,13 +114,13 @@ class UserMainPageState extends State<UserMainPage> {
               children: user.type == "FAN"
                   ? [
                       mainPage,
-                      // ChatRooms(context, user),
+                      ChatRooms(context, user),
                       Notifications(context),
                       ExtraMenu(context, user)
                     ]
                   : [
                       mainPage,
-                      // ChatRooms(context, user),
+                      ChatRooms(context, user),
                       ExtraMenu(context, user)
                     ]),
         ),

@@ -88,5 +88,29 @@ export class Handlers {
         this.repository.createConcert(req.params.username, req.body);
         res.sendStatus(200);
     }
+
+    getUser(req: Request, res: Response) {
+        let result = this.repository.getUser(req.params.username);
+
+        result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
+    }
+
+    getArtistsConcerts(req: Request, res: Response) {
+        let concerts = this.repository.getArtistConcerts(req.params.username);
+        if (concerts !== undefined)
+            return res.json(concerts);
+        else
+            return res.json({});
+    }
+
+    getAllConcerts(req: Request, res: Response) {
+        let concerts = this.repository.getAllConcerts();
+
+        if (concerts !== undefined){
+            return res.json(Array.from(concerts.values()));
+        }
+        else
+            return res.json({});
+    }
   
 }

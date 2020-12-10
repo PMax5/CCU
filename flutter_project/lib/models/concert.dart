@@ -9,8 +9,8 @@ class Concert {
   String image;
   String username;
   int status;
-  TextChannel textChannel;
-  VoiceChannel voiceChannel;
+  // TextChannel textChannel;
+  // VoiceChannel voiceChannel;
 
   Concert(int id, String name, String description, String date, String link, String image, String username, int status) {
     this.id = id;
@@ -21,12 +21,12 @@ class Concert {
     this.image = image;
     this.status = status;
     this.username = username;
-    this.textChannel = new TextChannel(this.name + " Channel");
+    // this.textChannel = new TextChannel(this.name + " Channel");
   }
 
-  setVoiceChannel(VoiceChannel channel) {
-    this.voiceChannel = channel;
-  }
+  // setVoiceChannel(VoiceChannel channel) {
+  //   this.voiceChannel = channel;
+  // }
 
   Map<String, dynamic> toJson() => {
     'name': this.name,

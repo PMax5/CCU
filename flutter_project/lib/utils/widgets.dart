@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../models/user.dart';
 import 'package:flutter_complete_guide/settings.dart';
 import 'package:flutter_complete_guide/models/user.dart';
+import '../models/concert.dart';
 
 Settings projectSettings = new Settings();
 List<String> channelNames = List<String>();
@@ -53,14 +54,14 @@ Widget MainMenu(BuildContext context, User user, Widget mainPage) {
               children: user.type == "FAN"
                   ? [
                       mainPage,
-                      ChatRooms(context, user),
-                      Notifications(context),
-                      ExtraMenu(context, user)
+                      // ChatRooms(context, user),
+                      // Notifications(context),
+                      // ExtraMenu(context, user)
                     ]
                   : [
                       mainPage,
-                      ChatRooms(context, user),
-                      ExtraMenu(context, user)
+                      // ChatRooms(context, user),
+                      // ExtraMenu(context, user)
                     ]),
         ),
       ],
@@ -178,3 +179,9 @@ Widget BackButtonLogoHeader(BuildContext context) {
   ]);
 }
 
+class Arguments {
+  final User logged_in;
+  final Concert concert;
+
+  Arguments(this.logged_in, this.concert);
+}

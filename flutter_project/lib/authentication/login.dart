@@ -3,7 +3,6 @@ import '../models/user.dart';
 import 'package:flutter_complete_guide/services/AuthenticationService.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
-import 'type.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -90,6 +89,7 @@ class LoginState extends State<Login> {
                                 if(loginFormKey.currentState.validate()) {
                                   login().then((user) {
                                     if (user != null) {
+                                      print("hello");
                                       Navigator.pushNamed(
                                           context,
                                           "/user/main",

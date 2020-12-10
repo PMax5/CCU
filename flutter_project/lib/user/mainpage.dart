@@ -44,7 +44,6 @@ class UserMainPageState extends State<UserMainPage> {
             itemBuilder: (context, index) {
               Concert concert = concerts.data[index];
               getArtist(concert.username).then((artist) {
-              if(artist != null)
                 return Column(
                   children: <Widget>[
                     Card(
@@ -74,7 +73,7 @@ class UserMainPageState extends State<UserMainPage> {
                     ),
                   ],
                 );
-              })
+              });return Column();
               
             },
           );

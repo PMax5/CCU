@@ -33,6 +33,10 @@ export class Server {
            this.handlers.purchaseTicket(req, res);
         });
 
+        this.app.post("/user/:username/concerts/:id/returnTicket", (req, res) => {
+           this.handlers.returnTicket(req, res);
+        });
+
         this.app.post("/user/:username/follow/:artistUsername", (req, res) => {
            this.handlers.follow(req, res);
         });

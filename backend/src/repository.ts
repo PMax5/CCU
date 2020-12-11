@@ -75,7 +75,7 @@ export class Repository {
         let concert = this.concerts.get(id);
         let user = this.users.get(username);
 
-        if (concert !== undefined && user !== undefined) {
+        if (concert !== undefined && user !== undefined && concert.status == STATUS_PENDING) {
             user.concerts.push(id);
             concert.participants.push(username);
 
@@ -84,6 +84,24 @@ export class Repository {
 
         return false;
     }
+
+
+    returnTicket(username: string, id: number) {
+        let concert = this.concerts.get(id);
+        let user = this.users.get(username);
+
+        if (concert !== undefined && user !== undefined && concert.status == STATUS_PENDING) {
+            let index =  user.concerts.indexOf(id);
+            user.concerts.splice(index, 1);
+            index =  concert.participants.indexOf(username);
+            concert.participants.splice(index, 1);
+
+            return [user,concert];
+        }
+
+        return undefined;
+    }
+
 
  /*   deleteNotification(fanUsername: string, notification: string)
     {

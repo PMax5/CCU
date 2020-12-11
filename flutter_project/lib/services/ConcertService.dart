@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:tuple/tuple.dart';
 import 'package:flutter_complete_guide/models/concert.dart';
 import 'package:flutter_complete_guide/services/Service.dart';
 import "package:http/http.dart" as http;
@@ -47,6 +47,19 @@ class ConcertService extends Service {
     return concerts;
   }
 
+
+ Future <Tuple2<User,Concert>> returnTicket(String username, int id) async {
+    final http.Response response = await http.post(
+        this.apiURL + "/user/$username/concerts/$id/returnTicket",
+        headers: this.headersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not return ticket from the concert.");
+
+    return Concert.fromJson(formValues);
+  }
+
   Future<void> purchaseTicket(String username, int id) async {
     final http.Response response = await http.post(
       this.apiURL + "/user/$username/concerts/$id/purchaseTicket",
@@ -56,6 +69,5 @@ class ConcertService extends Service {
     if (response.statusCode != 200)
       throw new Exception("Could not purchase ticket for concert with id=$id.");
   }
-
   
 }

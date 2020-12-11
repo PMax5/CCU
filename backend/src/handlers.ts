@@ -103,6 +103,13 @@ export class Handlers {
         result ? res.sendStatus(200) : res.sendStatus(500);
     }
 
+    returnTicket(req: Request, res: Response) {
+        let result = this.repository.returnTicket(req.params.username, Number(req.params.id));
+
+        result ? res.status(200).json(result) : res.sendStatus(500);
+    }
+
+
     unfollow (req: Request, res: Response) {
         let result = this.repository.unfollowArtist(req.params.username, req.params.artistUsername);
 

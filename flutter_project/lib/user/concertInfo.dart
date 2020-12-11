@@ -5,6 +5,7 @@
  import 'package:flutter_complete_guide/utils/widgets.dart';
  import 'package:flutter_complete_guide/services/ConcertService.dart';
  import 'package:flutter_complete_guide/services/UserService.dart';
+ import 'package:tuple/tuple.dart';
 
  class ConcertInfoPage extends StatefulWidget {
    ConcertInfoPage({Key key}) : super(key: key);
@@ -16,7 +17,8 @@
  class ConcertInfoPageState extends State<ConcertInfoPage> {
    ConcertService concertService = new ConcertService();
    UserService userService = new UserService();
-
+   User userUpdated;
+   Concert concertUpdated;
    Widget ExtraButton(User user, Concert concert) {
      return Container(
        width: (user.type == 'FAN' ? 140 : 100),
@@ -46,8 +48,16 @@
    }
 
    Widget ConcertInfoMenu(BuildContext context, Arguments arguments) {
-     Concert concert = arguments.concert;
-     User user = arguments.logged_in;
+     Concert concert;
+     User user;
+     if(concertUpdated == null)
+        concert = arguments.concert;
+     else
+        concert = concertUpdated;
+     if(userUpdated == null)
+        user = arguments.logged_in;
+     else
+        user = userUpdated;
 
      return MainMenu(
          context,
@@ -133,9 +143,24 @@
                                "Are you sure you want to return the ticket?,
                                "By returning the ticket, the total cost of it will be automatically\ "
                                    "refunded and you won’t have access to the concert stream.", () {
-                             //Navigator.of(context).pop();
-                             //Navigator.pushNamed(context, "/user/concertStream",
-                              //   arguments: Arguments(user, concert));
+                             Navigator.of(context).pop();
+                             returnTicket(user.username,concert.id).then((){ 
+                                   if (userResult != null)
+                                     setState(() {
+                                        userUpdated = userResult;
+                                        concertUpdated = concertResult;
+                                     }
+                                  else
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => TipDialog("Notice",
+                                                "Sorry was impossible to return the ticket try to refresh the page.",
+                                                () {
+                                                    Navigator.of(context).pop();
+                                                  })
+                                    );
+                             );}
+                             );
                            }, () {
                              Navigator.of(context).pop();
                            }));
@@ -262,6 +287,15 @@
    Future<User> getArtist(String username) async {
      try {
        return await userService.getUser(username);
+     } catch (e) {
+       print(e.toString());
+       return null;
+     }
+   }
+
+   Future<Tuple2<User,Concert>> returnTicket(String username, int concertId) async {
+     try {
+       return await concertService.returnTicket(username,id);
      } catch (e) {
        print(e.toString());
        return null;

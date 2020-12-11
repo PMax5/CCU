@@ -6,15 +6,16 @@ class User {
   String type;
   String password;
   String description;
-  
+  List<dynamic> favorites;
 
-  User(String username, String email, String name, String imagePath, String type, String description) {
+  User(String username, String email, String name, String imagePath, String type, String description, List<dynamic> favorites) {
     this.username = username;
     this.email = email;
     this.name = name;
     this.imagePath = imagePath;
     this.type = type;
     this.description = description;
+    this.favorites = favorites;
   }
 
 
@@ -35,7 +36,8 @@ class User {
       json["name"],
       json["imagePath"],
       json["type"],
-      json["description"]
+      json["description"],
+      json["favorites"]
     );
   }
 }

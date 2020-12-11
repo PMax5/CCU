@@ -180,7 +180,7 @@ CircleAvatar(
                   Navigator.pushNamed(
                       context, "/user/main", arguments: newUser);
                   Navigator.pushNamed(context, "/user/userProfile",
-                      arguments: ProfileArguments(newUser, true));
+                      arguments: ProfileArguments(newUser, true, null));
                 } else {
                   showDialog(
                       context: context,

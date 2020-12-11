@@ -29,6 +29,16 @@ export class Server {
            this.handlers.updateUser(req, res);
         });
 
+
+        this.app.post("/user/:username/follow", (req, res) => {
+           this.handlers.follow(req, res);
+        });
+
+
+        this.app.post("/user/:username/unfollow", (req, res) => {
+           this.handlers.unfollow(req, res);
+        });
+
         this.app.post("/artist/:username/concerts/new", (req, res) => {
            this.handlers.createConcert(req, res);
         });

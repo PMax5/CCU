@@ -15,10 +15,12 @@ class UserProfileState extends State<UserProfile> {
   Settings projectSettings = new Settings();
   UserService userService = new UserService();
   User user;
+  User userUpdated;
   bool edit;
+  User artist;
   bool follow;
-  bool followupdate;
   Widget buildEditButton(BuildContext context) {
+
     return Center(
       child: Container(
         width: 120,
@@ -34,10 +36,22 @@ class UserProfileState extends State<UserProfile> {
             if (edit)
               Navigator.pushNamed(context, "/user/editProfile", arguments: user);
             else {
-            //FIXME I NEED TO UPDATE SERVER WITH THE FOLLOW OR UNFOLLOW
-              setState( () {
-              followupdate = !follow;
-            }); 
+              updatefollow().then((newUser) {
+                if (newUser != null) {
+                  setState( () {
+                    userUpdated = newUser;
+                  }); 
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (_) =>
+                          TipDialog("Notice",
+                              "Sorry try to unfollow or follow the artist in a few minutes.",
+                                  () {
+                                Navigator.of(context).pop();
+                              }));
+                }
+              });             
             }
           },
         ),
@@ -99,15 +113,41 @@ class UserProfileState extends State<UserProfile> {
     );
   }
 
+  Future<User> updatefollow() async {
+    try {
+      User user_result;
+      if (follow)
+        user_result = await userService.unfollow(user.username,artist.username);
+      else
+        user_result = await userService.follow(user.username,artist.username);
+      return user_result;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ProfileArguments profileArguments = ModalRoute.of(context).settings.arguments;
-    user = profileArguments.user;
     edit = profileArguments.edit;
-    if (followupdate == null)
-     follow = false; //FIXME this need to come from server
+    if(!edit)
+    {
+      artist = profileArguments.artist;
+
+      if(userUpdated == null)
+        user = profileArguments.fan;
+      else
+        user = userUpdated;
+
+      if(user.favorites.contains(artist.username))
+        follow = true;
+      else
+        follow = false;
+
+    }
     else
-      follow = followupdate;
+      user = profileArguments.fan;
     return Scaffold(
       appBar: AppBar(
           title: Text("User Profile"),

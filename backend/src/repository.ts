@@ -46,11 +46,8 @@ export class Repository {
             user.description = userUpdated.description !== undefined ? userUpdated.description : user.description ;
             if (user.type == "FAN") {
                 user.notifications = userUpdated.notifications !== undefined ? userUpdated.notifications : user.notifications;
-                user.favorites = userUpdated.favorites !== undefined ? userUpdated.favorites : user.favorites;
             }
                  
-
-
             this.users.set(username, user);
             
             return this.users.get(username);
@@ -59,8 +56,26 @@ export class Repository {
         return undefined;
     }
 
+    followArtist(fanUsername: string, artistUsername: string)
+    {
+        let user = this.users.get(fanUsername);
+        user.favorites.push(artistUsername);
+    }
 
+    unfollowArtist(fanUsername: string, artistUsername: string)
+    {
+        let user = this.users.get(fanUsername);
+        let index =  user.favorites.indexOf(artistUsername);
+        user.favorites.splice(index, 1);
+    }
 
+ /*   deleteNotification(fanUsername: string, notification: string)
+    {
+        let user = this.users.get(fanUsername);
+        let index = user.notifications.indexOf(notification);
+        user.notifications.splice(index,1);
+    }
+*/
     createConcert(username: string, concert: Concert) {
         let concertID = this.concerts.size;
         let user = this.users.get(username);

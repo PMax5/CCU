@@ -140,7 +140,7 @@ Widget ChatRooms(BuildContext context, User user) {
         title: Text("Profile", style: TextStyle(fontSize: 20)),
         leading: Icon(Icons.person, size: 35),
         onTap: () {
-          Navigator.pushNamed(context, "/user/userProfile", arguments: ProfileArguments(user, true));
+          Navigator.pushNamed(context, "/user/userProfile", arguments: ProfileArguments(user, true, null));
         },
       ),
       Divider(
@@ -245,8 +245,8 @@ class Arguments {
 }
 
 class ProfileArguments {
-  final User user;
+  final User fan;
   final bool edit;
-
-  ProfileArguments(this.user, this.edit);
+  final User artist;
+  ProfileArguments(this.fan, this.edit, this.artist);
 }

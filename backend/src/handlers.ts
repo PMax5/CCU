@@ -90,6 +90,16 @@ export class Handlers {
         result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
     }
 
+    follow (req: Request, res: Response) {
+        let result = this.repository.follow(req.params.username, req.body);
+
+        result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
+    }
+    unfollow (req: Request, res: Response) {
+        let result = this.repository.unfollow(req.params.username, req.body);
+
+        result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
+    }
 
     createConcert(req: Request, res: Response) {
         this.repository.createConcert(req.params.username, req.body);

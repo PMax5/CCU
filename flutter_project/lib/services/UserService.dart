@@ -25,7 +25,43 @@ class UserService extends Service {
     user2.password = null;
     return user2;
   }
-  
+
+  Future<User> follow(String username, String artistname) async {
+    final http.Response response = await http.post(
+      this.apiURL + "/user/${username}/follow",
+      headers: this.headersPost,
+      body: jsonEncode(<String, dynamic> {
+        'username': artistname
+      })
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not follow user with username=${artistname}.");
+
+    var userJson = json.decode(response.body);
+    User user2 = User.fromJson(userJson);
+    user2.password = null;
+    return user2;
+  }
+
+  Future<User> unfollow(String username, String artistname) async {
+    final http.Response response = await http.post(
+      this.apiURL + "/user/${username}/unfollow",
+      headers: this.headersPost,
+      body: jsonEncode(<String, dynamic> {
+        'username': artistname
+      })
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not follow user with username=${artistname}.");
+
+    var userJson = json.decode(response.body);
+    User user2 = User.fromJson(userJson);
+    user2.password = null;
+    return user2;
+  }
+
   Future<User> getUser(String username) async {
     final http.Response response = await http.get(
         this.apiURL + "/user/${username}",

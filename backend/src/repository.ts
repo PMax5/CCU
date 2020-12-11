@@ -75,7 +75,7 @@ export class Repository {
         let concert = this.concerts.get(id);
         let user = this.users.get(username);
 
-        if (concert !== undefined && user !== undefined) {
+        if (concert !== undefined && user !== undefined && concert.participants !== undefined) {
             user.concerts.push(id);
             concert.participants.push(username);
 

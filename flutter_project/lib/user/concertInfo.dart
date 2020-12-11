@@ -158,14 +158,14 @@
                                    "By cancelling this concert, you are deleting the concert info and if people \ "
                                        "already bought tickets for this concert, they will be automatically refunded.",
                                    () {
-                                 cancelConcert(
+                                /* cancelConcert(
                                      user.username,
                                      concert
                                          .id);  FIXME this is endConcert not cancel
                                  Navigator.of(context).pop();
                                  Navigator.pushNamed(context,
                                      "/user/main",  TODO create cancel concert page
-                                     arguments: user);
+                                     arguments: user);*/
                                }, () {
                                  Navigator.of(context).pop();
                                }));
@@ -173,7 +173,7 @@
                    ),
                  ),
                ),
-               PinkButton('START STREAM', () {
+             /*  PinkButton('START STREAM', () {
                  showDialog(
                      context: context,
                      builder: (_) => ConfirmationDialog(
@@ -188,7 +188,7 @@
                          }, () {
                            Navigator.of(context).pop();
                          }));
-               }, 165),
+               }, 165),*/
              ])));
    }
 
@@ -249,7 +249,7 @@
        return await userService.getUser(username);
      } catch (e) {
        print(e.toString());
-       return null:
+       return null;
      }
    }
 

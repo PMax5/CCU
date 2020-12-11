@@ -28,11 +28,8 @@ class UserService extends Service {
 
   Future<User> follow(String username, String artistname) async {
     final http.Response response = await http.post(
-      this.apiURL + "/user/${username}/follow",
-      headers: this.headersPost,
-      body: jsonEncode(<String, dynamic> {
-        'username': artistname
-      })
+      this.apiURL + "/user/${username}/follow/${artistname}",
+      headers: this.headersPost
     );
 
     if (response.statusCode != 200)
@@ -46,11 +43,9 @@ class UserService extends Service {
 
   Future<User> unfollow(String username, String artistname) async {
     final http.Response response = await http.post(
-      this.apiURL + "/user/${username}/unfollow",
-      headers: this.headersPost,
-      body: jsonEncode(<String, dynamic> {
-        'username': artistname
-      })
+      this.apiURL + "/user/${username}/unfollow/${artistname}",
+      headers: this.headersPost
+
     );
 
     if (response.statusCode != 200)

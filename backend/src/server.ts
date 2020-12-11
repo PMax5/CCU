@@ -30,12 +30,12 @@ export class Server {
         });
 
 
-        this.app.post("/user/:username/follow", (req, res) => {
+        this.app.post("/user/:username/follow/:artistUsername", (req, res) => {
            this.handlers.follow(req, res);
         });
 
 
-        this.app.post("/user/:username/unfollow", (req, res) => {
+        this.app.post("/user/:username/unfollow/:artistUsername", (req, res) => {
            this.handlers.unfollow(req, res);
         });
 

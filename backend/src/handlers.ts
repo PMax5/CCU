@@ -44,6 +44,7 @@ export class Handlers {
                 + "the first James Smith’s original album in six years.",
             link: "https://www.google.com",
             image: "http://web.ist.utl.pt/ist189407/assets/images/james.png",
+            date: "10th November 2020 9 p.m"
         });
 
         console.log("Created default users ...");
@@ -91,12 +92,12 @@ export class Handlers {
     }
 
     follow (req: Request, res: Response) {
-        let result = this.repository.follow(req.params.username, req.body);
+        let result = this.repository.followArtist(req.params.username,  req.params.artistUsername);
 
         result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
     }
     unfollow (req: Request, res: Response) {
-        let result = this.repository.unfollow(req.params.username, req.body);
+        let result = this.repository.unfollowArtist(req.params.username, req.params.artistUsername);
 
         result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
     }

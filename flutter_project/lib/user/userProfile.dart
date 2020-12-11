@@ -20,7 +20,6 @@ class UserProfileState extends State<UserProfile> {
   User artist;
   bool follow;
   Widget buildEditButton(BuildContext context) {
-
     return Center(
       child: Container(
         width: 120,
@@ -28,10 +27,11 @@ class UserProfileState extends State<UserProfile> {
         child: RaisedButton(
           shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(5.0),
-              side: BorderSide(color: Colors.black, width: 2)),
+              side: edit ? BorderSide(color: Colors.black, width: 2) : follow ? BorderSide(width:0) : BorderSide(color: Colors.black, width: 2)),
+          color: edit ? null : follow ?  projectSettings.mainColor  : null,
           child: Text(edit ? 'EDIT' : follow ? 'UNFOLLOW': 'FOLLOW' ,
               style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+                  TextStyle(fontWeight: FontWeight.bold, color: edit ? Colors.black : follow ?  Colors.white :  Colors.black )),
           onPressed: () {
             if (edit)
               Navigator.pushNamed(context, "/user/editProfile", arguments: user);
@@ -59,7 +59,7 @@ class UserProfileState extends State<UserProfile> {
     );
   }
 
-  Widget buildDescription(User user) {
+  Widget buildDescription(User userDescription) {
     return Padding(
       padding: const EdgeInsets.only(left: 20),
       child: ListTile(
@@ -73,7 +73,7 @@ class UserProfileState extends State<UserProfile> {
         ),
         subtitle: Padding(
           padding: EdgeInsets.only(top: 6.0),
-          child: Text(user.description,
+          child: Text(userDescription.description,
               textAlign: TextAlign.justify,
               style: TextStyle(fontSize: 18, color: Colors.black)),
         ),
@@ -93,12 +93,12 @@ class UserProfileState extends State<UserProfile> {
                 child: CircleAvatar(
                 radius: 60,
                 backgroundColor: Colors.white,
-                backgroundImage: NetworkImage(user.imagePath),
+                backgroundImage: NetworkImage(edit == true ? user.imagePath:artist.imagePath),
                 ),
               ),
           ),
           Center(
-              child: Text(user.name,
+              child: Text(edit == true ? user.name : artist.name,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -107,7 +107,7 @@ class UserProfileState extends State<UserProfile> {
             padding: EdgeInsets.only(top: 30, bottom: 30),
             child: buildEditButton(context),
           ),
-          (user.type == 'ARTIST' ? buildDescription(user) : Container())
+          (edit ? user.type == 'ARTIST' ? buildDescription(user) : Container() : artist.type == "ARTIST" ? buildDescription(artist): Container())
         ],
       ),
     );

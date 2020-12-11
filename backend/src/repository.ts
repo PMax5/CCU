@@ -60,6 +60,7 @@ export class Repository {
     {
         let user = this.users.get(fanUsername);
         user.favorites.push(artistUsername);
+        return user;
     }
 
     unfollowArtist(fanUsername: string, artistUsername: string)
@@ -67,6 +68,7 @@ export class Repository {
         let user = this.users.get(fanUsername);
         let index =  user.favorites.indexOf(artistUsername);
         user.favorites.splice(index, 1);
+        return user;
     }
 
  /*   deleteNotification(fanUsername: string, notification: string)
@@ -111,7 +113,6 @@ export class Repository {
                     if (concert !== undefined)
                         concerts.push(concert);
                 });
-                console.log("hello");
                 return concerts;
             }
         }

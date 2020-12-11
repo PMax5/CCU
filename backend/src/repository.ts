@@ -71,6 +71,20 @@ export class Repository {
         return user;
     }
 
+    purchaseTicket(username: string, id: number) {
+        let concert = this.concerts.get(id);
+        let user = this.users.get(username);
+
+        if (concert !== undefined && user !== undefined) {
+            user.concerts.push(id);
+            concert.participants.push(username);
+
+            return true;
+        }
+
+        return false;
+    }
+
  /*   deleteNotification(fanUsername: string, notification: string)
     {
         let user = this.users.get(fanUsername);

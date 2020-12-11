@@ -47,5 +47,15 @@ class ConcertService extends Service {
     return concerts;
   }
 
+  Future<void> purchaseTicket(String username, int id) async {
+    final http.Response response = await http.post(
+      this.apiURL + "/user/$username/concerts/$id/purchaseTicket",
+      headers: this.headersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not purchase ticket for concert with id=$id.");
+  }
+
   
 }

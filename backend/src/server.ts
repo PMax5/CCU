@@ -29,6 +29,9 @@ export class Server {
            this.handlers.updateUser(req, res);
         });
 
+        this.app.post("/user/:username/concerts/:id/purchaseTicket", (req, res) => {
+           this.handlers.purchaseTicket(req, res);
+        });
 
         this.app.post("/user/:username/follow/:artistUsername", (req, res) => {
            this.handlers.follow(req, res);
@@ -50,6 +53,8 @@ export class Server {
         this.app.get("/concerts", (req, res) => {
             this.handlers.getAllConcerts(req, res);
         });
+
+
 
     }
 

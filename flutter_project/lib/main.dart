@@ -11,11 +11,13 @@ import 'package:flutter_complete_guide/user/userProfile.dart';
 import 'package:flutter_complete_guide/user/editUserProfile.dart';
 import 'package:flutter_complete_guide/user/concertInfo.dart';
 
-// import 'package:flutter_complete_guide/payment/creditcard.dart';
-// import 'package:flutter_complete_guide/payment/mbway.dart';
-// import 'package:flutter_complete_guide/payment/paymentOptions.dart';
-// import 'package:flutter_complete_guide/payment/paymentprocessor.dart';
-// import 'package:flutter_complete_guide/payment/paypal.dart';
+import 'package:flutter_complete_guide/payment/paymentOptions.dart';
+import 'package:flutter_complete_guide/payment/creditcard.dart';
+import 'package:flutter_complete_guide/payment/mbway.dart';
+import 'package:flutter_complete_guide/payment/paymentprocessor.dart';
+import 'package:flutter_complete_guide/payment/paypal.dart';
+
+
 // import 'package:flutter_complete_guide/user/chatRoom.dart';
 
 // import 'package:flutter_complete_guide/user/createConcert.dart';
@@ -39,11 +41,11 @@ class MyApp extends StatelessWidget {
         "/signup": (context) => SignUp(),
         "/signup/type": (context) => SignUpType(),
         "/signup/profile": (context) => SignUpProfile(),
-        // "/payment": (context) => PaymentOptions(),
-        // "/payment/creditcard": (context) => CreditCardOption(),
-        // "/payment/paypal": (context) => PaypalOption(),
-        // "/payment/mbway": (context) => MBWayOption(),
-        // "/payment/process": (context) => PaymentProcessor(),
+        "/payment": (context) => PaymentOptions(),
+        "/payment/creditcard": (context) => CreditCardOption(),
+        "/payment/paypal": (context) => PaypalOption(),
+        "/payment/mbway": (context) => MBWayOption(),
+        "/payment/process": (context) => PaymentProcessor(),
         "/user/main": (context) => UserMainPage(),
         // "/user/concertCreate": (context) => CreateConcert(),
         "/user/concertInfo": (context) => ConcertInfoPage(),

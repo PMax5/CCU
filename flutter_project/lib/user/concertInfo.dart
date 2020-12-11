@@ -140,7 +140,7 @@
                    showDialog(
                        context: context,
                        builder: (_) => ConfirmationDialog(
-                               "Are you sure you want to return the ticket?,
+                               "Are you sure you want to return the ticket?",
                                "By returning the ticket, the total cost of it will be automatically\ "
                                    "refunded and you won’t have access to the concert stream.", () {
                              Navigator.of(context).pop();

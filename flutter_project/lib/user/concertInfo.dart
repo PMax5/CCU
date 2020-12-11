@@ -109,22 +109,37 @@
              }
            });
            if (bought) {
-           //FIXME VERIFICAR SE O CONCERTO JÁ COMEÇOU
-             return BottomButton('GO TO STREAM', () {
-               showDialog(
-                   context: context,
-                   builder: (_) => ConfirmationDialog(
-                           "Voice call with the artist",
-                           "By going to the stream, you’re enabled to win a voice call with the \ "
-                               "artist along with other fans at the end of the concert. You’ll receive \ "
-                               "a notification in case this happens.", () {
-                         Navigator.of(context).pop();
-                         Navigator.pushNamed(context, "/user/concertStream",
-                             arguments: Arguments(user, concert));
-                       }, () {
-                         Navigator.of(context).pop();
-                       }));
-             }, 350);
+              if (concert.status == 1)
+                 return BottomButton('GO TO STREAM', () {
+                   showDialog(
+                       context: context,
+                       builder: (_) => ConfirmationDialog(
+                               "Voice call with the artist",
+                               "By going to the stream, you’re enabled to win a voice call with the \ "
+                                   "artist along with other fans at the end of the concert. You’ll receive \ "
+                                   "a notification in case this happens.", () {
+                             Navigator.of(context).pop();
+                             Navigator.pushNamed(context, "/user/concertStream",
+                                 arguments: Arguments(user, concert));
+                           }, () {
+                             Navigator.of(context).pop();
+                           }));
+                 }, 350);
+              else
+                return BottomButton('RETURN TICKET', () {
+                   showDialog(
+                       context: context,
+                       builder: (_) => ConfirmationDialog(
+                               "Are you sure you want to return the ticket?,
+                               "By returning the ticket, the total cost of it will be automatically\ "
+                                   "refunded and you won’t have access to the concert stream.", () {
+                             //Navigator.of(context).pop();
+                             //Navigator.pushNamed(context, "/user/concertStream",
+                              //   arguments: Arguments(user, concert));
+                           }, () {
+                             Navigator.of(context).pop();
+                           }));
+                 }, 350);
            }
            return BottomButton('BUY TICKET', () {
              Navigator.pushNamed(context, "/payment",

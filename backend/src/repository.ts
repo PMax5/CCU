@@ -41,24 +41,17 @@ export class Repository {
         let user = this.users.get(username);
 
         if (user !== undefined) {
-            // user.name = userUpdated.name !== undefined ? userUpdated.name : user.name;
-            // user.imagePath = userUpdated.imagePath !== undefined ? userUpdated.imagePath: user.imagePath;
-            // user.description = userUpdated.description !== undefined ? userUpdated.description : user.description ;
-            // if (user.type == "FAN")
-            //      user.notifications = userUpdated.notifications !== undefined ? userUpdated.notifications : user.notifications;
-
-
-            let newUser = {
-                username : user.username,
-                name: userUpdated.name !== undefined ? userUpdated.name : user.name,
-                email: user.email,
-                password: user.password,
-                imagePath: userUpdated.imagePath !== undefined ? userUpdated.imagePath : user.imagePath,
-                description: userUpdated.description !== undefined ? userUpdated.description : user.description,
-                type: user.type
+            user.name = userUpdated.name !== undefined ? userUpdated.name : user.name;
+            user.imagePath = userUpdated.imagePath !== undefined ? userUpdated.imagePath: user.imagePath;
+            user.description = userUpdated.description !== undefined ? userUpdated.description : user.description ;
+            if (user.type == "FAN") {
+                user.notifications = userUpdated.notifications !== undefined ? userUpdated.notifications : user.notifications;
+                user.favorites = userUpdated.favorites !== undefined ? userUpdated.favorites : user.favorites;
             }
+                 
 
-            this.users.set(username, newUser);
+
+            this.users.set(username, user);
             
             return this.users.get(username);
         }
@@ -103,7 +96,7 @@ export class Repository {
                     if (concert !== undefined)
                         concerts.push(concert);
                 });
-
+                console.log("hello");
                 return concerts;
             }
         }

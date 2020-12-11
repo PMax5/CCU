@@ -83,7 +83,7 @@ class UserMainPageState extends State<UserMainPage> {
                 }
                 return Center(child: CircularProgressIndicator());   
             }
-          );
+          )
         );
   }
 
@@ -172,7 +172,7 @@ class UserMainPageState extends State<UserMainPage> {
             }
             return Center(child: CircularProgressIndicator()); 
           }
-        );    
+        )    
       ); 
   }
 
@@ -209,7 +209,7 @@ class UserMainPageState extends State<UserMainPage> {
   @override
   Widget build(BuildContext context) {
     User user = ModalRoute.of(context).settings.arguments;
-
+    print(user.username);
     return Scaffold(
         body: SingleChildScrollView(
             child: Column(children: <Widget>[

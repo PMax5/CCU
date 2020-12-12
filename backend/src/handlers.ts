@@ -127,6 +127,11 @@ export class Handlers {
         result ? res.sendStatus(200) : res.sendStatus(500);
     }
 
+    cancelConcert(req: Request, res: Response) {
+        let result = this.repository.cancelConcert(req.params.username, Number(req.params.id));
+        result ? res.sendStatus(200) : res.sendStatus(500);
+    }
+
     endConcert(req: Request, res: Response) {
         let result = this.repository.endConcert(req.params.username, Number(req.params.id));
         result ? res.sendStatus(200) : res.sendStatus(500);

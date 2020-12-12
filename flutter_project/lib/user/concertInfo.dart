@@ -186,14 +186,11 @@ import 'package:flutter/services.dart';
                                    "By cancelling this concert, you are deleting the concert info and if people \ "
                                        "already bought tickets for this concert, they will be automatically refunded.",
                                    () {
-                                /* cancelConcert(
-                                     user.username,
-                                     concert
-                                         .id);  FIXME this is endConcert not cancel
+                               cancelConcert(user.username,concert.id); 
                                  Navigator.of(context).pop();
                                  Navigator.pushNamed(context,
-                                     "/user/main",  TODO create cancel concert page
-                                     arguments: user);*/
+                                     "/user/main",  
+                                     arguments: user);
                                }, () {
                                  Navigator.of(context).pop();
                                }));
@@ -264,13 +261,13 @@ import 'package:flutter/services.dart';
      }
    }
 
-   // Future<void> cancelConcert(String username, int concertId) async {
-   //   try {
-   //     await concertService.endConcert(username, concertId);
-   //   } catch (e) {
-   //     print(e.toString());
-   //   }
-   // }
+    Future<void> cancelConcert(String username, int concertId) async {
+      try {
+        await concertService.cancelConcert(username, concertId);
+      } catch (e) {
+        print(e.toString());
+      }
+    }
 
    Future<User> getArtist(String username) async {
      try {

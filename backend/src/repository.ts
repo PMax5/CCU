@@ -142,6 +142,15 @@ export class Repository {
         return false;
     }
 
+    cancelConcert(username: string, id: number) {
+        let concert = this.concerts.get(id);
+        if (concert !== undefined && concert.username === username && concert.status === this.STATUS_PENDING) {
+            concert.status = this.STATUS_CANCELLED;
+            return true;
+        }
+        return false;
+    }
+
     endConcert(username: string, id: number) {
         let concert = this.concerts.get(id);
         if (concert !== undefined && concert.username === username && concert.status === this.STATUS_STARTED) {

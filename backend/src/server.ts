@@ -58,6 +58,10 @@ export class Server {
             this.handlers.endConcert(req, res);
         });
 
+        this.app.post("/artist/:username/concerts/:id/cancel", (req, res) => {
+            this.handlers.cancelConcert(req, res);
+        });
+
         this.app.get("/artist/:username/concerts", (req, res) => {
             this.handlers.getArtistsConcerts(req, res);
         });

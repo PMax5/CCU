@@ -18,6 +18,17 @@ class ConcertService extends Service {
 
   }
 
+  Future<void> updateConcert(Map<String, String> formValues, int concertId) async {
+    final http.Response response = await http.put(
+        this.apiURL + "/concerts/$concertId/update",
+        headers: this.headersPost,
+        body: jsonEncode(formValues)
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not update concert.");
+
+  }
   Future<List<Concert>> getAllConcerts() async {
     final http.Response response = await http.get(
       this.apiURL + "/concerts",

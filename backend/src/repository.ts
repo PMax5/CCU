@@ -135,6 +135,23 @@ export class Repository {
         
     }
 
+    updateConcert(concertId: number, concert: Concert) {
+        let concertResult = this.concerts.get(concertId);
+
+        if (concertResult !== undefined) {
+            concertResult.name = concert.name !== undefined ? concert.name : concertResult.name;
+            concertResult.date = concert.date !== undefined ? concert.date: concertResult.date;
+            concertResult.description = concert.description !== undefined ? concert.description : concertResult.description ;
+            concertResult.image = concert.image !== undefined ? concert.image : concertResult.image;
+                 
+            this.concerts.set(concertId, concertResult);
+            
+            return true;
+        }
+        return false;        
+    }
+
+
     startConcert(username: string, id: number) {
         let concert = this.concerts.get(id);
 

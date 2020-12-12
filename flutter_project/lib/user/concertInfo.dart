@@ -37,9 +37,9 @@ import 'package:flutter/services.dart';
                 
            }
          
-           else //FIXMEPLEASE I WANT TO GO TO THE CREATION WITH INITIAL VALUES PLEASE 
-             Navigator.pushNamed(
-                 context, "/login");
+           else
+             Navigator.pushNamed(context, "/user/concertCreate",
+                              arguments: ConcertArguments(Arguments(user,concert),true));
          },
        ),
      );
@@ -48,7 +48,7 @@ import 'package:flutter/services.dart';
    Widget ConcertInfoMenu(BuildContext context, Arguments arguments) {
     Concert concert = arguments.concert;
     User user = arguments.logged_in;
-
+    
      return MainMenu(
          context,
          user,

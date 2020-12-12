@@ -112,7 +112,7 @@ class UserMainPageState extends State<UserMainPage> {
                   floatingActionButton: FloatingActionButton.extended(
                     onPressed: () {
                       Navigator.pushNamed(context, "/user/concertCreate",
-                          arguments: user);
+                          arguments: ConcertArguments(Arguments(user,null),false));
                     },
                     label: Text("CREATE"),
                     icon: Icon(Icons.add),
@@ -164,7 +164,7 @@ class UserMainPageState extends State<UserMainPage> {
                       floatingActionButton: FloatingActionButton.extended(
                         onPressed: () {
                           Navigator.pushNamed(context, "/user/concertCreate",
-                              arguments: user);
+                              arguments: ConcertArguments(Arguments(user,null),false));
                         },
                         label: Text("CREATE"),
                         icon: Icon(Icons.add),

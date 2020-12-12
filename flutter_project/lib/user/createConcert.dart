@@ -1,11 +1,17 @@
 
 
+import 'package:dash_chat/dash_chat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/user.dart';
+import '../models/concert.dart';
 import 'package:flutter_complete_guide/services/ConcertService.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
+import 'package:intl/intl.dart';
+
+
+
 
 class CreateConcert extends StatefulWidget {
   CreateConcert({Key key}) : super(key: key);
@@ -19,11 +25,11 @@ class CreateConcertState extends State<CreateConcert> {
   ConcertService concertService = new ConcertService();
   final createConcertFormKey = GlobalKey<FormState>();
   Map<String, String> formValues = new Map<String, String>();
-
-  DateTime selectedDateTime = DateTime.now();
+  bool edit;
+  Concert concert;
+  DateTime selectedDateTime;
 
   Widget buildImagePreview() {
-    print(formValues["image"]);
     return Center(
       child: Padding(
           padding: EdgeInsets.only(bottom: 10),
@@ -46,8 +52,8 @@ class CreateConcertState extends State<CreateConcert> {
           onPressed: () {
             //FIXME: I WANT PICKERIMAGE PLEASE
             setState(() {
-                formValues["image"] =
-                    'https://rentalandstaging.net/wp-content/uploads/2015/11/rsn-stage-lights.jpg';
+                formValues["image"] = edit ? "https://web.ist.utl.pt/~ist189407/assets/images/james_stream.png" :
+                  "https://web.ist.utl.pt/~ist189407/assets/images/james.png";
               
             });
           },
@@ -77,6 +83,7 @@ class CreateConcertState extends State<CreateConcert> {
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
                         hintText: "Concert Name"),
+                    initialValue: formValues["name"],
                     validator: (value) {
                       if (value.isEmpty)
                         return "Enter a name for your concert";
@@ -102,24 +109,19 @@ class CreateConcertState extends State<CreateConcert> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
           onPressed: () {
-            selectDate(context);
-            String year = "${selectedDateTime.year.toString()}";
-            String month =
-                "${selectedDateTime.month.toString().padLeft(2, '0')}";
-            String day = "${selectedDateTime.day.toString().padLeft(2, '0')}";
-            String hours = "${selectedDateTime.hour.toString()}";
-            String minutes = "${selectedDateTime.minute.toString()}";
-            String date =
-                day  + "-" + month + "-" + year + " " + hours + ":" + minutes;
-            print(date);
-            formValues["date"] = date;
+            selectDate(context).then((result) {
+                  final DateFormat formatter = DateFormat(); 
+                  final String date = formatter.format(selectedDateTime);
+                  formValues["date"] = date;
+            });
+           
           },
         ),
       ),
     );
   }
 
-  Future<Null> selectDate(BuildContext context) async {
+  Future<void> selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: selectedDateTime,
@@ -141,18 +143,27 @@ class CreateConcertState extends State<CreateConcert> {
     );
     if (picked != null && picked != selectedDateTime)
       setState(() {
-        selectedDateTime = picked;
+        
+        selectedDateTime =  DateTime(
+            picked.year,
+            picked.month,
+            picked.day,
+            selectedDateTime.hour,
+            selectedDateTime.minute);
       });
   }
 
   Widget buildHourInputField(BuildContext context) {
+    String hour =  selectedDateTime.hour <= 9 ? "0${selectedDateTime.hour.toString()}" : "${selectedDateTime.hour.toString()}";
+    String minute = selectedDateTime.minute <= 9 ? "0${selectedDateTime.minute.toString()}":
+            "${selectedDateTime.minute.toString()}";
     return Center(
       child: Container(
         width: 170,
         height: projectSettings.textInputHeight,
         child: OutlineButton(
-          child: Text(
-            "${selectedDateTime.hour.toString()}:${selectedDateTime.minute.toString()}",
+          child: Text( hour
+          + ":" + minute ,
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           ),
           color: Colors.white,
@@ -160,24 +171,19 @@ class CreateConcertState extends State<CreateConcert> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
           onPressed: () {
-            selectTime(context);
-            String year = "${selectedDateTime.year.toString()}";
-            String month =
-                "${selectedDateTime.month.toString().padLeft(2, '0')}";
-            String day = "${selectedDateTime.day.toString().padLeft(2, '0')}";
-            String hours = "${selectedDateTime.hour.toString()}";
-            String minutes = "${selectedDateTime.minute.toString()}";
-            String date =
-                year + "-" + month + "-" + day + " " + hours + ":" + minutes;
-            print(date);
-            formValues["date"] = date;
+            selectTime(context).then((result){
+                final DateFormat formatter = DateFormat(); 
+                final String date = formatter.format(selectedDateTime);
+                formValues["date"] = date;
+            });
+        
           },
         ),
       ),
     );
   }
 
-  Future<Null> selectTime(BuildContext context) async {
+  Future<void> selectTime(BuildContext context) async {
     final TimeOfDay picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(selectedDateTime),
@@ -231,6 +237,7 @@ class CreateConcertState extends State<CreateConcert> {
                         errorBorder: inputBorder(Colors.red),
                         focusedErrorBorder: inputBorder(Colors.red),
                         hintText: "Description"),
+                    initialValue: formValues["description"],
                     validator: (value) {
                       if (value.isEmpty)
                         return "Enter a description for your concert";
@@ -262,14 +269,14 @@ class CreateConcertState extends State<CreateConcert> {
     );
   }
 
-  Widget buildCreateButton(
+  Widget buildSaveButton(
       BuildContext context, GlobalKey<FormState> key, User user) {
     return Center(
         child: Container(
             width: 170,
             height: projectSettings.textInputHeight,
             child: ElevatedButton(
-                child: Text("CREATE",
+                child: Text("SAVE",
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
@@ -277,21 +284,40 @@ class CreateConcertState extends State<CreateConcert> {
                 ),
                 onPressed: () {
                   if (key.currentState.validate()) {
-                    createConcert(user).then((concert) {
-                      if (concert) {
-                        Navigator.popUntil(context, ModalRoute.withName("/"));
-                        Navigator.pushNamed(context, "/user/main",
-                            arguments: user);
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (_) => TipDialog("Notice",
-                                    "Something went wrong, check your inserted information.",
-                                    () {
-                                  Navigator.of(context).pop();
-                                }));
-                      }
-                    });
+                    if(!edit){
+                      createConcert(user).then((concert) {
+                        if (concert) {
+                          Navigator.popUntil(context, ModalRoute.withName("/"));
+                          Navigator.pushNamed(context, "/user/main",
+                              arguments: user);
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (_) => TipDialog("Notice",
+                                      "Something went wrong, check your inserted information.",
+                                      () {
+                                    Navigator.of(context).pop();
+                                  }));
+                        }
+                      });
+                    }
+                    else{
+                      updateConcert(concert.id).then((concert) {
+                        if (concert) {
+                          Navigator.popUntil(context, ModalRoute.withName("/"));
+                          Navigator.pushNamed(context, "/user/main",
+                              arguments: user);
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (_) => TipDialog("Notice",
+                                      "Something went wrong, check your inserted information.",
+                                      () {
+                                    Navigator.of(context).pop();
+                                  }));
+                        }
+                      });
+                    }
                   }
                 })));
   }
@@ -319,7 +345,7 @@ class CreateConcertState extends State<CreateConcert> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   buildCancelButton(context, user),
-                  buildCreateButton(context, createConcertFormKey, user)
+                  buildSaveButton(context, createConcertFormKey, user)
                 ],
               ),
             ],
@@ -330,6 +356,16 @@ class CreateConcertState extends State<CreateConcert> {
   Future<bool> createConcert(User user) async {
     try {
        await concertService.createConcert(formValues, user.username);
+       return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+   Future<bool> updateConcert(int concertId) async {
+    try {
+       await concertService.updateConcert(formValues, concertId);
        return true;
     } catch (e) {
       print(e.toString());
@@ -358,18 +394,26 @@ class CreateConcertState extends State<CreateConcert> {
 
   @override
   Widget build(BuildContext context) {
-    User user = ModalRoute.of(context).settings.arguments;
+    ConcertArguments concertArguments = ModalRoute.of(context).settings.arguments;
+    edit = concertArguments.edit;
+    User user = concertArguments.arguments.logged_in;
+   
+    if(edit)
+    {
+      concert = concertArguments.arguments.concert;
+    }
     if (formValues.length == 0)
     {
       formValues["username"] = user.username;
-      formValues["image"] = "http://web.ist.utl.pt/ist189407/assets/images/concert_placeholder.png";
-      String year = "${selectedDateTime.year.toString()}";
-      String month ="${selectedDateTime.month.toString().padLeft(2, '0')}";
-      String day = "${selectedDateTime.day.toString().padLeft(2, '0')}";
-      String hours = "${selectedDateTime.hour.toString()}";
-      String minutes = "${selectedDateTime.minute.toString()}";
-      String date =  day  + "-" + month + "-" + year + " " + hours + ":" + minutes;
+      formValues["image"] = edit ? concert.image : "http://web.ist.utl.pt/ist189407/assets/images/concert_placeholder.png";
+      final DateFormat formatter = DateFormat(); 
+      selectedDateTime = edit ? formatter.parse(concert.date) : DateTime.now();
+      final String date = formatter.format(selectedDateTime);
+      print(date);
       formValues["date"] = date;
+      formValues["name"] = edit ? concert.name : null;
+      formValues["description"] = edit ? concert.description : null;
+
       
     }
 

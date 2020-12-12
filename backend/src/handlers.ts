@@ -43,7 +43,7 @@ export class Handlers {
                 + "This unique date is part of the European tour scheduled for autumn, which will feature \"I love you\", \ "
                 + "the first James Smith’s original album in six years.",
             image: "https://rentalandstaging.net/wp-content/uploads/2015/11/rsn-stage-lights.jpg",
-            date: "10th November 2020 9 p.m"
+            date:  "December 18, 2020 12:00:00 AM"
         });
 
         console.log("Created default users ...");
@@ -117,6 +117,11 @@ export class Handlers {
 
     createConcert(req: Request, res: Response) {
         let result = this.repository.createConcert(req.params.username, req.body);
+        result ? res.sendStatus(200) : res.sendStatus(500);
+    }
+
+    updateConcert(req: Request, res: Response) {
+        let result = this.repository.updateConcert(Number(req.params.id), req.body);
         result ? res.sendStatus(200) : res.sendStatus(500);
     }
 

@@ -83,7 +83,7 @@ class ConcertStreamState extends State<ConcertStream> {
 
     return Scaffold(
         body: Stack(children: <Widget>[
-      Image.network(concert.image,
+      Image.network('https://rentalandstaging.net/wp-content/uploads/2015/11/rsn-stage-lights.jpg',
           width: double.infinity, height: double.infinity, fit: BoxFit.cover),
       Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         user.type == "FAN" ? Align(

@@ -250,3 +250,11 @@ class ProfileArguments {
   final User artist;
   ProfileArguments(this.fan, this.edit, this.artist);
 }
+
+
+class ConcertArguments {
+  final Arguments arguments;
+  final bool edit;
+  
+  ConcertArguments(this.arguments, this.edit);
+}

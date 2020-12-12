@@ -56,6 +56,19 @@ export class Repository {
         return undefined;
     }
 
+    startCall(id: number) {
+        let voiceCall = this.voiceChannels.get(id);
+
+        if (voiceCall !== undefined) {
+            voiceCall.status = this.STATUS_STARTED;
+            this.voiceChannels.set(id,voiceCall);
+            
+            return true;
+        }
+
+        return false;
+    }
+
     followArtist(fanUsername: string, artistUsername: string)
     {
         let user = this.users.get(fanUsername);
@@ -202,16 +215,18 @@ export class Repository {
 
     endConcert(username: string, id: number) {
         let concert = this.concerts.get(id);
-        if (concert !== undefined && concert.username === username && concert.status === this.STATUS_STARTED) {
+        if (concert !== undefined && concert.username === username && concert.status === this.STATUS_STARTED && concert.participants !== undefined) {
             let participantsVoice = new Array<String>();
+
             if(concert.participants.length > 3)
             {
                 let allParticipants = concert.participants;
                 while(participantsVoice.length != 3)
                 {
                     let participant = allParticipants[Math.floor(Math.random() * allParticipants.length)];
-                    if (!participantsVoice.contains(participant))
+                    if (participantsVoice.indexOf(participant) === -1)
                         participantsVoice.push(participant);
+                    
                 }
             }
             else

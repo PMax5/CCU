@@ -90,6 +90,12 @@ export class Handlers {
         result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
     }
 
+    startCall(req: Request, res: Response) {
+        let result = this.repository.startCall(Number(req.params.id));
+
+        result ? res.sendStatus(200) : res.sendStatus(500);
+    }
+
     follow (req: Request, res: Response) {
         let result = this.repository.followArtist(req.params.username,  req.params.artistUsername);
 

@@ -83,7 +83,7 @@ class VoiceChannel {
   String name;
   List<String> participants;
   int status;
-  int concertId
+  int concertId;
   VoiceChannel(String name, List<String> participants, int status, int concertId) {
     this.name = name;
     this.participants = participants;

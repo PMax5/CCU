@@ -81,8 +81,8 @@ class UserService extends Service {
       throw new Exception("Could not get textChannels with username=${username}.");
 
     var channelsJson = json.decode(response.body) as List;
-    List<TextChannel> channels = channelsJson.map((channelJson) => TextChannel.fromJson(channelJson)).toList();
-    return channels;
+    // List<TextChannel> channels = channelsJson.map((channelJson) => TextChannel.fromJson(channelJson)).toList();
+    return [];
   }
 
   Future<List<VoiceChannel>> getVoiceChannels(String username) async {
@@ -95,10 +95,10 @@ class UserService extends Service {
       throw new Exception("Could not get voiceChannels with username=${username}.");
 
     var voiceChannelsJson = json.decode(response.body) as List;
-    List<VoiceChannel> voiceChannels = voiceChannelsJson.map((voiceChannelJson) => TextChannel.fromJson(voiceChannelJson)).toList();
+    List<VoiceChannel> voiceChannels = voiceChannelsJson.map((voiceChannelJson) => VoiceChannel.fromJson(voiceChannelJson)).toList();
     return voiceChannels;
   }
-  Future<void> startCall(int concertId) async {
+  Future<void> startCall(int id) async {
      final http.Response response = await http.put(
         this.apiURL + "/concert/${id}/startCall",
         headers: this.headersPost
@@ -107,7 +107,7 @@ class UserService extends Service {
     if (response.statusCode != 200)
       throw new Exception("Could not start voiceCall with concertId=${id}.");
   }
-  Future<void> endCall (int concertId) async {
+  Future<void> endCall (int id) async {
      final http.Response response = await http.put(
         this.apiURL + "/concert/${id}/endCall",
         headers: this.headersPost

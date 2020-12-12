@@ -20,7 +20,7 @@ export interface TextChannel {
 export interface VoiceChannel {
     name ?: string,
     status ?: number,
-    participants ?: string[],
+    participants ?: Array<String>,
     concertId ?: number
 }
 

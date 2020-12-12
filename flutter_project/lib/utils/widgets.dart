@@ -129,7 +129,7 @@ Future<List<VoiceChannel>> getVoiceChannels(String username,String type) async {
     List<VoiceChannel> voiceChannels = await userService.getVoiceChannels(username);
     if(type == "FAN")
       return voiceChannels.where((c) => c.status == 1).toList();
-    return voiceChannels.where((c) => c.status == 1 or c.status == 0).toList();
+    return voiceChannels.where((c) => c.status == 1 || c.status == 0).toList();
   } catch (e) {
     print(e.toString());
     return null;
@@ -178,7 +178,7 @@ Widget ChatRooms(BuildContext context, User user) {
                       onTap: () {
                         if (user.type == "FAN") {
                           Navigator.pushNamed(context, "/user/voicecall",
-                              arguments: user);
+                              arguments: VoiceArguments(user, voiceChannels[index]));
                         } else {
                           showDialog(
                               context: context,
@@ -186,10 +186,10 @@ Widget ChatRooms(BuildContext context, User user) {
                                       "Are you sure you want to start this voice call?",
                                       "You will start a voice call with your fans.",
                                       () {
-                                    startCall(voiceChannels[index].concertId).then((){
+                                    startCall(voiceChannels[index].concertId).then((result){
                                       Navigator.of(context).pop();
                                       Navigator.pushNamed(context, "/user/voicecall",
-                                        arguments: user);
+                                        arguments: VoiceArguments(user, voiceChannels[index]));
                                     });
                                    
                                   }, () {
@@ -222,18 +222,16 @@ Widget ChatRooms(BuildContext context, User user) {
             ]);
           }
           else
+          ;
           //FIXME VOICE CHANNELS DEU ERRO POR ISSO MENSAGEM DE ERRO SFF
         });
       }
       else
-      //FIXME TEXTCHANNELS DEU ERRO POR ISSO MENSAGEM DE ERRO SFF
+      ;//FIXME TEXTCHANNELS DEU ERRO POR ISSO MENSAGEM DE ERRO SFF
   });
 
 }
 
-Widget ChatRooms(BuildContext context, User user) {
-    return Container();
-  }
 
   Widget ExtraMenu(BuildContext context, User user) {
     return ListView(children: [
@@ -364,4 +362,18 @@ class ConcertArguments {
   final bool edit;
   
   ConcertArguments(this.arguments, this.edit);
+}
+
+class VoiceArguments {
+  final User user;
+  final VoiceChannel infoVoice;
+
+  VoiceArguments(this.user, this.infoVoice);
+}
+
+class ChannelArguments {
+  final User user;
+  final TextChannel infoText;
+
+  ChannelArguments(this.user, this.infoText);
 }

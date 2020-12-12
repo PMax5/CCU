@@ -134,7 +134,7 @@ export class Repository {
     startConcert(username: string, id: number) {
         let concert = this.concerts.get(id);
 
-        if (concert !== undefined && concert.username === username && concert.status = this.STATUS_PENDING) {
+        if (concert !== undefined && concert.username === username && concert.status === this.STATUS_PENDING) {
             concert.status = this.STATUS_STARTED;
             return true;
         }
@@ -165,17 +165,6 @@ export class Repository {
 
     getAllConcerts() {
         return this.concerts;
-    }
-
-    startConcert(username: string, id: number) {
-        let concert = this.concerts.get(id);
-
-        if (concert !== undefined && concert.username === username && concert.status == this.STATUS_PENDING) {
-            concert.status = this.STATUS_STARTED;
-            return true;
-        }
-
-        return false;
     }
 
 }

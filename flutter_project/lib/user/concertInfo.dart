@@ -46,8 +46,9 @@ import 'package:flutter/services.dart';
    }
 
    Widget ConcertInfoMenu(BuildContext context, Arguments arguments) {
-     Concert concert = arguments.concert;
-     User user = arguments.logged_in;
+    Concert concert = arguments.concert;
+    User user = arguments.logged_in;
+
      return MainMenu(
          context,
          user,

@@ -1,9 +1,8 @@
-import 'dart:math';
+
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/user.dart';
-import '../models/concert.dart';
 import 'package:flutter_complete_guide/services/ConcertService.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import '../settings.dart';
@@ -24,14 +23,12 @@ class CreateConcertState extends State<CreateConcert> {
   DateTime selectedDateTime = DateTime.now();
 
   Widget buildImagePreview() {
+    print(formValues["image"]);
     return Center(
       child: Padding(
           padding: EdgeInsets.only(bottom: 10),
-          child: Image(
-            image: AssetImage(formValues["image"]),
-            fit: BoxFit.cover,
-          )),
-    );
+          child: Image.network(formValues["image"], fit: BoxFit.fill),
+    ));
   }
 
   Widget buildEditImageButton() {
@@ -69,7 +66,7 @@ class CreateConcertState extends State<CreateConcert> {
 
     return Center(
         child: Padding(
-            padding: EdgeInsets.only(bottom: 1),
+            padding: EdgeInsets.only(bottom: 1, top:20),
             child: Container(
                 width: projectSettings.textInputWidth + 40,
                 height: projectSettings.textInputHeight + 25,
@@ -258,7 +255,7 @@ class CreateConcertState extends State<CreateConcert> {
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
           onPressed: () {
-            Navigator.pop();
+            Navigator.pop(context);
           },
         ),
       ),
@@ -306,7 +303,7 @@ class CreateConcertState extends State<CreateConcert> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               buildImagePreview(),
-              buildEditImageButton,
+              buildEditImageButton(),
               buildNameInputField(),
               Padding(
                 padding: EdgeInsets.only(bottom: 15),
@@ -362,10 +359,18 @@ class CreateConcertState extends State<CreateConcert> {
   @override
   Widget build(BuildContext context) {
     User user = ModalRoute.of(context).settings.arguments;
-    if (formValues == null)
+    if (formValues.length == 0)
     {
       formValues["username"] = user.username;
       formValues["image"] = "http://web.ist.utl.pt/ist189407/assets/images/concert_placeholder.png";
+      String year = "${selectedDateTime.year.toString()}";
+      String month ="${selectedDateTime.month.toString().padLeft(2, '0')}";
+      String day = "${selectedDateTime.day.toString().padLeft(2, '0')}";
+      String hours = "${selectedDateTime.hour.toString()}";
+      String minutes = "${selectedDateTime.minute.toString()}";
+      String date =  day  + "-" + month + "-" + year + " " + hours + ":" + minutes;
+      formValues["date"] = date;
+      
     }
 
     return Scaffold(

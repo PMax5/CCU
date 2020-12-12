@@ -11,7 +11,7 @@ class Concert {
   // TextChannel textChannel;
   // VoiceChannel voiceChannel;
 
-  Concert(int id, String name, String description, String date, String link, String image, String username, int status) {
+  Concert(int id, String name, String description, String date, String image, String username, int status) {
     this.id = id;
     this.name = name;
     this.description = description;

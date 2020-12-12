@@ -41,3 +41,63 @@ class User {
     );
   }
 }
+
+class TextChannel {
+  String name;
+  List<Message> messages;
+  int concertId;
+  TextChannel(String name, int concertId) {
+    this.name = name;
+    this.concertId = concertId;
+  }
+
+  void loadTextMessages(List<Message> messages) {
+    this.messages = messages;
+  }
+}
+
+class Message {
+  String message;
+  User author;
+
+  Message(String message, User author) {
+    this.message = message;
+    this.author = author;
+  }
+
+  factory Message.fromJson(Map<String, dynamic> json) {
+    return Message(
+        json["message"],
+        User.fromJson(json["author"])
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'message': this.message,
+    'author': this.author.toJson()
+  };
+
+}
+
+class VoiceChannel {
+  String name;
+  List<String> participants;
+  int status;
+  int concertId
+  VoiceChannel(String name, List<String> participants, int status, int concertId) {
+    this.name = name;
+    this.participants = participants;
+    this.status = status;
+    this.concertId = concertId;
+  }
+
+  factory VoiceChannel.fromJson(Map<String, dynamic> json) {
+    return VoiceChannel(
+      json["name"],
+      json["participants"],
+      json["status"],
+      json["concertId"]
+    );
+  }
+}
+

@@ -147,6 +147,22 @@ export class Handlers {
         result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
     }
 
+    getTextChannels(req: Request, res: Response) {
+        let channels = this.repository.getTextChannels(req.params.username);
+        if (channels !== undefined)
+            return res.json(channels);
+        else
+            return res.json({});
+    }
+
+    getVoiceChannels(req: Request, res: Response) {
+        let voiceChannels = this.repository.getVoiceChannels(req.params.username);
+        if (voiceChannels !== undefined)
+            return res.json(voiceChannels);
+        else
+            return res.json({});
+    }
+
     getArtistsConcerts(req: Request, res: Response) {
         let concerts = this.repository.getArtistConcerts(req.params.username);
         if (concerts !== undefined)

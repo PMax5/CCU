@@ -11,13 +11,15 @@ export interface Concert {
     status ?: number
 }
 
-export interface Channel {
+export interface TextChannel {
     name ?: string,
     messages ?: Array<Message>,
+    concertId ?: number
 }
 
 export interface VoiceChannel {
     name ?: string,
+    status ?: number,
     participants ?: string[],
     concertId ?: number
 }
@@ -25,11 +27,4 @@ export interface VoiceChannel {
 export interface Message {
     author : User,
     message : string
-}
-
-export interface GeneralChannel {
-    name ?: string,
-    concertId ?: number,
-    voice ?: boolean,
-    imagePath ?: string
 }

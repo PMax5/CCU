@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_complete_guide/services/UserService.dart';
 import '../models/user.dart';
 import 'package:flutter_complete_guide/settings.dart';
 import 'package:flutter_complete_guide/models/user.dart';
 import '../models/concert.dart';
 
 Settings projectSettings = new Settings();
-List<String> channelNames = List<String>();
-
+UserService userService = new UserService();
 Widget CenteredHeaderLogo() {
   return Center(child: projectSettings.logo);
 }
@@ -122,6 +122,113 @@ Widget BackButtonLogoHeader(BuildContext context) {
                 padding: EdgeInsets.only(top: 40),
                 child: projectSettings.logo)))
   ]);
+}
+
+Future<List<VoiceChannel>> getVoiceChannels(String username,String type) async {
+  try {
+    List<VoiceChannel> voiceChannels = await userService.getVoiceChannels(username);
+    if(type == "FAN")
+      return voiceChannels.where((c) => c.status == 1).toList();
+    return voiceChannels.where((c) => c.status == 1 or c.status == 0).toList();
+  } catch (e) {
+    print(e.toString());
+    return null;
+  }
+}
+
+Future<List<TextChannel>> getTextChannels(String username) async {
+  try {
+    return await userService.getTextChannels(username);
+  } catch (e) {
+    print(e.toString());
+    return null;
+  }
+}
+
+Future<void> startCall(int concertId) async {
+  try{
+    await userService.startCall(concertId);
+  }
+  catch(e){
+    print(e.toString());
+  }
+}
+
+Widget ChatRooms(BuildContext context, User user) {
+  getTextChannels(user.username).then((textChannels){
+      if(textChannels != null)
+      {
+        getVoiceChannels(user.username,user.type).then((voiceChannels) {
+          if(voiceChannels != null)
+          {    
+            return ListView(children: [
+              ListTile(
+                title: Text("Voice Calls", style: TextStyle(fontSize: 20)),
+              ),
+              Image.network(
+                  'http://web.ist.utl.pt/ist189407/assets/images/divider.png'),
+              ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: voiceChannels.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                      title: Text(voiceChannels[index].name),
+                      leading: Icon(Icons.volume_up),
+                      onTap: () {
+                        if (user.type == "FAN") {
+                          Navigator.pushNamed(context, "/user/voicecall",
+                              arguments: user);
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (_) => ConfirmationDialog(
+                                      "Are you sure you want to start this voice call?",
+                                      "You will start a voice call with your fans.",
+                                      () {
+                                    startCall(voiceChannels[index].concertId).then((){
+                                      Navigator.of(context).pop();
+                                      Navigator.pushNamed(context, "/user/voicecall",
+                                        arguments: user);
+                                    });
+                                   
+                                  }, () {
+                                    Navigator.of(context).pop();
+                                  }));
+                        }
+                      });
+                },
+              ),
+              ListTile(
+                title: Text("Chat Rooms", style: TextStyle(fontSize: 20)),
+              ),
+              Image.network(
+                  'http://web.ist.utl.pt/ist189407/assets/images/divider.png'),
+              ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: textChannels.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(textChannels[index].name),
+                    leading: Icon(Icons.sms),
+                    onTap: () {
+                      Navigator.pushNamed(context, "/user/userchat",
+                          arguments: ChannelArguments(user, textChannels[index]));
+                    },
+                  );
+                },
+              ),
+            ]);
+          }
+          else
+          //FIXME VOICE CHANNELS DEU ERRO POR ISSO MENSAGEM DE ERRO SFF
+        });
+      }
+      else
+      //FIXME TEXTCHANNELS DEU ERRO POR ISSO MENSAGEM DE ERRO SFF
+  });
+
 }
 
 Widget ChatRooms(BuildContext context, User user) {

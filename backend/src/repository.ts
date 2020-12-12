@@ -1,12 +1,12 @@
 import { User } from './models/authentication';
-import { Channel, Concert, Message, VoiceChannel, GeneralChannel } from "./models/artist";
+import { TextChannel, Concert, Message, VoiceChannel } from "./models/artist";
 
 export class Repository {
 
     private users = new Map();
     private concerts = new Map<number, Concert>();
-    private channels = new Map<number, Channel>();
-    private voiceChannels = new Map<string, VoiceChannel>();
+    private channels = new Map<number, TextChannel>();
+    private voiceChannels = new Map<number, VoiceChannel>();
 
     private STATUS_PENDING = 0;
     private STATUS_STARTED = 1;
@@ -125,7 +125,8 @@ export class Repository {
 
             let channel = {
                 messages: new Array<Message>(),
-                name: concert.name
+                name: concert.name,
+                concertId: concert.id
             }
 
             this.channels.set(concertID, channel);
@@ -171,11 +172,60 @@ export class Repository {
         }
         return false;
     }
+    getTextChannels(username: string){
+        let user = this.users.get(username);
+        let channels = new Array<TextChannel>();
+        if(user !== undefined && user.concerts !== undefined)
+        {
+            user.concerts.forEach((value: number) => {
+                let channel = this.channels.get(value);
+                if (channel !== undefined)
+                    channels.push(channel);
+            });    
+        }
+        return channels;
+    }
+
+    getVoiceChannels(username: string){
+        let user = this.users.get(username);
+        let channels = new Array<VoiceChannel>();
+        if(user !== undefined && user.concerts !== undefined)
+        {
+            user.concerts.forEach((value: number) => {
+                let voiceChannel = this.voiceChannels.get(value);
+                if (voiceChannel !== undefined)
+                    channels.push(voiceChannel);
+            });    
+        }
+        return channels;
+    }
 
     endConcert(username: string, id: number) {
         let concert = this.concerts.get(id);
         if (concert !== undefined && concert.username === username && concert.status === this.STATUS_STARTED) {
+            let participantsVoice = new Array<String>();
+            if(concert.participants.length > 3)
+            {
+                let allParticipants = concert.participants;
+                while(participantsVoice.length != 3)
+                {
+                    let participant = allParticipants[Math.floor(Math.random() * allParticipants.length)];
+                    if (!participantsVoice.contains(participant))
+                        participantsVoice.push(participant);
+                }
+            }
+            else
+                participantsVoice = concert.participants;
             concert.status = this.STATUS_ENDED;
+            participantsVoice.push(username);
+            let voiceChannel = {
+                status: this.STATUS_PENDING,
+                participants: participantsVoice,
+                name: concert.name,
+                concertId: id
+            }
+            this.voiceChannels.set(id, voiceChannel);
+
             return true;
         }
         return false;

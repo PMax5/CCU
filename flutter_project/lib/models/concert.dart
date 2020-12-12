@@ -1,5 +1,3 @@
-import 'package:flutter_complete_guide/models/user.dart';
-
 class Concert {
   int id;
   String name;
@@ -8,8 +6,6 @@ class Concert {
   String image;
   String username;
   int status;
-  // TextChannel textChannel;
-  // VoiceChannel voiceChannel;
 
   Concert(int id, String name, String description, String date, String image, String username, int status) {
     this.id = id;
@@ -19,14 +15,9 @@ class Concert {
     this.image = image;
     this.status = status;
     this.username = username;
-    // this.textChannel = new TextChannel(this.name + " Channel");
   }
 
-  // setVoiceChannel(VoiceChannel channel) {
-  //   this.voiceChannel = channel;
-  // }
-
-  Map<String, dynamic> toJson() => {
+   Map<String, dynamic> toJson() => {
     'name': this.name,
     'description': this.description,
     'date': this.date,

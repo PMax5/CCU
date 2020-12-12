@@ -66,6 +66,15 @@ export class Server {
             this.handlers.cancelConcert(req, res);
         });
 
+        this.app.get("/user/:username/channels", (req, res) => {
+            this.handlers.getTextChannels(req, res);
+        });
+
+        this.app.get("/user/:username/voiceChannels", (req, res) => {
+            this.handlers.getVoiceChannels(req, res);
+        });
+
+
         this.app.get("/artist/:username/concerts", (req, res) => {
             this.handlers.getArtistsConcerts(req, res);
         });

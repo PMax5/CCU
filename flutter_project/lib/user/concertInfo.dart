@@ -5,7 +5,6 @@
  import 'package:flutter_complete_guide/utils/widgets.dart';
  import 'package:flutter_complete_guide/services/ConcertService.dart';
  import 'package:flutter_complete_guide/services/UserService.dart';
- import 'package:tuple/tuple.dart';
 
  class ConcertInfoPage extends StatefulWidget {
    ConcertInfoPage({Key key}) : super(key: key);
@@ -17,8 +16,6 @@
  class ConcertInfoPageState extends State<ConcertInfoPage> {
    ConcertService concertService = new ConcertService();
    UserService userService = new UserService();
-   User userUpdated;
-   Concert concertUpdated;
    Widget ExtraButton(User user, Concert concert) {
      return Container(
        width: (user.type == 'FAN' ? 140 : 100),
@@ -48,17 +45,8 @@
    }
 
    Widget ConcertInfoMenu(BuildContext context, Arguments arguments) {
-     Concert concert;
-     User user;
-     if(concertUpdated == null)
-        concert = arguments.concert;
-     else
-        concert = concertUpdated;
-     if(userUpdated == null)
-        user = arguments.logged_in;
-     else
-        user = userUpdated;
-
+     Concert concert = arguments.concert;
+     User user = arguments.logged_in;
      return MainMenu(
          context,
          user,
@@ -143,13 +131,12 @@
                                "Are you sure you want to return the ticket?",
                                "By returning the ticket, the total cost of it will be automatically\ "
                                    "refunded and you won’t have access to the concert stream.", () {
-                             Navigator.of(context).pop();
-                             returnTicket(user.username,concert.id).then((){ 
-                                   if (userResult != null)
-                                     setState(() {
-                                        userUpdated = userResult;
-                                        concertUpdated = concertResult;
-                                     }
+                             returnTicket(user.username,concert.id).then((result){ 
+                                   if (result != null)
+                                   {
+                                     Navigator.popUntil(context, ModalRoute.withName("/"));
+                                     Navigator.pushNamed(context, "/user/main", arguments:result);
+                                   }
                                   else
                                     showDialog(
                                         context: context,
@@ -159,7 +146,7 @@
                                                     Navigator.of(context).pop();
                                                   })
                                     );
-                             );}
+                             }
                              );
                            }, () {
                              Navigator.of(context).pop();
@@ -213,7 +200,7 @@
                    ),
                  ),
                ),
-             /*  PinkButton('START STREAM', () {
+              PinkButton('START STREAM', () {
                  showDialog(
                      context: context,
                      builder: (_) => ConfirmationDialog(
@@ -228,7 +215,7 @@
                          }, () {
                            Navigator.of(context).pop();
                          }));
-               }, 165),*/
+               }, 165),
              ])));
    }
 
@@ -268,13 +255,13 @@
      }
    }
 
-   // Future<void> startConcert(String username, int concertId) async {
-   //   try {
-   //     await concertService.startConcert(username, concertId);
-   //   } catch (e) {
-   //     print(e.toString());
-   //   }
-   // }
+   Future<void> startConcert(String username, int concertId) async {
+     try {
+       await concertService.startConcert(username, concertId);
+     } catch (e) {
+       print(e.toString());
+     }
+   }
 
    // Future<void> cancelConcert(String username, int concertId) async {
    //   try {
@@ -293,9 +280,9 @@
      }
    }
 
-   Future<Tuple2<User,Concert>> returnTicket(String username, int concertId) async {
+   Future<User> returnTicket(String username, int concertId) async {
      try {
-       return await concertService.returnTicket(username,id);
+       return await concertService.returnTicket(username,concertId);
      } catch (e) {
        print(e.toString());
        return null;

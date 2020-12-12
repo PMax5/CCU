@@ -75,14 +75,13 @@ export class Repository {
         let concert = this.concerts.get(id);
         let user = this.users.get(username);
 
-        if (concert !== undefined && user !== undefined concert.participantes !== undefined && concert.status == STATUS_PENDING) {
+        if (concert !== undefined && user !== undefined && concert.participants !== undefined && concert.status == 0) {
             user.concerts.push(id);
             concert.participants.push(username);
-
-            return true;
+            return user;
         }
 
-        return false;
+        return undefined;
     }
 
 
@@ -90,13 +89,13 @@ export class Repository {
         let concert = this.concerts.get(id);
         let user = this.users.get(username);
 
-        if (concert !== undefined && user !== undefined && concert.status == STATUS_PENDING) {
+        if (concert !== undefined && user !== undefined && concert.participants !== undefined && concert.status == 0) {
             let index =  user.concerts.indexOf(id);
             user.concerts.splice(index, 1);
             index =  concert.participants.indexOf(username);
             concert.participants.splice(index, 1);
 
-            return [user,concert];
+            return user;
         }
 
         return undefined;

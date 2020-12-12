@@ -100,13 +100,13 @@ export class Handlers {
     purchaseTicket(req: Request, res: Response) {
         let result = this.repository.purchaseTicket(req.params.username, Number(req.params.id));
 
-        result ? res.sendStatus(200) : res.sendStatus(500);
+        result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
     }
 
     returnTicket(req: Request, res: Response) {
         let result = this.repository.returnTicket(req.params.username, Number(req.params.id));
 
-        result ? res.status(200).json(result) : res.sendStatus(500);
+        result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
     }
 
 

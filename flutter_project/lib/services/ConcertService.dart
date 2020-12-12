@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:tuple/tuple.dart';
 import 'package:flutter_complete_guide/models/concert.dart';
 import 'package:flutter_complete_guide/services/Service.dart';
+import 'package:flutter_complete_guide/models/user.dart';
 import "package:http/http.dart" as http;
 
 class ConcertService extends Service {
@@ -48,7 +48,7 @@ class ConcertService extends Service {
   }
 
 
- Future <Tuple2<User,Concert>> returnTicket(String username, int id) async {
+ Future<User> returnTicket(String username, int id) async {
     final http.Response response = await http.post(
         this.apiURL + "/user/$username/concerts/$id/returnTicket",
         headers: this.headersPost
@@ -56,11 +56,13 @@ class ConcertService extends Service {
 
     if (response.statusCode != 200)
       throw new Exception("Could not return ticket from the concert.");
-
-    return Concert.fromJson(formValues);
+    var userJson = json.decode(response.body);
+    User user = User.fromJson(userJson);
+    user.password = null;
+    return user;
   }
 
-  Future<void> purchaseTicket(String username, int id) async {
+  Future<User> purchaseTicket(String username, int id) async {
     final http.Response response = await http.post(
       this.apiURL + "/user/$username/concerts/$id/purchaseTicket",
       headers: this.headersPost
@@ -68,6 +70,10 @@ class ConcertService extends Service {
 
     if (response.statusCode != 200)
       throw new Exception("Could not purchase ticket for concert with id=$id.");
+    var userJson = json.decode(response.body);
+    User user = User.fromJson(userJson);
+    user.password = null;
+    return user;
   }
   
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/utils/widgets.dart';
 import 'package:flutter_complete_guide/services/ConcertService.dart';
 import '../settings.dart';
+import '../models/user.dart';
 
 class PaymentProcessor extends StatefulWidget {
   PaymentProcessor({Key key}) : super(key: key);
@@ -77,6 +78,7 @@ class PaymentProcessorState extends State<PaymentProcessor> {
                     })))
       ]);
     } else {
+      Arguments arguments = ModalRoute.of(context).settings.arguments;
       widgets.add(Center(
           child: Container(
               width: projectSettings.textInputWidth,
@@ -89,16 +91,16 @@ class PaymentProcessorState extends State<PaymentProcessor> {
                         projectSettings.mainColor),
                   ),
                   onPressed: () {
-                    Navigator.popUntil(
-                        context, ModalRoute.withName("/user/main"));
+                    buyTicket(arguments.logged_in.username,  arguments.concert.id).then((newUser){
+                        Navigator.popUntil(context, ModalRoute.withName("/"));
+                        Navigator.pushNamed(context, "/user/main",arguments:newUser);
+
+                    } );
+
                   }))));
     }
 
-    if (isValid) {
-      Arguments arguments = ModalRoute.of(context).settings.arguments;
-      buyTicket(arguments.logged_in.username, arguments.concert.id);
-    }
-
+  
     return widgets;
   }
 
@@ -110,11 +112,12 @@ class PaymentProcessorState extends State<PaymentProcessor> {
             children: paymentValid(true)));
   }
 
-  void buyTicket(String username, int concertId) async {
+  Future<User> buyTicket(String username, int concertId) async {
     try {
-      await concertService.purchaseTicket(username, concertId);
+      return await concertService.purchaseTicket(username, concertId);
     } catch (e) {
       print(e.toString());
+      return null;
     }
   }
 

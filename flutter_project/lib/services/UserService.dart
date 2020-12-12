@@ -63,9 +63,6 @@ class UserService extends Service {
         headers: this.headersPost
     );
 
-    print(response.statusCode);
-
-    print(response.body);
     if (response.statusCode != 200)
       throw new Exception("Could not get user with username=${username}.");
 

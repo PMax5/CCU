@@ -5,7 +5,6 @@ export interface Concert {
     date ?: string,
     name ?: string,
     description ?: string,
-    link ?: string,
     image ?: string,
     participants ?: string[],
     username ?: string,

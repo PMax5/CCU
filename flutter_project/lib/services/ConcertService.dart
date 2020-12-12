@@ -6,7 +6,7 @@ import "package:http/http.dart" as http;
 
 class ConcertService extends Service {
 
-  Future<Concert> createConcert(Map<String, String> formValues, String username) async {
+  Future<void> createConcert(Map<String, String> formValues, String username) async {
     final http.Response response = await http.post(
         this.apiURL + "/artist/$username/concerts/new",
         headers: this.headersPost,
@@ -16,7 +16,6 @@ class ConcertService extends Service {
     if (response.statusCode != 200)
       throw new Exception("Could not create concert.");
 
-    return Concert.fromJson(formValues);
   }
 
   Future<List<Concert>> getAllConcerts() async {

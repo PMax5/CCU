@@ -42,7 +42,6 @@ export class Handlers {
             description: "The long wait is over: Portugal is scheduled to meet with James Smith at Altice Arena, in Lisbon. "
                 + "This unique date is part of the European tour scheduled for autumn, which will feature \"I love you\", \ "
                 + "the first James Smith’s original album in six years.",
-            link: "https://www.google.com",
             image: "https://rentalandstaging.net/wp-content/uploads/2015/11/rsn-stage-lights.jpg",
             date: "10th November 2020 9 p.m"
         });
@@ -117,8 +116,8 @@ export class Handlers {
     }
 
     createConcert(req: Request, res: Response) {
-        this.repository.createConcert(req.params.username, req.body);
-        res.sendStatus(200);
+        let result = this.repository.createConcert(req.params.username, req.body);
+        result ? res.sendStatus(200) : res.sendStatus(500);
     }
 
     startConcert(req: Request, res: Response) {

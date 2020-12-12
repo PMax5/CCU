@@ -5,7 +5,6 @@ class Concert {
   String name;
   String description;
   String date;
-  String link;
   String image;
   String username;
   int status;
@@ -17,7 +16,6 @@ class Concert {
     this.name = name;
     this.description = description;
     this.date = date;
-    this.link = link;
     this.image = image;
     this.status = status;
     this.username = username;
@@ -32,7 +30,6 @@ class Concert {
     'name': this.name,
     'description': this.description,
     'date': this.date,
-    'link': this.link,
     'image': this.image,
     'id': this.id,
     'status': this.status,
@@ -45,7 +42,6 @@ class Concert {
       json["name"],
       json["description"],
       json["date"],
-      json["link"],
       json["image"],
       json["username"],
       json["status"]

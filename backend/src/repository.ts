@@ -113,21 +113,25 @@ export class Repository {
         let concertID = this.concerts.size;
         let user = this.users.get(username);
 
-        concert.id = concertID;
-        concert.participants = new Array<string>();
-       
-        concert.username = username;
-        concert.status = this.STATUS_PENDING;
-        this.concerts.set(concertID, concert);
+        if(user !== undefined)
+        {
+            concert.id = concertID;
+            concert.participants = new Array<string>();
+            concert.username = username;
+            concert.status = this.STATUS_PENDING;
+            this.concerts.set(concertID, concert);
 
-        user.concerts.push(concertID);
+            user.concerts.push(concertID);
 
-        let channel = {
-            messages: new Array<Message>(),
-            name: concert.name
+            let channel = {
+                messages: new Array<Message>(),
+                name: concert.name
+            }
+
+            this.channels.set(concertID, channel);
+            return true;
         }
-
-        this.channels.set(concertID, channel);
+       return false;
         
     }
 

@@ -75,5 +75,15 @@ class ConcertService extends Service {
     user.password = null;
     return user;
   }
+
+  Future<void> startConcert(String username, int id) async {
+    final http.Response response = await http.post(
+      this.apiURL + "/artist/$username/concerts/$id/start",
+      headers: this.headersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not start concert with id=$id.");
+  }
   
 }

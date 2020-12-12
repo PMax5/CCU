@@ -86,4 +86,14 @@ class ConcertService extends Service {
       throw new Exception("Could not start concert with id=$id.");
   }
   
+  Future<void> endConcert(String username, int id) async {
+    final http.Response response = await http.post(
+      this.apiURL + "/artist/$username/concerts/$id/end",
+      headers: this.headersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not end concert with id=$id.");
+  }
+  
 }

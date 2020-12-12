@@ -142,6 +142,14 @@ export class Repository {
         return false;
     }
 
+    endConcert(username: string, id: number) {
+        let concert = this.concerts.get(id);
+        if (concert !== undefined && concert.username === username && concert.status === this.STATUS_STARTED) {
+            concert.status = this.STATUS_ENDED;
+            return true;
+        }
+        return false;
+    }
 
     getArtistConcerts(username: string) {
         let concerts = new Array<Concert>();

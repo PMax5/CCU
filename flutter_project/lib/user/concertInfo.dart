@@ -292,7 +292,7 @@
    @override
    Widget build(BuildContext context) {
      Arguments arguments = ModalRoute.of(context).settings.arguments;
-
+     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
      return Scaffold(
          body: SingleChildScrollView(
              child: Column(children: <Widget>[

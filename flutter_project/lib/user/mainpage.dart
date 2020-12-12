@@ -209,6 +209,7 @@ class UserMainPageState extends State<UserMainPage> {
   @override
   Widget build(BuildContext context) {
     User user = ModalRoute.of(context).settings.arguments;
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     print(user.username);
     return Scaffold(
         body: SingleChildScrollView(

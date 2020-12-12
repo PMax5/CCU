@@ -1,5 +1,6 @@
  import 'package:flutter/cupertino.dart';
  import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
  import '../models/concert.dart';
  import '../models/user.dart';
  import 'package:flutter_complete_guide/utils/widgets.dart';
@@ -292,7 +293,7 @@
    @override
    Widget build(BuildContext context) {
      Arguments arguments = ModalRoute.of(context).settings.arguments;
-     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+     
      return Scaffold(
          body: SingleChildScrollView(
              child: Column(children: <Widget>[

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/services/UserService.dart';
 import '../models/concert.dart';
 import 'package:flutter_complete_guide/models/user.dart';
@@ -209,7 +210,7 @@ class UserMainPageState extends State<UserMainPage> {
   @override
   Widget build(BuildContext context) {
     User user = ModalRoute.of(context).settings.arguments;
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    
     print(user.username);
     return Scaffold(
         body: SingleChildScrollView(

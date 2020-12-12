@@ -47,6 +47,7 @@ class ConcertStreamState extends State<ConcertStream> {
                         Navigator.of(context).pop();
                         Navigator.pushNamed(context, "/user/main",
                             arguments: user);
+                        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
                       }, () {
                         Navigator.of(context).pop();
                       }));
@@ -85,7 +86,7 @@ class ConcertStreamState extends State<ConcertStream> {
       Image.network(concert.image,
           width: double.infinity, height: double.infinity, fit: BoxFit.cover),
       Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Align(
+        user.type == "FAN" ? Align(
             alignment: FractionalOffset.topLeft,
             child: IconButton(
               padding: const EdgeInsets.only(top: 20, left: 20.0),
@@ -93,9 +94,10 @@ class ConcertStreamState extends State<ConcertStream> {
               color: Colors.white,
               tooltip: MaterialLocalizations.of(context).backButtonTooltip,
               onPressed: () {
+                SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
                 Navigator.pop(context);
               },
-            )),
+            )):Container(),
         Expanded(
             child: Align(
                 alignment: FractionalOffset.topRight,

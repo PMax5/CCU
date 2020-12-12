@@ -50,6 +50,10 @@ export class Server {
            this.handlers.createConcert(req, res);
         });
 
+        this.app.post("/artist/:username/concerts/:id/start", (req, res) => {
+            this.handlers.startConcert(req, res);
+        });
+
         this.app.get("/artist/:username/concerts", (req, res) => {
             this.handlers.getArtistsConcerts(req, res);
         });

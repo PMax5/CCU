@@ -131,6 +131,18 @@ export class Repository {
         
     }
 
+    startConcert(username: string, id: number) {
+        let concert = this.concerts.get(id);
+
+        if (concert !== undefined && concert.username === username && concert.status = this.STATUS_PENDING) {
+            concert.status = this.STATUS_STARTED;
+            return true;
+        }
+
+        return false;
+    }
+
+
     getArtistConcerts(username: string) {
         let concerts = new Array<Concert>();
         let user = this.users.get(username);

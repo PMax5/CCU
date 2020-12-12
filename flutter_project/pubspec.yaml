@@ -25,7 +25,6 @@ dependencies:
     sdk: flutter
   http: ^0.12.0+4
   dash_chat: ^1.1.15
-  tuple: ^1.0.3
 
 
 

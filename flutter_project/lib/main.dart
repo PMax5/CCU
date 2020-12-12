@@ -16,12 +16,12 @@ import 'package:flutter_complete_guide/payment/creditcard.dart';
 import 'package:flutter_complete_guide/payment/mbway.dart';
 import 'package:flutter_complete_guide/payment/paymentprocessor.dart';
 import 'package:flutter_complete_guide/payment/paypal.dart';
+import 'package:flutter_complete_guide/user/concertStream.dart';
 
 
 // import 'package:flutter_complete_guide/user/chatRoom.dart';
 
 // import 'package:flutter_complete_guide/user/createConcert.dart';
-// import 'package:flutter_complete_guide/user/concertStream.dart';
 // import 'package:flutter_complete_guide/user/voicecall.dart';
 
 
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         "/user/main": (context) => UserMainPage(),
         // "/user/concertCreate": (context) => CreateConcert(),
         "/user/concertInfo": (context) => ConcertInfoPage(),
-        // "/user/concertStream": (context) => ConcertStream(),
+        "/user/concertStream": (context) => ConcertStream(),
         "/user/userProfile": (context) => UserProfile(),
         "/user/editProfile": (context) => EditUserProfile(),
         // "/user/voicecall": (context) => VoiceCall(),

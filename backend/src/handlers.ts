@@ -121,6 +121,12 @@ export class Handlers {
         res.sendStatus(200);
     }
 
+    startConcert(req: Request, res: Response) {
+        let result = this.repository.startConcert(req.params.username, Number(req.params.id));
+
+        result ? res.sendStatus(200) : res.sendStatus(500);
+    }
+    
     getUser(req: Request, res: Response) {
         let result = this.repository.getUser(req.params.username);
 

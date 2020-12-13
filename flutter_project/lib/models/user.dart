@@ -81,10 +81,10 @@ class Message {
 
 class VoiceChannel {
   String name;
-  List<String> participants;
+  List<dynamic> participants;
   int status;
   int concertId;
-  VoiceChannel(String name, List<String> participants, int status, int concertId) {
+  VoiceChannel(String name, List<dynamic> participants, int status, int concertId) {
     this.name = name;
     this.participants = participants;
     this.status = status;

@@ -409,7 +409,6 @@ class CreateConcertState extends State<CreateConcert> {
       final DateFormat formatter = DateFormat(); 
       selectedDateTime = edit ? formatter.parse(concert.date) : DateTime.now();
       final String date = formatter.format(selectedDateTime);
-      print(date);
       formValues["date"] = date;
       formValues["name"] = edit ? concert.name : null;
       formValues["description"] = edit ? concert.description : null;

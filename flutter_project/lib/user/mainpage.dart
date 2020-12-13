@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/services/UserService.dart';
 import '../models/concert.dart';
 import 'package:flutter_complete_guide/models/user.dart';
@@ -180,7 +179,6 @@ class UserMainPageState extends State<UserMainPage> {
   Future<List<Concert>> getAvailableConcerts() async {
     try {
       List<Concert> concerts = await concertService.getAllConcerts();
-      print(concerts.length);
       return concerts.where((c) => c.status != 2 && c.status != 3).toList();
     } catch (e) {
       print(e.toString());
@@ -211,7 +209,6 @@ class UserMainPageState extends State<UserMainPage> {
   Widget build(BuildContext context) {
     User user = ModalRoute.of(context).settings.arguments;
     
-    print(user.username);
     return Scaffold(
         body: SingleChildScrollView(
             child: Column(children: <Widget>[

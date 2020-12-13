@@ -8,7 +8,7 @@ export class Handlers {
 
         let user = {
             username: "test",
-            name: "Test User",
+            name: "Mary",
             email: "user@example.com",
             password: "lol",
             imagePath: "http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png",
@@ -16,6 +16,29 @@ export class Handlers {
         };
 
         this.repository.createUser(user);
+
+        let user2 = {
+            username: "test2",
+            name: "John",
+            email: "user@example.com",
+            password: "lol",
+            imagePath: "http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png",
+            type: "FAN",
+        };
+
+        this.repository.createUser(user2);
+
+        let user3 = {
+            username: "test3",
+            name: "Isabella",
+            email: "user@example.com",
+            password: "lol",
+            imagePath: "http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png",
+            type: "FAN",
+        };
+
+        this.repository.createUser(user3);
+
 
         this.repository.createUser({
             username: "testartist",
@@ -45,6 +68,10 @@ export class Handlers {
             image: "https://rentalandstaging.net/wp-content/uploads/2015/11/rsn-stage-lights.jpg",
             date:  "December 18, 2020 12:00:00 AM"
         });
+
+        this.repository.purchaseTicket("test",0);
+        this.repository.purchaseTicket("test2",0);
+        this.repository.purchaseTicket("test3",0);
 
         console.log("Created default users ...");
     }
@@ -92,6 +119,12 @@ export class Handlers {
 
     startCall(req: Request, res: Response) {
         let result = this.repository.startCall(Number(req.params.id));
+
+        result ? res.sendStatus(200) : res.sendStatus(500);
+    }
+
+    endCall(req: Request, res: Response) {
+        let result = this.repository.endCall(Number(req.params.id));
 
         result ? res.sendStatus(200) : res.sendStatus(500);
     }
@@ -149,6 +182,12 @@ export class Handlers {
     
     getUser(req: Request, res: Response) {
         let result = this.repository.getUser(req.params.username);
+
+        result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
+    }
+
+    getUsers(req: Request, res: Response) {
+        let result = this.repository.getUsers(req.params.username, Number(req.params.id));
 
         result !== undefined ? res.status(200).json(result) : res.sendStatus(500);
     }

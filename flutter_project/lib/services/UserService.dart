@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_complete_guide/models/user.dart';
 import 'package:flutter_complete_guide/services/Service.dart';
 import "package:http/http.dart" as http;
@@ -57,6 +56,19 @@ class UserService extends Service {
     return user2;
   }
 
+  Future<List<User>> getUsers(int id,String username) async {
+    final http.Response response = await http.get(
+        this.apiURL + "/user/${username}/voicecall/${id}",
+        headers: this.headersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not get user with username=${username}.");
+    var usersJson = json.decode(response.body) as List;
+    List<User> users = usersJson.map((userJson) => User.fromJson(userJson)).toList();
+    return users;
+  }
+
   Future<User> getUser(String username) async {
     final http.Response response = await http.get(
         this.apiURL + "/user/${username}",
@@ -100,7 +112,7 @@ class UserService extends Service {
   }
   Future<void> startCall(int id) async {
      final http.Response response = await http.put(
-        this.apiURL + "/concert/${id}/startCall",
+        this.apiURL + "/concerts/${id}/startCall",
         headers: this.headersPost
     );
 
@@ -109,10 +121,9 @@ class UserService extends Service {
   }
   Future<void> endCall (int id) async {
      final http.Response response = await http.put(
-        this.apiURL + "/concert/${id}/endCall",
+        this.apiURL + "/concerts/${id}/endCall",
         headers: this.headersPost
     );
-
     if (response.statusCode != 200)
       throw new Exception("Could not end voiceCall with concertId=${id}.");
   }

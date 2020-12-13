@@ -13,6 +13,9 @@ class VoiceCall extends StatefulWidget {
 class VoiceCallState extends State<VoiceCall> {
   bool _soundOFF = false, _microOFF = false;
   bool _fan1OFF = false, _fan2OFF = false, _fan3OFF = false;
+  User user;
+  VoiceChannel voiceInfo;
+  List<User> participants = new List<User>();
 
   Widget buttonMuteFan(BuildContext context, int nrFan) {
     if (nrFan == 1) {
@@ -114,15 +117,15 @@ class VoiceCallState extends State<VoiceCall> {
     );
   }
 
-  Widget fansVoiceCall(BuildContext context) {
+  Widget fansVoiceCall(BuildContext context, dynamic participants) {
     return Column(
       children: [
         Padding(padding: EdgeInsets.only(top: 25)),
         CenteredHeaderLogo(),
         Padding(padding: EdgeInsets.only(top: 100)),
         CenteredProfile(
-            'http://web.ist.utl.pt/ist189407/assets/images/profile_artist.png',
-            'James Smith'),
+           participants[0].imagePath,
+           participants[0].name),
         Padding(padding: EdgeInsets.only(top: 100)),
         Center(
             child: Row(
@@ -182,7 +185,6 @@ class VoiceCallState extends State<VoiceCall> {
                     ))),
             MaterialButton(
               onPressed: () {
-                //TODO: end call
                 showDialog(
                     context: context,
                     builder: (_) => ConfirmationDialog(
@@ -190,7 +192,7 @@ class VoiceCallState extends State<VoiceCall> {
                             "You quit the voice call with your favourite artist.",
                             () {
                           Navigator.pop(context);
-                          Navigator.maybePop(context);
+                          Navigator.pop(context);
                         }, () {
                           Navigator.of(context).pop();
                         }));
@@ -207,14 +209,14 @@ class VoiceCallState extends State<VoiceCall> {
     );
   }
 
-  Widget artistsVoiceCall(BuildContext context) {
+  Widget artistsVoiceCall(BuildContext context, dynamic participants) {
     return Column(
       children: [
         Padding(padding: EdgeInsets.only(top: 25)),
         CenteredHeaderLogo(),
         Container(
           margin: const EdgeInsets.only(top: 50, bottom: 40),
-          child: Text("James Smith's Call",
+          child: Text(voiceInfo.name,
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -222,24 +224,25 @@ class VoiceCallState extends State<VoiceCall> {
         ),
 
         // profile of 3 fans
+       
         Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               this.fanProfileCall(
                   context,
-                  'http://web.ist.utl.pt/ist189407/assets/images/profile_john.png',
-                  'John',
+                  participants[0].imagePath,
+                  participants[0].name,
                   1),
               this.fanProfileCall(
                   context,
-                  'http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png',
-                  'Mary',
+                  participants[1].imagePath,
+                  participants[1].name,
                   2),
               this.fanProfileCall(
                   context,
-                  'http://web.ist.utl.pt/ist189407/assets/images/profile_isabella.png',
-                  'Isabella',
+                  participants[2].imagePath,
+                  participants[2].name,
                   3),
             ],
           ),
@@ -285,9 +288,11 @@ class VoiceCallState extends State<VoiceCall> {
                             "By clicking on this button, this voice call will "
                                 "immediately end and everyone who was in it will"
                                 " have to leave it.", () {
-                          // TODO: endVoiceCall
-                          Navigator.pop(context);
-                          Navigator.maybePop(context);
+                          endCall(voiceInfo.concertId).then((result) {
+                                Navigator.popUntil(context, ModalRoute.withName("/"));
+                                Navigator.pushNamed(context, "/user/main", arguments: user);
+                          });
+                      
                         }, () {
                           Navigator.of(context).pop();
                         }));
@@ -303,18 +308,43 @@ class VoiceCallState extends State<VoiceCall> {
       ],
     );
   }
-
+  Future<List<User>> getUsers(int id, String username) async {
+     try {
+       return await userService.getUsers(id,username);
+     } catch (e) {
+       print(e.toString());
+       return null;
+     }
+   }
+  Future<void> endCall(int id) async {
+     try {
+       await userService.endCall(id);
+     } catch (e) {
+       print(e.toString());
+     }
+   }
   @override
   Widget build(BuildContext context) {
-    User user = ModalRoute.of(context).settings.arguments;
-
-    return Scaffold(
+    VoiceArguments voiceArguments = ModalRoute.of(context).settings.arguments;
+    user = voiceArguments.user;
+    voiceInfo = voiceArguments.infoVoice;
+    return FutureBuilder(future: getUsers(voiceInfo.concertId, user.username),
+    builder: (context,participants) { 
+      if(participants.hasData)
+      {
+         return Scaffold(
         appBar: AppBar(
           title: Text("Voice Call"),
           backgroundColor: projectSettings.mainColor,
         ),
         body: user.type == "FAN"
-            ? this.fansVoiceCall(context)
-            : this.artistsVoiceCall(context));
+            ? this.fansVoiceCall(context,participants.data)
+            : this.artistsVoiceCall(context,participants.data));
+      }
+      return Center(child: CircularProgressIndicator()); });
+
+    
+   
+   
   }
 }

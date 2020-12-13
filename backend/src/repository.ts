@@ -56,10 +56,23 @@ export class Repository {
         return undefined;
     }
 
+    endCall(id: number) {
+        let voiceCall = this.voiceChannels.get(id);
+
+        if (voiceCall !== undefined  && voiceCall.status === this.STATUS_STARTED) {
+            voiceCall.status = this.STATUS_ENDED;
+            this.voiceChannels.set(id,voiceCall);
+            
+            return true;
+        }
+
+        return false;
+    }
+
     startCall(id: number) {
         let voiceCall = this.voiceChannels.get(id);
 
-        if (voiceCall !== undefined) {
+        if (voiceCall !== undefined && voiceCall.status === this.STATUS_PENDING) {
             voiceCall.status = this.STATUS_STARTED;
             this.voiceChannels.set(id,voiceCall);
             
@@ -217,8 +230,7 @@ export class Repository {
         let concert = this.concerts.get(id);
         if (concert !== undefined && concert.username === username && concert.status === this.STATUS_STARTED && concert.participants !== undefined) {
             let participantsVoice = new Array<String>();
-
-            if(concert.participants.length > 3)
+            if(concert.participants.length >= 3)
             {
                 let allParticipants = concert.participants;
                 while(participantsVoice.length != 3)
@@ -228,22 +240,59 @@ export class Repository {
                         participantsVoice.push(participant);
                     
                 }
+                participantsVoice.push(username);
+                let voiceChannel = {
+                    status: this.STATUS_PENDING,
+                    participants: participantsVoice,
+                    name: concert.name,
+                    concertId: id
+                }
+                this.voiceChannels.set(id, voiceChannel);
             }
-            else
-                participantsVoice = concert.participants;
             concert.status = this.STATUS_ENDED;
-            participantsVoice.push(username);
-            let voiceChannel = {
-                status: this.STATUS_PENDING,
-                participants: participantsVoice,
-                name: concert.name,
-                concertId: id
-            }
-            this.voiceChannels.set(id, voiceChannel);
+           
 
             return true;
         }
         return false;
+    }
+
+    getUsers(username: string, concertId: number) {
+        let users = new Array<User>();
+        let user_logged = this.users.get(username);
+        let concert = this.voiceChannels.get(concertId);
+
+        if (concert !== undefined && user_logged !== undefined) {
+            let userConcertIds = concert.participants;
+            if(user_logged.type == "FAN")
+            {
+                if (userConcertIds !== undefined) {
+                    userConcertIds.forEach((value: String) => { 
+                        let user = this.users.get(value);
+                        if (user !== undefined && user.type == "ARTIST")
+                            users.push(user);
+                        
+                     
+                    });
+                }
+            }
+            else
+            {
+                if (userConcertIds !== undefined) {
+                    userConcertIds.forEach((value: String) => { 
+                        if(user_logged.username != value){
+                            let user = this.users.get(value);
+                            if (user !== undefined)
+                                users.push(user);
+                        }
+                     
+                    });
+                }
+                        
+            }
+             return users;
+            }
+        return [];
     }
 
     getArtistConcerts(username: string) {

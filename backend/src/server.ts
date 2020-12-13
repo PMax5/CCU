@@ -54,9 +54,13 @@ export class Server {
             this.handlers.updateConcert(req, res);
          });
 
-        this.app.put("/concerts/:id/startCall", (req, res) => {
+        this.app.put("/concerts/:id/startCall", (req, res) => {  
             this.handlers.startCall(req, res);
          });
+        this.app.put("/concerts/:id/endCall", (req, res) => {  
+            this.handlers.endCall(req, res);
+     });
+
 
         this.app.post("/artist/:username/concerts/:id/start", (req, res) => {
             this.handlers.startConcert(req, res);
@@ -77,7 +81,11 @@ export class Server {
         this.app.get("/user/:username/voiceChannels", (req, res) => {
             this.handlers.getVoiceChannels(req, res);
         });
-
+        
+        this.app.get("/user/:username/voicecall/:id", (req, res) => {
+            this.handlers.getUsers(req, res);
+        });
+      
 
         this.app.get("/artist/:username/concerts", (req, res) => {
             this.handlers.getArtistsConcerts(req, res);

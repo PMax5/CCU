@@ -178,7 +178,7 @@ CircleAvatar(
                 if (newUser != null) {
                   Navigator.popUntil(context, ModalRoute.withName("/"));
                   Navigator.pushNamed(
-                      context, "/user/main", arguments: newUser);
+                      context, "/user/main", arguments: MainArguments(newUser,newUser.type == "FAN" ? 3: 2));
                   Navigator.pushNamed(context, "/user/userProfile",
                       arguments: ProfileArguments(newUser, true, null));
                 } else {

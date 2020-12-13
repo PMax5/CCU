@@ -92,7 +92,7 @@ class LoginState extends State<Login> {
                                       Navigator.pushNamed(
                                           context,
                                           "/user/main",
-                                          arguments: user
+                                          arguments: MainArguments(user,0)
                                       );
                                     }
                                     else {

@@ -69,6 +69,40 @@ class UserService extends Service {
     return users;
   }
 
+  Future<User> deleteNotification(String username, String notification) async {
+    final http.Response response = await http.post(
+        this.apiURL + "/fan/${username}/notifications/delete",
+        headers: this.headersPost,
+        body: jsonEncode(<String, dynamic> {
+          'notification': notification
+        })
+    );
+    if (response.statusCode != 200)
+      throw new Exception("Could not delete notification =${notification}.");
+
+    var userJson = json.decode(response.body);
+    User user = User.fromJson(userJson);
+    user.password = null;
+    return user;
+  }
+
+  Future<User> addNotification(String username, String notification) async {
+    final http.Response response = await http.post(
+        this.apiURL + "/fan/${username}/notifications/add",
+        headers: this.headersPost,
+        body: jsonEncode(<String, dynamic> {
+          'notification': notification
+        })
+    );
+    if (response.statusCode != 200)
+      throw new Exception("Could not add notification =${notification}.");
+
+    var userJson = json.decode(response.body);
+    User user = User.fromJson(userJson);
+    user.password = null;
+    return user;
+  }
+
   Future<User> getUser(String username) async {
     final http.Response response = await http.get(
         this.apiURL + "/user/${username}",
@@ -93,8 +127,8 @@ class UserService extends Service {
       throw new Exception("Could not get textChannels with username=${username}.");
 
     var channelsJson = json.decode(response.body) as List;
-    // List<TextChannel> channels = channelsJson.map((channelJson) => TextChannel.fromJson(channelJson)).toList();
-    return [];
+    List<TextChannel> channels = channelsJson.map((channelJson) => TextChannel.fromJson(channelJson)).toList();
+    return channels;
   }
 
   Future<List<VoiceChannel>> getVoiceChannels(String username) async {

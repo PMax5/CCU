@@ -46,7 +46,7 @@ class ConcertStreamState extends State<ConcertStream> {
                         endConcert(user.username, concertId);
                         Navigator.of(context).pop();
                         Navigator.pushNamed(context, "/user/main",
-                            arguments: user);
+                            arguments: MainArguments(user,1));
                         SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
                       }, () {
                         Navigator.of(context).pop();

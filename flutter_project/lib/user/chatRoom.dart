@@ -1,4 +1,4 @@
-import 'dart:async';
+/* import 'dart:async';
 
 import 'package:dash_chat/dash_chat.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,7 +63,7 @@ class ChatRoomState extends State<ChatRoom> {
 
   Widget createRoom(BuildContext context, ChannelArguments arguments) {
     //TODO: Add timer.
-    loadMessages(arguments.channel.concertId).then((messages) {
+    loadMessages(arguments.infoText.concertId).then((messages) {
       insertMessages(messages);
     });
 
@@ -73,7 +73,7 @@ class ChatRoomState extends State<ChatRoom> {
         onSend: (message) {
           addMessage(message.user,
               message.text);
-          sendMessage(arguments.channel.concertId, message.text, this.user);
+          sendMessage(arguments.infoText.concertId, message.text, this.user);
         },
         messageDecorationBuilder: (message, isUser) {
           return BoxDecoration(
@@ -95,10 +95,11 @@ class ChatRoomState extends State<ChatRoom> {
     user = arguments.user;
     return Scaffold(
         appBar: AppBar(
-          title: Text(arguments.channel.name),
+          title: Text(arguments.infoText.name),
           backgroundColor: projectSettings.mainColor,
         ),
         body: createRoom(context, arguments)
     );
   }
 }
+ */

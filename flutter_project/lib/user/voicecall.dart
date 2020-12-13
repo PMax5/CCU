@@ -290,7 +290,7 @@ class VoiceCallState extends State<VoiceCall> {
                                 " have to leave it.", () {
                           endCall(voiceInfo.concertId).then((result) {
                                 Navigator.popUntil(context, ModalRoute.withName("/"));
-                                Navigator.pushNamed(context, "/user/main", arguments: user);
+                                Navigator.pushNamed(context, "/user/main", arguments: MainArguments(user,1));
                           });
                       
                         }, () {

@@ -278,26 +278,50 @@ Widget ChatRooms(BuildContext context, User user) {
       ),
     ]);
   }
-  
 //FIXME STATEFUL CLASS
-Widget Notifications(BuildContext context) {
-  return ListView(
-    children: [
-      ListTile(
-        title: Text("Notification History", style: TextStyle(fontSize: 20)),
-      ),
-      Image.network(
-          'http://web.ist.utl.pt/ist189407/assets/images/divider.png'),
-      ListTile(
-        title: Text("New James Smith’s Concert"),
-        trailing: Icon(Icons.delete),
-      ),
-    ],
-  );
+Future<User> deleteNotification(String username, String notification) async {
+    try {
+      return await userService.deleteNotification(username,notification);
+    } catch(e) {
+      print(e.toString());
+      return null;
+    }
 }
 
-Widget MainMenu(BuildContext context, User user, Widget mainPage) {
-  return DefaultTabController(
+Widget Notifications(BuildContext context, User user) {
+      return ListView(
+        children: [
+          ListTile(
+           title: Text("Notification History", style: TextStyle(fontSize: 20)),
+            ),
+          Image.network(
+            'http://web.ist.utl.pt/ist189407/assets/images/divider.png'),
+          ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: user.notifications.length,
+              itemBuilder: (context, index) {
+              return ListTile(
+                            title: Text(user.notifications[index]),
+                            trailing: IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              deleteNotification(user.username,user.notifications[index]).then((userResult) {
+                                    Navigator.popUntil(context, ModalRoute.withName("/"));
+                                    Navigator.pushNamed(context, "/user/main",
+                                        arguments: MainArguments(userResult,2));
+                              });
+                              
+                            },
+                            )
+                           );
+                      },
+                    )]
+     );
+}
+
+Widget MainMenu(BuildContext context, User user,int tabIndex, Widget mainPage) {
+  return DefaultTabController(initialIndex: tabIndex,
     length: user.type == "FAN" ? 4 : 3,
     child: Column(
       children: <Widget>[
@@ -319,7 +343,7 @@ Widget MainMenu(BuildContext context, User user, Widget mainPage) {
                     unselectedLabelColor: Color.fromRGBO(100, 100, 100, 1),
                     labelColor: projectSettings.mainColor,
                     indicatorColor: projectSettings.mainColor,
-                    tabs: user.type == "FAN"
+                    tabs:  user.type == "FAN"
                         ? [
                             Tab(icon: Icon(Icons.library_music)),
                             Tab(icon: Icon(Icons.forum)),
@@ -338,7 +362,7 @@ Widget MainMenu(BuildContext context, User user, Widget mainPage) {
                   ? [
                       mainPage,
                       ChatRooms(context, user),
-                      Notifications(context),
+                      Notifications(context,user),
                       ExtraMenu(context, user)
                     ]
                   : [
@@ -386,4 +410,10 @@ class ChannelArguments {
   final TextChannel infoText;
 
   ChannelArguments(this.user, this.infoText);
+}
+
+class MainArguments {
+  final User user;
+  final int tabInitial;
+  MainArguments(this.user,this.tabInitial);
 }

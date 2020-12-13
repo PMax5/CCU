@@ -51,6 +51,7 @@
      return MainMenu(
          context,
          user,
+         0,
          Column(children: [
            Padding(
              padding: EdgeInsets.only(top: 10.0),
@@ -190,7 +191,7 @@
                                  Navigator.of(context).pop();
                                  Navigator.pushNamed(context,
                                      "/user/main",  
-                                     arguments: user);
+                                     arguments: MainArguments(user,0));
                                }, () {
                                  Navigator.of(context).pop();
                                }));

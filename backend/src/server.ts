@@ -59,8 +59,16 @@ export class Server {
          });
         this.app.put("/concerts/:id/endCall", (req, res) => {  
             this.handlers.endCall(req, res);
-     });
+         });
 
+        
+        this.app.post("/fan/:username/notifications/delete", (req, res) => {
+            this.handlers.deleteNotification(req, res);
+        });
+
+        this.app.post("/fan/:username/notifications/add", (req, res) => {
+            this.handlers.addNotification(req, res);
+        });
 
         this.app.post("/artist/:username/concerts/:id/start", (req, res) => {
             this.handlers.startConcert(req, res);

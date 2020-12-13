@@ -289,7 +289,7 @@ class CreateConcertState extends State<CreateConcert> {
                         if (concert) {
                           Navigator.popUntil(context, ModalRoute.withName("/"));
                           Navigator.pushNamed(context, "/user/main",
-                              arguments: user);
+                              arguments: MainArguments(user,0));
                         } else {
                           showDialog(
                               context: context,
@@ -306,7 +306,7 @@ class CreateConcertState extends State<CreateConcert> {
                         if (concert) {
                           Navigator.popUntil(context, ModalRoute.withName("/"));
                           Navigator.pushNamed(context, "/user/main",
-                              arguments: user);
+                              arguments: MainArguments(user,0));
                         } else {
                           showDialog(
                               context: context,

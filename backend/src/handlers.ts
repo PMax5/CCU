@@ -72,6 +72,7 @@ export class Handlers {
         this.repository.purchaseTicket("test",0);
         this.repository.purchaseTicket("test2",0);
         this.repository.purchaseTicket("test3",0);
+        this.repository.addNotification("test",{notification:"New concert from James Smith"});
 
         console.log("Created default users ...");
     }
@@ -85,6 +86,18 @@ export class Handlers {
         }
 
         return res.status(500).send("User already exists.");
+    }
+
+    addNotification(req: Request, res: Response) {
+        let result = this.repository.addNotification(req.params.username, req.body);
+        return  result !== undefined ? res.status(200).json(result) :  res.sendStatus(500);
+
+    }
+
+    deleteNotification(req: Request, res: Response) {
+        let result = this.repository.deleteNotification(req.params.username, req.body);
+        return  result !== undefined ? res.status(200).json(result) :  res.sendStatus(500);
+
     }
 
     loginUser(req: Request, res: Response) {
@@ -102,9 +115,10 @@ export class Handlers {
                 description: user.description,
                 type: user.type,
                 concerts: user.concerts,
-                favorites: user.favorites
+                favorites: user.favorites,
+                notifications: user.notifications
             }
-            res.status(200).json(userToSend) 
+            res.status(200).json(userToSend); 
         }
         else
             res.sendStatus(403);

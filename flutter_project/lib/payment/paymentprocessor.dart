@@ -93,7 +93,7 @@ class PaymentProcessorState extends State<PaymentProcessor> {
                   onPressed: () {
                     buyTicket(arguments.logged_in.username,  arguments.concert.id).then((newUser){
                         Navigator.popUntil(context, ModalRoute.withName("/"));
-                        Navigator.pushNamed(context, "/user/main",arguments:newUser);
+                        Navigator.pushNamed(context, "/user/main",arguments: MainArguments(newUser,0));
 
                     } );
 

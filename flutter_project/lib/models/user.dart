@@ -7,8 +7,9 @@ class User {
   String password;
   String description;
   List<dynamic> favorites;
+  List<dynamic> notifications;
 
-  User(String username, String email, String name, String imagePath, String type, String description, List<dynamic> favorites) {
+  User(String username, String email, String name, String imagePath, String type, String description, List<dynamic> favorites, List<dynamic> notifications) {
     this.username = username;
     this.email = email;
     this.name = name;
@@ -16,6 +17,7 @@ class User {
     this.type = type;
     this.description = description;
     this.favorites = favorites;
+    this.notifications = notifications;
   }
 
 
@@ -26,7 +28,8 @@ class User {
     'type': this.type,
     'username': this.username,
     'password': this.password,
-    'description': this.description
+    'description': this.description,
+    'notifications': this.notifications,
   };
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -37,20 +40,28 @@ class User {
       json["imagePath"],
       json["type"],
       json["description"],
-      json["favorites"]
+      json["favorites"],
+      json["notifications"]
     );
   }
 }
 
 class TextChannel {
   String name;
-  List<Message> messages;
+  List<dynamic> messages;
   int concertId;
-  TextChannel(String name, int concertId) {
+  TextChannel(String name, int concertId,  List<dynamic> messages) {
     this.name = name;
     this.concertId = concertId;
+    this.messages = messages;
   }
-
+   factory TextChannel.fromJson(Map<String, dynamic> json) {
+    return TextChannel(
+        json["name"],
+        json["concertId"],
+        json["messages"]
+    );
+  }
   void loadTextMessages(List<Message> messages) {
     this.messages = messages;
   }

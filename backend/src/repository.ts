@@ -1,4 +1,4 @@
-import { User } from './models/authentication';
+import { User , Notification } from './models/authentication';
 import { TextChannel, Concert, Message, VoiceChannel } from "./models/artist";
 
 export class Repository {
@@ -128,13 +128,23 @@ export class Repository {
     }
 
 
- /*   deleteNotification(fanUsername: string, notification: string)
+    deleteNotification(fanUsername: string, notification: Notification)
     {
         let user = this.users.get(fanUsername);
-        let index = user.notifications.indexOf(notification);
+        console.log(user);
+        let index = user.notifications.indexOf(notification.notification);
         user.notifications.splice(index,1);
+        return user;
     }
-*/
+
+    addNotification(fanUsername: string, notification: Notification)
+    {
+        let user = this.users.get(fanUsername);
+        user.notifications.push(notification.notification);
+        this.users.set(fanUsername,user);
+        return user;
+    }
+
     createConcert(username: string, concert: Concert) {
         let concertID = this.concerts.size;
         let user = this.users.get(username);

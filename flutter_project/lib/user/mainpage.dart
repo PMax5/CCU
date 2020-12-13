@@ -16,11 +16,13 @@ class UserMainPage extends StatefulWidget {
 class UserMainPageState extends State<UserMainPage> {
   ConcertService concertService = new ConcertService();
   UserService userService = new UserService();
+  int tabIndex;
 
   Widget createFanMenu(BuildContext context, User user) {
     return MainMenu(
           context,
           user,
+          tabIndex,
           FutureBuilder(
               future: getAvailableConcerts(),
               builder: (context, concerts) {
@@ -91,6 +93,8 @@ class UserMainPageState extends State<UserMainPage> {
     return MainMenu(
             context,
             user,
+            tabIndex
+            ,
             FutureBuilder(
           future: getArtistCurrentConcerts(user.username),
           builder: (context, artistConcerts) {
@@ -207,7 +211,9 @@ class UserMainPageState extends State<UserMainPage> {
   }
   @override
   Widget build(BuildContext context) {
-    User user = ModalRoute.of(context).settings.arguments;
+    MainArguments mainArguments  = ModalRoute.of(context).settings.arguments;
+    User user = mainArguments.user;
+    tabIndex = mainArguments.tabInitial;
     
     return Scaffold(
         body: SingleChildScrollView(

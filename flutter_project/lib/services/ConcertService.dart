@@ -115,5 +115,34 @@ class ConcertService extends Service {
     if (response.statusCode != 200)
       throw new Exception("Could not end concert with id=$id.");
   }
+
+  Future<List<Message>> getConcertMessages(int id) async {
+    final http.Response response = await http.get(
+      this.apiURL + "/concerts/$id/messages",
+      headers: this.headersPost
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not get messages for concert with id=$id.");
+
+    var messagesJson = json.decode(response.body);
+    List<Message> messages = messagesJson.map<Message>((messageJson) => Message.fromJson(messageJson)).toList();
+    return messages;
+  }
+
+  Future<List<Message>> sendMessage(int id, Message message) async {
+    final http.Response response = await http.post(
+      this.apiURL + "/concerts/$id/sendMessage",
+      headers: this.headersPost,
+      body: jsonEncode(message)
+    );
+
+    if (response.statusCode != 200)
+      throw new Exception("Could not send message for concert with id=$id.");
+
+    var messagesJson = json.decode(response.body);
+    List<Message> messages = messagesJson.map<Message>((messageJson) => Message.fromJson(messageJson)).toList();
+    return messages;
+  }
   
 }

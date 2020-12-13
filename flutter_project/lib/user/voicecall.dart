@@ -102,8 +102,11 @@ class VoiceCallState extends State<VoiceCall> {
         // maybe ill have to add a padding
         Padding(
             padding: EdgeInsets.all(10.0),
-            child:
-                SizedBox(width: 95, height: 95, child: Image.network(image))),
+            child: CircleAvatar(
+                radius: 45,
+                backgroundColor: Colors.white,
+                backgroundImage: NetworkImage(image),
+                ),),
         Container(
           margin: const EdgeInsets.all(10.0),
           child: Text(name,

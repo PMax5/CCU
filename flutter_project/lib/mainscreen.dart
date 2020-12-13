@@ -11,7 +11,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Scaffold(
       body: Stack(
         children: <Widget>[

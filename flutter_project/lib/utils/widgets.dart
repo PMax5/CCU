@@ -225,7 +225,7 @@ Widget ChatRooms(BuildContext context, User user) {
                     leading: Icon(Icons.sms),
                     onTap: () {
                       Navigator.pushNamed(context, "/user/userchat",
-                          arguments: ChannelArguments(user, textChannels.data[index]));
+                          arguments: ChannelArguments(user, textChannels.data[index],false));
                     },
                   );
                 },
@@ -268,6 +268,7 @@ Widget ChatRooms(BuildContext context, User user) {
           title: Text("Log Out", style: TextStyle(fontSize: 20)),
           leading: Icon(Icons.logout, size: 35),
           onTap: () {
+          
             Navigator.popUntil(context, ModalRoute.withName("/"));
           }),
       Divider(
@@ -278,7 +279,6 @@ Widget ChatRooms(BuildContext context, User user) {
       ),
     ]);
   }
-//FIXME STATEFUL CLASS
 Future<User> deleteNotification(String username, String notification) async {
     try {
       return await userService.deleteNotification(username,notification);
@@ -408,8 +408,9 @@ class VoiceArguments {
 class ChannelArguments {
   final User user;
   final TextChannel infoText;
+  final bool inConcert;
 
-  ChannelArguments(this.user, this.infoText);
+  ChannelArguments(this.user, this.infoText,this.inConcert);
 }
 
 class MainArguments {

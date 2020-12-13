@@ -1,8 +1,9 @@
-/* import 'dart:async';
+import 'dart:async';
 
 import 'package:dash_chat/dash_chat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/models/concert.dart';
 import 'package:flutter_complete_guide/models/user.dart';
 import 'package:flutter_complete_guide/services/ConcertService.dart';
@@ -38,6 +39,7 @@ class ChatRoomState extends State<ChatRoom> {
       return messages;
     } catch(e) {
       print(e.toString());
+      return null;
     }
   }
 
@@ -70,6 +72,11 @@ class ChatRoomState extends State<ChatRoom> {
     return DashChat(
         messages: chatMessages,
         inputCursorColor: projectSettings.mainColor,
+        inputDecoration: InputDecoration(
+          hintText: "Add message here...",
+          border: OutlineInputBorder()
+        ),
+
         onSend: (message) {
           addMessage(message.user,
               message.text);
@@ -95,6 +102,7 @@ class ChatRoomState extends State<ChatRoom> {
     user = arguments.user;
     return Scaffold(
         appBar: AppBar(
+         // leading: arguments.inConcert ? BackButton(onPressed: () { SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]); Navigator.pop(context);}) : BackButton(),
           title: Text(arguments.infoText.name),
           backgroundColor: projectSettings.mainColor,
         ),
@@ -102,4 +110,3 @@ class ChatRoomState extends State<ChatRoom> {
     );
   }
 }
- */

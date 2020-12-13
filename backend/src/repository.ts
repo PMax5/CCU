@@ -110,6 +110,30 @@ export class Repository {
         return undefined;
     }
 
+    sendConcertMessages(concertId: number, message: Message){
+        let concert = this.concerts.get(concertId);
+        let channel = this.channels.get(concertId);
+        if(concert !== undefined && channel !== undefined && channel.messages !== undefined)
+        {
+            let participants = concert.participants;
+            if(participants !== undefined && message.author.username !== undefined && (participants.includes(message.author.username) || concert.username === message.author.username))
+            {
+                channel.messages.push(message);
+                this.channels.set(concertId,channel);
+                return channel.messages;
+            }
+        }
+        return [];
+    }
+
+    getConcertMessages(concertId: number){
+        let concert = this.concerts.get(concertId);
+        let channel = this.channels.get(concertId);
+        if(concert !== undefined && channel !== undefined && channel.messages !== undefined)
+            return channel.messages;
+        return [];
+    }
+
 
     returnTicket(username: string, id: number) {
         let concert = this.concerts.get(id);
@@ -220,6 +244,11 @@ export class Repository {
             });    
         }
         return channels;
+    }
+
+    getTextChannel(id: number){
+        let channel = this.channels.get(id);
+        return channel;
     }
 
     getVoiceChannels(username: string){

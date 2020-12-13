@@ -188,17 +188,8 @@ class VoiceCallState extends State<VoiceCall> {
                     ))),
             MaterialButton(
               onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (_) => ConfirmationDialog(
-                            "Are you sure you want to quit this voice call?",
-                            "You quit the voice call with your favourite artist.",
-                            () {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        }, () {
-                          Navigator.of(context).pop();
-                        }));
+                  Navigator.pop(context);
+
               },
               color: Colors.red[900],
               textColor: Colors.white,

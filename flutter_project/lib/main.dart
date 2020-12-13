@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         "/user/userProfile": (context) => UserProfile(),
         "/user/editProfile": (context) => EditUserProfile(),
         "/user/voicecall": (context) => VoiceCall(),
-       // "/user/userchat": (context) => ChatRoom(),
+        "/user/userchat": (context) => ChatRoom(),
       },
     );
   }

@@ -43,11 +43,11 @@ class ConcertStreamState extends State<ConcertStream> {
                           "Are you sure you want to end the concert?",
                           "By clicking on this button, your stream will end immediately \ "
                               "and no one will have access to it.", () {
+                     //   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
                         endConcert(user.username, concertId);
                         Navigator.of(context).pop();
                         Navigator.pushNamed(context, "/user/main",
                             arguments: MainArguments(user,1));
-                        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
                       }, () {
                         Navigator.of(context).pop();
                       }));
@@ -61,25 +61,24 @@ class ConcertStreamState extends State<ConcertStream> {
       print(e.toString());
     }
   }
-/*
-  Future<GeneralChannel> getConcertChannel(String username) async {
+
+  Future<TextChannel> getConcertChannel(int concertId) async {
     try {
-      List<GeneralChannel> channels =
-          await concertService.getConcertsChannels(username);
-      return channels[0];
+      return await concertService.getConcertChannel(concertId);
+
     } catch (e) {
       print("Could not load concert text channel.");
       return null;
     }
   }
-*/
+
   @override
   Widget build(BuildContext context) {
     Arguments arguments = ModalRoute.of(context).settings.arguments;
     User user = arguments.logged_in;
     Concert concert = arguments.concert;
 
-    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
+//    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
 
     return Scaffold(
         body: Stack(children: <Widget>[
@@ -94,7 +93,7 @@ class ConcertStreamState extends State<ConcertStream> {
               color: Colors.white,
               tooltip: MaterialLocalizations.of(context).backButtonTooltip,
               onPressed: () {
-                SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+             //   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
                 Navigator.pop(context);
               },
             )):Container(),
@@ -107,13 +106,13 @@ class ConcertStreamState extends State<ConcertStream> {
                   iconSize: 40,
                   color: Colors.white,
                   onPressed: () {
-                   /*  SystemChrome.setPreferredOrientations(
-                        [DeviceOrientation.portraitUp]);
+                 //    SystemChrome.setPreferredOrientations(
+                   //     [DeviceOrientation.portraitUp]);
 
-                   getConcertChannel(user.username).then((channel) => {
+                   getConcertChannel(concert.id).then((channel) => {
                           Navigator.pushNamed(context, "/user/userchat",
-                              arguments: ChannelArguments(user, channel))
-                        });*/
+                              arguments: ChannelArguments(user, channel,true))
+                        });
                   },
                 )))
       ]),

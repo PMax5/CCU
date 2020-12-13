@@ -82,6 +82,18 @@ export class Server {
             this.handlers.cancelConcert(req, res);
         });
 
+        this.app.post("/concerts/:id/sendMessage", (req, res) => {
+            this.handlers.sendConcertMessages(req, res);
+        });
+
+        this.app.get("/concerts/:id/messages", (req, res) => {
+            this.handlers.loadConcertMessages(req, res);
+        });
+
+        this.app.get("/concerts/:id/channel", (req, res) => {
+            this.handlers.getTextChannel(req, res);
+        });
+
         this.app.get("/user/:username/channels", (req, res) => {
             this.handlers.getTextChannels(req, res);
         });

@@ -146,6 +146,18 @@ export class Handlers {
         result ? res.sendStatus(200) : res.sendStatus(500);
     }
 
+    loadConcertMessages(req: Request, res: Response){
+        let messages = this.repository.getConcertMessages(Number(req.params.id));
+        res.json(messages);
+
+    }
+
+    sendConcertMessages(req: Request, res: Response){
+        let messages = this.repository.sendConcertMessages(Number(req.params.id),req.body);
+        res.json(messages);
+
+    }
+
     follow (req: Request, res: Response) {
         let result = this.repository.followArtist(req.params.username,  req.params.artistUsername);
 
@@ -213,6 +225,14 @@ export class Handlers {
         let channels = this.repository.getTextChannels(req.params.username);
         if (channels !== undefined)
             return res.json(channels);
+        else
+            return res.json({});
+    }
+
+    getTextChannel(req: Request, res: Response) {
+        let channel = this.repository.getTextChannel(Number(req.params.id));
+        if (channel !== undefined)
+            return res.json(channel);
         else
             return res.json({});
     }

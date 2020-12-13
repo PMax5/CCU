@@ -17,7 +17,19 @@ class ConcertService extends Service {
       throw new Exception("Could not create concert.");
 
   }
+  Future<TextChannel> getConcertChannel(int concertId) async {
+    final http.Response response = await http.get(
+      this.apiURL + "/concerts/${concertId}/channel",
+      headers: this.requestHeadersPost
+    );
 
+    if (response.statusCode != 200)
+      throw new Exception("Could not get the text channel");
+
+    var textChannelJson = json.decode(response.body);
+    TextChannel textChannel = TextChannel.fromJson(textChannelJson);
+    return textChannel;
+  }
   Future<void> updateConcert(Map<String, String> formValues, int concertId) async {
     final http.Response response = await http.put(
         this.apiURL + "/concerts/$concertId/update",

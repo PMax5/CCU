@@ -22,7 +22,7 @@ export class Handlers {
             name: "John",
             email: "user@example.com",
             password: "lol",
-            imagePath: "http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png",
+            imagePath: "http://web.ist.utl.pt/ist189407/assets/images/John.png",
             type: "FAN",
         };
 
@@ -33,7 +33,7 @@ export class Handlers {
             name: "Isabella",
             email: "user@example.com",
             password: "lol",
-            imagePath: "http://web.ist.utl.pt/ist189407/assets/images/profile_fan.png",
+            imagePath: "http://web.ist.utl.pt/ist189407/assets/images/Isabella.jpg",
             type: "FAN",
         };
 
@@ -42,7 +42,7 @@ export class Handlers {
 
         this.repository.createUser({
             username: "testartist",
-            name: "Test User 2",
+            name: "James Smith",
             email: "user2@example.com",
             password: "lol",
             imagePath: "http://web.ist.utl.pt/ist189407/assets/images/profile_artist.png",

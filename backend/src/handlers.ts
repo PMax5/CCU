@@ -73,6 +73,9 @@ export class Handlers {
         this.repository.purchaseTicket("test2",0);
         this.repository.purchaseTicket("test3",0);
         this.repository.addNotification("test",{notification:"New concert from James Smith"});
+        this.repository.addNotification("test",{notification:"New concert from Guilherme Nunes"});
+        this.repository.addNotification("test",{notification:"New concert from Ines Alves"});
+
 
         console.log("Created default users ...");
     }

@@ -23,7 +23,7 @@ class AuthenticationService extends Service {
 
   Future<User> signUp(Map<String, String> formValues) async {
 
-    Map<String, dynamic> json = {
+    Map<String, dynamic> ajson = {
       'username': formValues['username'],
       'email': formValues['email'],
       'password': formValues['password'],
@@ -39,14 +39,16 @@ class AuthenticationService extends Service {
     final http.Response response = await http.post(
       this.apiURL + "/user/signup",
       headers: this.headersPost,
-      body: jsonEncode(json)
+      body: jsonEncode(ajson)
     );
 
     if(response.statusCode != 200)
       throw new Exception("Signup not successful.");
-
-    json.remove('password');
-    return new User.fromJson(json);
+    
+    var userJson = json.decode(response.body);
+    User user = User.fromJson(userJson);
+    user.password = null;
+    return user;
   }
 
 }

@@ -127,7 +127,6 @@ Widget BackButtonLogoHeader(BuildContext context) {
 Future<List<VoiceChannel>> getVoiceChannels(String username,String type) async {
   try {
     List<VoiceChannel> voiceChannels = await userService.getVoiceChannels(username);
-    print(voiceChannels.length);
     if(type == "FAN")
       return voiceChannels.where((c) => c.status == 1).toList();
     return voiceChannels.where((c) => c.status == 1 || c.status == 0).toList();
@@ -289,6 +288,7 @@ Future<User> deleteNotification(String username, String notification) async {
 }
 
 Widget Notifications(BuildContext context, User user) {
+
       return ListView(
         children: [
           ListTile(

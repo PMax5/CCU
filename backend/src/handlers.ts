@@ -84,8 +84,9 @@ export class Handlers {
         let user = req.body;
 
         if (this.repository.getUser(user.username) === undefined) {
-            this.repository.createUser(req.body);
-            return res.sendStatus(200);
+           let newuser = this.repository.createUser(req.body);
+            return newuser !== undefined ? res.status(200).json(newuser): res.sendStatus(500);
+
         }
 
         return res.status(500).send("User already exists.");

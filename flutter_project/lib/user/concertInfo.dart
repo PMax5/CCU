@@ -137,7 +137,7 @@
                                    if (result != null)
                                    {
                                      Navigator.popUntil(context, ModalRoute.withName("/"));
-                                     Navigator.pushNamed(context, "/user/main", arguments:result);
+                                     Navigator.pushNamed(context, "/user/main", arguments: MainArguments(result,0));
                                    }
                                   else
                                     showDialog(

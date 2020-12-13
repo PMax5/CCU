@@ -29,8 +29,9 @@ export class Repository {
                 notifications:user.type==='FAN'? new Array<string>() : undefined
             }
             this.users.set(user.username, newUser);
+            return newUser;
         }
-       
+       return undefined
     }
 
     getUser(username: string) {

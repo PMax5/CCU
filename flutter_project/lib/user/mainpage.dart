@@ -93,8 +93,7 @@ class UserMainPageState extends State<UserMainPage> {
     return MainMenu(
             context,
             user,
-            tabIndex
-            ,
+            tabIndex,
             FutureBuilder(
           future: getArtistCurrentConcerts(user.username),
           builder: (context, artistConcerts) {
@@ -212,6 +211,7 @@ class UserMainPageState extends State<UserMainPage> {
   @override
   Widget build(BuildContext context) {
     MainArguments mainArguments  = ModalRoute.of(context).settings.arguments;
+
     User user = mainArguments.user;
     tabIndex = mainArguments.tabInitial;
     
